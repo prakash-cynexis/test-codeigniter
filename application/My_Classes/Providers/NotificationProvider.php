@@ -5,20 +5,40 @@ namespace MYClasses\Providers;
 class NotificationProvider implements NotifyInterface
 {
     private static $FCM_PATH = 'https://fcm.googleapis.com/fcm/send';
+    private $message;
+    private $device_type;
+    private $device_token;
     private static $API_SERVER_KEY = '';
     private static $iOS_SERVER_KEY = '';
 
-    public function send(array $userInfo)
+    public function send()
     {
-        if($userInfo['device_type'] && $userInfo['device_token'])
-        switch ($userInfo['device_type']):
+        switch ($this->device_type):
             case 'iOS':
-                return self::iOS($userInfo['device_token'], $userInfo['message']);
+                return self::iOS($this->device_token, $this->message);
             case 'android':
-                return self::android($userInfo['device_token'], $userInfo['message']);
+                return self::android($this->device_token, $this->message);
             default:
                 return false;
         endswitch;
+    }
+
+    public function message($message)
+    {
+        $this->message = $message;
+        return $this;
+    }
+
+    public function device_type($device_type)
+    {
+        $this->device_type = $device_type;
+        return $this;
+    }
+
+    public function device_token($device_token)
+    {
+        $this->device_token = $device_token;
+        return $this;
     }
 
     private static function iOS($token, $message)

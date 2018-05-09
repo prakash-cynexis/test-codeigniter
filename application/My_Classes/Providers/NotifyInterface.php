@@ -4,5 +4,5 @@ namespace MYClasses\Providers;
 
 interface NotifyInterface
 {
-    public function send(array $userInfo);
+    public function send();
 }
