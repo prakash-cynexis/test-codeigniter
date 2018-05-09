@@ -26,7 +26,7 @@ class Testing extends MY_Controller
     public function testPost()
     {
         if (isPost()) {
-            $data = \MYClasses\Http\Requests\TestRequest::validate();
+            $data = \MYClasses\Http\Requests\NewRegistrationRequest::validate();
 
             /*$data = $this->request->validate([
                 ['field' => 'address_prof', 'rules' => 'required']
