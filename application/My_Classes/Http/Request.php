@@ -28,8 +28,8 @@ class Request
 
     public function input($key = null)
     {
-        if (is_string($key)) return (!empty($this->requestData[$key])) ? $this->requestData[$key] : false;
-        return !empty($this->requestData) ? $this->requestData : false;
+        if (is_string($key)) return (!empty($this->requestData[$key])) ? $this->requestData[$key] : [];
+        return !empty($this->requestData) ? $this->requestData : [];
     }
 
     public function isApp()
@@ -43,13 +43,13 @@ class Request
         return (new \CI_User_agent())->is_browser();
     }
 
-    public function validate(array $rules, $data = null)
+    public function validate(array $rules, $redirect = null, $data = null)
     {
         if (is_null($data)) $data = $this->input();
 
         $this->CI->form_validation->set_data($data);
         $this->CI->form_validation->set_rules($rules);
-        if (!$this->CI->form_validation->run()) response()->error(formatExceptionAsDataArray($this->CI->form_validation->error_array()), $data);
+        if (!$this->CI->form_validation->run()) response()->form_validation_exception($data, $redirect);
         return $data;
     }
 }

@@ -38,6 +38,7 @@ class Testing extends MY_Controller
 
     public function password_reset()
     {
+        dd(request()->input());
     }
 
     public function testTemplateEmail()

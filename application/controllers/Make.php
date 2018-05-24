@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Tools extends MY_Controller
+class Make extends MY_Controller
 {
     protected $_file = null;
     protected $_resource_path = APPPATH . '/My_Classes/Resources/';
