@@ -39,7 +39,7 @@ class EmailProvider implements NotifyInterface
         $emailSent = $this->CI->email->send();
         //exit($this->CI->email->print_debugger());
         if (!$emailSent) {
-            log_activity('Email Not send:- ' . $this->to, 'email');
+            log_activity($this->to, 'email not send');
             return false;
         }
         return true;

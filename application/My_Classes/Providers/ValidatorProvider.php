@@ -14,17 +14,18 @@ abstract class ValidatorProvider implements ValidatorInterface
     {
         static::$CI = &get_instance();
         static::$input = request()->input();
+        if (!static::$input) response()->error(Response::DEFAULT_ERROR);
     }
 
-    protected static function validates($data = null, $redirect = true)
+    protected static function validates($data = null)
     {
         static::initialize();
         $class = get_called_class();
-        if (is_null($data)) $data = static::$input;
+        if (!is_null($data)) static::$input = $data;
 
-        static::$CI->form_validation->set_data($data);
+        static::$CI->form_validation->set_data(static::$input);
         static::$CI->form_validation->set_rules($class::rules());
-        if (!static::$CI->form_validation->run()) response()->form_validation_exception($data, $redirect);
-        return $data;
+        if (!static::$CI->form_validation->run()) response()->form_validation_exception(static::$input);
+        return static::$input;
     }
 }

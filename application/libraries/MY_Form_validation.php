@@ -38,4 +38,25 @@ class MY_Form_validation extends CI_Form_validation
         }
         return true;
     }
+
+    function valid_latitude($lat)
+    {
+        if (!$data = preg_match('/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/', $lat)) {
+            log_activity($data, 'valid_latitude');
+            $this->CI->form_validation->set_message('valid_latitude', '{field} must be a valid value, e.g. 00.000000');
+            return false;
+        }
+        return true;
+    }
+
+    function valid_longitude($long)
+    {
+        if (!$data = preg_match('/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/', $long)) {
+            log_activity($data, 'valid_longitude');
+            $this->CI->form_validation->set_message('valid_longitude', '{field} must be a valid value, e.g. 00.000000');
+            return false;
+        }
+        return true;
+    }
+
 }

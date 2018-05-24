@@ -24,9 +24,31 @@ if (!function_exists('request')) {
         return new \MYClasses\Http\Request();
     }
 }
+
 if (!function_exists('response')) {
     function response()
     {
         return new \MYClasses\Http\Response();
+    }
+}
+
+if (!function_exists('aes')) {
+    function aes()
+    {
+        return new \MYClasses\Providers\AESProvider();
+    }
+}
+
+if (!function_exists('validateLatitude')) {
+    function validateLatitude($lat)
+    {
+        return preg_match('/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/', $lat);
+    }
+}
+
+if (!function_exists('validateLongitude')) {
+    function validateLongitude($long)
+    {
+        return preg_match('/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/', $long);
     }
 }

@@ -105,7 +105,7 @@ if (!function_exists('randomString')) {
      */
     function randomString($length = 25)
     {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $characters = '23003164A33FF27BD4A1C7DE78E025F6DBC67E3960AD891C29B45CE4DCC4CDB7';
         $randomString = '';
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, strlen($characters) - 1)];
@@ -493,7 +493,7 @@ if (!function_exists('formatExceptionAsDataArray')) {
      */
     function formatExceptionAsDataArray($array)
     {
-        if (empty($array)) return $array;
+        if (empty($array) || !is_array($array)) return $array;
         $array = removeArrayKeys($array);
         if (isSingleItemArray($array)) {
             return $array[0];

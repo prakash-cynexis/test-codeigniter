@@ -46,6 +46,9 @@ class Request
     public function validate(array $rules, $redirect = null, $data = null)
     {
         if (is_null($data)) $data = $this->input();
+        if (is_null($redirect)) $redirect = true;
+
+        if (empty($data)) response()->error(Response::DEFAULT_ERROR);
 
         $this->CI->form_validation->set_data($data);
         $this->CI->form_validation->set_rules($rules);

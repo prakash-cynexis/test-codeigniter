@@ -175,7 +175,7 @@ class Response
 
     public function form_validation_exception($data = null, $redirect = true)
     {
-        $this->error(formatExceptionAsDataArray(get_instance()->form_validation->error_array()), $data, $redirect);
+        $this->error(formatExceptionAsDataArray(get_instance()->form_validation->error_array()), typeCast($data), $redirect);
     }
 
     /**
