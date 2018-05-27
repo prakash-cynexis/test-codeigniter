@@ -70,10 +70,9 @@ class Make extends MY_Controller
 
             if (!file_exists($file)) die("Formatted file not found. please check core files.");
 
-            $this->_file = file_get_contents($file);
-            $text = str_replace($this->_class_name, $fileName, $this->_file);
+            $text = $this->_file = file_get_contents($file);
 
-            $fileName = APPPATH . "/view/layout/backend/pages/{$fileName}.html";
+            $fileName = APPPATH . "/views/layout/backend/pages/{$fileName}.php";
             $this->createFile($text, $fileName);
         }
         die("No direct script access allowed");
