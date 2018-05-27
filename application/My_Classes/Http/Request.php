@@ -49,7 +49,7 @@ class Request
 
         $this->CI->form_validation->set_data($data);
         $this->CI->form_validation->set_rules($rules);
-        if (!$this->CI->form_validation->run()) response()->error(formatExceptionAsDataArray($this->CI->form_validation->error_array()), $data);
+        if (!$this->CI->form_validation->run()) response()->form_validation_exception($data);
         return $data;
     }
 }
