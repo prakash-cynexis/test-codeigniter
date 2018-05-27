@@ -63,6 +63,22 @@ class Make extends MY_Controller
         die("No direct script access allowed");
     }
 
+    public function views($fileName)
+    {
+        if (is_cli()) {
+            $file = $this->_resource_path . 'formatOfView.txt';
+
+            if (!file_exists($file)) die("Formatted file not found. please check core files.");
+
+            $this->_file = file_get_contents($file);
+            $text = str_replace($this->_class_name, $fileName, $this->_file);
+
+            $fileName = APPPATH . "/view/layout/backend/pages/{$fileName}.html";
+            $this->createFile($text, $fileName);
+        }
+        die("No direct script access allowed");
+    }
+
     private function createFile($content, $fileName)
     {
         $this->load->helper('file');
