@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class {{class_Name}}_Model extends MY_Model
+class {{class_Name}}_model extends MY_Model
 {
     protected $before_get = [];
 

@@ -30,4 +30,11 @@ class MY_Model extends BASE_Model
         $this->_table = $this->table_original;
         return $data;
     }
+
+    final protected function hashPassword($data)
+    {
+        if (!isset($data['password'])) return $data;
+        $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+        return $data;
+    }
 }

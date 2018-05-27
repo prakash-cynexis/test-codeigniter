@@ -43,7 +43,6 @@ class Testing extends MY_Controller
     public function testTemplateEmail()
     {
         $templateName = 'password_reset.php';
-
         $emailTemplate = new EmailTemplateProvider($templateName);
         $emailTemplate->setData([
             'name' => 'Prakash Sharma',
@@ -77,9 +76,10 @@ class Testing extends MY_Controller
         dd($email);
     }
 
-    public function pass()
+    public function pass($data = null)
     {
-        echo password_hash('admin123', PASSWORD_BCRYPT);
+        if (is_null($data)) $data = 'admin123';
+        echo password_hash($data, PASSWORD_BCRYPT);
     }
 
     public function lists()

@@ -74,7 +74,7 @@ if (!function_exists('validAuthToken')) {
         $userID = $authToken['id'];
 
         $user = $CI->User_model->get($userID);
-        if (!$user) apiError('No user found with ID: ' . $userID);
+        if (!$user) apiError('Auth-Token invalid user not found with ID: ' . $userID);
 
         return get_token();
         //return get_token() === $user['auth_token'];

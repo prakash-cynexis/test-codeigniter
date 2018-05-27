@@ -25,7 +25,7 @@ abstract class ValidatorProvider implements ValidatorInterface
 
         static::$CI->form_validation->set_data(static::$input);
         static::$CI->form_validation->set_rules($class::rules());
-        if (!static::$CI->form_validation->run()) response()->error(formatExceptionAsDataArray(static::$CI->form_validation->error_array()), static::$input);
+        if (!static::$CI->form_validation->run()) response()->form_validation_exception(static::$input);
         return static::$input;
     }
 }

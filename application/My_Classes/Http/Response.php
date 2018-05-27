@@ -175,7 +175,7 @@ class Response
 
     public function form_validation_exception($data = null, $redirect = true)
     {
-        $this->error(formatExceptionAsDataArray(get_instance()->form_validation->error_array()), $data, $redirect);
+        $this->error(formatExceptionAsDataArray(get_instance()->form_validation->error_array()), typeCast($data), $redirect);
     }
 
     /**
@@ -187,7 +187,7 @@ class Response
      */
     private static function CreateResponse($status, $message, $data = null, $http_status = null, $redirect = true)
     {
-        if (!empty($data)) self::$_data = $data;
+        if (!empty($data)) self::$_data = typeCast($data);
         if (!empty($status)) self::$_status = $status;
         if (!empty($message)) self::$_message = $message;
         if (!empty($redirect)) self::$_redirect = $redirect;

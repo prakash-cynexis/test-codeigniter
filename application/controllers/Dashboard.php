@@ -12,6 +12,6 @@ class Dashboard extends MY_Controller
 
     public function index()
     {
-        $this->adminView('dashboard');
+        $this->admin_view('dashboard');
     }
 }

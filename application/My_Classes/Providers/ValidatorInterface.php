@@ -4,7 +4,7 @@ namespace MYClasses\Providers;
 
 interface ValidatorInterface
 {
-    public static function rules();
+    static function rules();
 
-    public static function validate($data = null);
+    static function validate($data = null);
 }

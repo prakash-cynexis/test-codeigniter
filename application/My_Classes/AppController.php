@@ -32,7 +32,7 @@ abstract class AppController extends \CI_Controller
         $this->webLayout($title)->publish($page);
     }
 
-    final public function adminView($page, $title = null)
+    final public function admin_view($page, $title = null)
     {
         $this->adminLayout($title)->publish($page);
     }
