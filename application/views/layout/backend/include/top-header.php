@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
     <?php getMetaData(); ?>
     <title>Admin | <?= $title ?></title>
-    <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="<?= assetUrl('plugins/bootstrap/css/bootstrap.min.css') ?>" media="screen">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" type="text/css" href="<?= assetUrl('plugins/font-awesome/css/font-awesome.min.css') ?>" media="screen">
-    <!-- NProgress -->
-    <link rel="stylesheet" type="text/css" href="<?= assetUrl('plugins/nprogress/nprogress.css') ?>" media="screen">
-    <!-- Custom Theme Style -->
-    <link rel="stylesheet" type="text/css" href="<?= assetUrl('backend/css/custom.min.css') ?>" media="screen">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+    <link href="<?= assetUrl('plugins/font-awesome/css/font-awesome.min.css') ?>" rel="stylesheet" type="text/css"/>
+    <link href="<?= assetUrl('plugins/simple-line-icons/simple-line-icons.min.css') ?>" rel="stylesheet" type="text/css"/>
+    <link href="<?= assetUrl('plugins/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css"/>
+    <link href="<?= assetUrl('plugins/bootstrap-switch/css/bootstrap-switch.min.css') ?>" rel="stylesheet" type="text/css"/>
+    <link href="<?= assetUrl('backend/css/components.min.css') ?>" rel="stylesheet" type="text/css"/>
+    <link href="<?= assetUrl('backend/css/plugins.min.css') ?>" rel="stylesheet" type="text/css"/>
+    <link href="<?= assetUrl('backend/css/layout.min.css') ?>" rel="stylesheet" type="text/css"/>
+    <link href="<?= assetUrl('backend/css/darkblue.min.css') ?>" rel="stylesheet" type="text/css"/>
+    <link href="<?= assetUrl('backend/css/custom.css') ?>" rel="stylesheet" type="text/css"/>
+    <link rel="shortcut icon" href="favicon.ico"/>
     <?php getStylesheet(); ?>
     <!-- Jquery -->
     <?= jquery() ?>

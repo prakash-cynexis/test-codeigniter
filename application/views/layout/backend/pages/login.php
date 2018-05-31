@@ -22,7 +22,7 @@
             <section class="login_content">
                 <img src="<?= assetUrl('images/logo.png') ?>">
                 <?= htmlFlash() ?>
-                <?= form_open('auth/login', ['class' => 'login-form']) ?>
+                <?= form_open('welcome/login', ['class' => 'login-form']) ?>
                 <div class="form-group">
                     <input class="form-control" placeholder="Email" type="text" name="user_name">
                 </div>

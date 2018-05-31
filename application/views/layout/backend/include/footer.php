@@ -1,21 +1,27 @@
 <!-- footer content -->
-<footer>
-    <div class="pull-right">
-        by <a href="https://cynexis.com">Cynexis Media {memory_usage}</a>
+</div>
+<div class="page-footer">
+    <div class="page-footer-inner"> <?= COMPANY_NAME ?> {memory_usage}
+        <a target="_blank" href="http://keenthemes.com">Keenthemes</a>
     </div>
-    <div class="clearfix"></div>
-</footer>
-<!-- /footer content -->
+    <div class="scroll-to-top">
+        <i class="icon-arrow-up"></i>
+    </div>
 </div>
 </div>
-<!-- jQuery -->
-<script src="<?= assetUrl('plugins/jquery/js/jquery.min.js') ?>"></script>
-<!-- Bootstrap -->
+<script src="<?= assetUrl('backend/js/respond.min.js') ?>"></script>
+<script src="<?= assetUrl('backend/js/excanvas.min.js') ?>"></script>
+<script src="<?= assetUrl('backend/js/ie8.fix.min.js') ?>"></script>
+<script src="<?= assetUrl('backend/js/js.cookie.min.js') ?>"></script>
+<script src="<?= assetUrl('backend/js/jquery.blockui.min.js') ?>"></script>
+<script src="<?= assetUrl('backend/js/app.min.js') ?>"></script>
+<script src="<?= assetUrl('backend/js/layout.min.js') ?>"></script>
+<script src="<?= assetUrl('backend/js/demo.min.js') ?>"></script>
+<script src="<?= assetUrl('backend/js/quick-sidebar.min.js') ?>"></script>
+<script src="<?= assetUrl('backend/js/quick-nav.min.js') ?>"></script>
 <script src="<?= assetUrl('plugins/bootstrap/js/bootstrap.min.js') ?>"></script>
-<!-- NProgress -->
-<script src="<?= assetUrl('plugins/nprogress/nprogress.js') ?>"></script>
-<!-- Custom Theme Scripts -->
-<script src="<?= assetUrl('backend/js/custom.min.js') ?>"></script>
+<script src="<?= assetUrl('plugins/jquery-slimscroll/jquery.slimscroll.min.js') ?>"></script>
+<script src="<?= assetUrl('plugins/bootstrap-switch/js/bootstrap-switch.min.js') ?>"></script>
 <?php getJavascript() ?>
 <script>
     $(document).on('click', '.btn-spinner', function (e) {
