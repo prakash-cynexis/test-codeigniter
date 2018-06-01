@@ -20,12 +20,12 @@ class AuthManager implements AuthInterface
         $this->token = new Token();
     }
 
-    public function login($userData)
+    public function login($requestData)
     {
-        $user = $this->CI->User_model->get_by(['email' => $userData['email']]);
+        $user = $this->CI->User_model->get_by(['email' => $requestData['email']]);
         if (!$user) return false;
 
-        if (!password_verify($userData['password'], $user['password'])) return false;
+        if (!password_verify($requestData['password'], $user['password'])) return false;
         if (!booleanIntValue($user['is_active'])) $this->response->error(Response::LOGIN_NOT_APPROVED);
 
         $user_details = $this->CI->User_model->get_by(['email' => $user['email']]);
