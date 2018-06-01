@@ -2,7 +2,6 @@
 </div>
 <div class="page-footer">
     <div class="page-footer-inner"> <?= COMPANY_NAME ?> {memory_usage}
-        <a target="_blank" href="http://keenthemes.com">Keenthemes</a>
     </div>
     <div class="scroll-to-top">
         <i class="icon-arrow-up"></i>
