@@ -5,7 +5,6 @@ namespace MYClasses\Providers;
 class EmailProvider
 {
     private $CI;
-    private $defaultSubject = 'Password Reset.';
     private $to;
     private $html;
     private $subject;
@@ -96,11 +95,11 @@ class EmailProvider
     {
         $array = [
             'to' => $this->to,
-            'subject' => is_null($this->subject) ? $this->defaultSubject : $this->subject,
-            'body' => !$this->getMessageLines() ? $this->getHtml() : $this->getMessageLines(),
+            'subject' => $this->subject,
+            'body' => !($messageLine = $this->getMessageLines()) ? $this->getHtml() : $messageLine,
         ];
 
-        if ($this->getMessageLines()) $array = $this->replaceTextToAction($array);
+        if ($messageLine) $array = $this->replaceTextToAction($array);
         return $array;
     }
 

@@ -16,6 +16,12 @@ class Testing extends MY_Controller
         $this->load->model(["User_model"]);
     }
 
+    public function testFile()
+    {
+        $data = $this->request->input();
+        dd($data);
+    }
+
     public function testPost()
     {
         echo VIEWPATH;
