@@ -17,6 +17,7 @@ class Request
         } elseif ($this->CI->input->server('REQUEST_METHOD') === 'POST') {
             $data = $this->CI->input->post();
         }
+        $data = array_merge($data, $this->filterFiles());
         $this->requestData = omitNullKeys($data, true);
         $this->CI->requestData = $this->requestData;
     }
@@ -81,5 +82,22 @@ class Request
 
         if (!$this->authUser) response()->error('Authentication required', null, true, 401);
         return $this->authUser;
+    }
+
+    public function files()
+    {
+        return $this->filterFiles();
+    }
+
+    protected function filterFiles()
+    {
+        $files = [];
+        if (empty($_FILES)) return $files;
+
+        foreach ($_FILES as $key => $file) {
+            $files[$key] = $file['name'];
+        }
+
+        return $files;
     }
 }
