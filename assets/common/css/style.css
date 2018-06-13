@@ -1,0 +1,32 @@
+
+.success-alert {
+    background: #c3e09f;
+    /*display: inline-block;*/
+    padding: 10px 25px;
+    color: #fff;
+    font-size: 11px;
+    margin: 0 auto 20px;
+    font-weight: bold;
+}
+
+.success-alert .fa {
+    color: #8dc73f;
+    margin-right: 10px;
+    font-size: 14px;
+}
+
+.error-alert {
+    background: #db6561;
+    /*display: inline-block;*/
+    padding: 10px 25px;
+    color: #fff;
+    font-size: 11px;
+    margin: 0 auto 20px;
+    font-weight: bold;
+}
+
+.error-alert .fa {
+    color: #ffffff;
+    margin-right: 10px;
+    font-size: 14px;
+}
