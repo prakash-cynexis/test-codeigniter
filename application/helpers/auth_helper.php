@@ -57,7 +57,7 @@ if (!function_exists('is_authenticated')) {
     {
         $authToken = (new Token())->get();
         // token from request not matching with the token in DB, meaning user is logged in via another device
-        if (!validAuthToken($authToken)) response()->error('You have been logged out from this device. Please login again.', 401); // 401 HTTPS status code = UNAUTHORIZED
+        if (!validAuthToken($authToken)) response()->error('You have been logged out from this device. Please login again.', null, true, 401); // 401 HTTPS status code = UNAUTHORIZED
         return $authToken;
     }
 }
