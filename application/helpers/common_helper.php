@@ -617,7 +617,7 @@ if (!function_exists('isAjaxRequest')) {
     function isAjaxRequest()
     {
         $header = get_instance()->input->request_headers();
-        return isset($header['X-Requested-With']) && $header['X-Requested-With'] === 'XMLHttpRequest';
+        return !empty($header['X-Requested-With']) && strtolower($header['X-Requested-With']) === 'xmlhttprequest';
     }
 }
 
@@ -802,9 +802,7 @@ if (!function_exists('getStylesheet')) {
     {
         $style_sheet = get_instance()->style_sheet;
         if (empty($style_sheet)) return null;
-        foreach ($style_sheet as $index => $item) {
-            echo $item . PHP_EOL;
-        }
+        foreach ($style_sheet as $index => $item) echo $item . PHP_EOL;
     }
 }
 if (!function_exists('getJavascript')) {
@@ -812,9 +810,7 @@ if (!function_exists('getJavascript')) {
     {
         $java_script = get_instance()->java_script;
         if (empty($java_script)) return null;
-        foreach ($java_script as $index => $item) {
-            echo $item . PHP_EOL;
-        }
+        foreach ($java_script as $index => $item) echo $item . PHP_EOL;
     }
 }
 if (!function_exists('getMetaData')) {
@@ -822,9 +818,7 @@ if (!function_exists('getMetaData')) {
     {
         $meta_data = get_instance()->meta_data;
         if (empty($meta_data)) return null;
-        foreach ($meta_data as $index => $item) {
-            echo $item . PHP_EOL;
-        }
+        foreach ($meta_data as $index => $item) echo $item . PHP_EOL;
     }
 }
 

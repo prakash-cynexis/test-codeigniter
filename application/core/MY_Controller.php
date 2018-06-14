@@ -10,21 +10,21 @@ class MY_Controller extends AppController
      * then this variable is take it to on the view
      * @var array $meta_data
      */
-    public $meta_data; // set in layout class
+    public $meta_data = []; // set in layout class
 
     /**
      * java_script is set from the Controller Side,
      * then this variable is take it to on the view
      * @var array $java_script
      */
-    public $java_script; // set in layout class
+    public $java_script = []; // set in layout class
 
     /**
      * style_sheet is set from the Controller Side,
      * then this variable is take it to on the view
      * @var array $style_sheet
      */
-    public $style_sheet; // set in layout class
+    public $style_sheet = []; // set in layout class
 
     /**
      * This variable can be accessed in all the classes
@@ -83,6 +83,32 @@ class MY_Controller extends AppController
         $this->data['title'] = (!empty($title)) ? $title : variableToStr($page);
         $pageLoad = $this->load->view("layout/{$folder}/pages/{$page}", $this->data, true);
         $this->loadView($pageLoad, $folder);
+    }
+
+    final public function setJavaScript(array $files, $folder)
+    {
+        foreach ($files as $index => $file) {
+            $file = assetUrl("{$folder}/js/{$file}");
+            $this->java_script[] = "<script type=\"text/javascript\" src=\"$file\"></script>";
+        }
+        return $this;
+    }
+
+    final public function setStyleSheet(array $files, $folder)
+    {
+        foreach ($files as $index => $file) {
+            $file = assetUrl("{$folder}/css/{$file}");
+            $this->style_sheet[] = "<link rel=\"stylesheet\" type=\"text/css\" href=\"$file\">";
+        }
+        return $this;
+    }
+
+    final public function setMetaData(array $data)
+    {
+        foreach ($data as $index => $item) {
+            $this->meta_data[] = "<meta name=\"$index\" content=\"$item\">";
+        }
+        return $this;
     }
 
     private function loadView($content, $folder)
