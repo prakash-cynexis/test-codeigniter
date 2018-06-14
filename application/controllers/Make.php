@@ -20,7 +20,7 @@ class Make extends MY_Controller
         if (is_cli()) {
             $file = $this->_resource_path . 'formatOfRequestClass.txt';
 
-            if (!file_exists($file)) die("Formatted file not found. please check core files.");
+            if (!file_exists($file)) exit("Formatted file not found. please check core files.");
 
             $this->_file = file_get_contents($file);
             $text = str_replace($this->_class_name, $fileName, $this->_file);
@@ -28,7 +28,7 @@ class Make extends MY_Controller
             $fileName = APPPATH . "/My_Classes/http/requests/{$fileName}.php";
             $this->createFile($text, $fileName);
         }
-        die("No direct script access allowed");
+        exit("No direct script access allowed");
     }
 
     public function controller($fileName)
@@ -36,7 +36,7 @@ class Make extends MY_Controller
         if (is_cli()) {
             $file = $this->_resource_path . 'formatOfController.txt';
 
-            if (!file_exists($file)) die("Formatted file not found. please check core files.");
+            if (!file_exists($file)) exit("Formatted file not found. please check core files.");
 
             $this->_file = file_get_contents($file);
             $text = str_replace($this->_class_name, $fileName, $this->_file);
@@ -44,7 +44,7 @@ class Make extends MY_Controller
             $fileName = APPPATH . "/controllers/{$fileName}.php";
             $this->createFile($text, $fileName);
         }
-        die("No direct script access allowed");
+        exit("No direct script access allowed");
     }
 
     public function model($fileName)
@@ -52,7 +52,7 @@ class Make extends MY_Controller
         if (is_cli()) {
             $file = $this->_resource_path . 'formatOfModel.txt';
 
-            if (!file_exists($file)) die("Formatted file not found. please check core files.");
+            if (!file_exists($file)) exit("Formatted file not found. please check core files.");
 
             $this->_file = file_get_contents($file);
             $text = str_replace($this->_class_name, $fileName, $this->_file);
@@ -60,22 +60,37 @@ class Make extends MY_Controller
             $fileName = APPPATH . "/models/{$fileName}_model.php";
             $this->createFile($text, $fileName);
         }
-        die("No direct script access allowed");
+        exit("No direct script access allowed");
     }
 
-    public function views($fileName)
+    public function web_view($fileName)
     {
         if (is_cli()) {
             $file = $this->_resource_path . 'formatOfView.txt';
 
-            if (!file_exists($file)) die("Formatted file not found. please check core files.");
+            if (!file_exists($file)) exit("Formatted file not found. please check core files.");
+
+            $text = $this->_file = file_get_contents($file);
+
+            $fileName = APPPATH . "/views/layout/web/pages/{$fileName}.php";
+            $this->createFile($text, $fileName);
+        }
+        exit("No direct script access allowed");
+    }
+
+    public function admin_view($fileName)
+    {
+        if (is_cli()) {
+            $file = $this->_resource_path . 'formatOfView.txt';
+
+            if (!file_exists($file)) exit("Formatted file not found. please check core files.");
 
             $text = $this->_file = file_get_contents($file);
 
             $fileName = APPPATH . "/views/layout/backend/pages/{$fileName}.php";
             $this->createFile($text, $fileName);
         }
-        die("No direct script access allowed");
+        exit("No direct script access allowed");
     }
 
     private function createFile($content, $fileName)
@@ -83,8 +98,8 @@ class Make extends MY_Controller
         $this->load->helper('file');
 
         if (!write_file($fileName, $content)) {
-            die('Unable to write the file');
+            exit('Unable to write the file');
         }
-        die('File written!');
+        exit('File written!');
     }
 }
