@@ -3,31 +3,32 @@
 namespace MYClasses\Providers;
 
 use MYClasses\Http\Response;
-use MYClasses\Providers\AESProvider;
 
 class Token
 {
     private $aes;
+    private $response;
 
     public function __construct()
     {
         $this->aes = new AESProvider();
+        $this->response = new Response();
     }
 
     public function get()
     {
-        if (!$token = self::isExists()) response()->error('Auth-Token is not exists.', Response::HTTP_UNAUTHORIZED);
+        if (!$token = self::isExists()) $this->response->error('Auth-Token is not exists.', Response::HTTP_UNAUTHORIZED);
 
         $token = $this->aes->decrypt($token);
-        if (!$token) response()->error('encrypted data is invalid.');
-        if (!self::validate($token)) response()->error('Invalid user data.', Response::HTTP_NOT_FOUND);
+        if (!$token) $this->response->error('encrypted data is invalid.');
+        if (!self::validate($token)) $this->response->error('Invalid user data.', Response::HTTP_NOT_FOUND);
         return $token;
     }
 
     public function set($data)
     {
         $token = $this->aes->encrypt(json_encode($data));
-        if (!$token) response()->error('invalid data for token.');
+        if (!$token) $this->response->error('invalid data for token.');
 
         return $token;
     }

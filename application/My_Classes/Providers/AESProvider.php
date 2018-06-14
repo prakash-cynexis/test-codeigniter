@@ -22,7 +22,7 @@ class AESProvider
         $cryptor = new Encryptor;
         $encryption_key = $this->CI->config->item('encryption_key');
         $encrypted = '';
-        if (blank($value)) $this->response->error('Can not allow null or empty field.', 400);
+        if (empty($value)) $this->response->error('Can not allow null or empty field.', 400);
         try {
             $encrypted = $cryptor->encrypt($value, $encryption_key);
         } catch (\Exception $e) {
@@ -38,7 +38,7 @@ class AESProvider
         $deCryptor = new Decryptor;
         $encryption_key = $this->CI->config->item('encryption_key');
         $decrypted = '';
-        if (blank($value)) $this->response->error('encrypted data is empty.');
+        if (empty($value)) $this->response->error('encrypted data is empty.');
         try {
             $decrypted = $deCryptor->decrypt(rawurldecode($value), $encryption_key);
         } catch (\Exception $e) {

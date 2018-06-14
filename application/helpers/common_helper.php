@@ -349,26 +349,6 @@ if (!function_exists('arrayToExcel')) {
     }
 }
 
-if (!function_exists('trimming')) {
-    /**
-     * @param $array
-     * @return mixed
-     */
-    function trimming($array)
-    {
-        $blacklist = ['search', 'submit', 'save', 'generate', 'create', 'upload', 'login', 'forgot'];
-
-        if (!is_array($array)) {
-            return trim($array);
-        }
-
-        foreach ($blacklist as $key) {
-            unset($array[$key]);
-        }
-        return array_map('trimming', $array);
-    }
-}
-
 if (!function_exists('aOnclick')) {
     /**
      * @param $title
@@ -532,11 +512,10 @@ if (!function_exists('omitNullKeys')) {
      * @param bool $trimming
      * @return array|mixed
      */
-    function omitNullKeys(array $data, $trimming = false)
+    function omitNullKeys(array $data, $trimming = true)
     {
-        if (is_bool($trimming) && $trimming === true) {
-            $data = trimming($data);
-        }
+        if ($trimming === true) $data = trimming($data);
+
         if (is_null($data) && empty($data)) return false;
         foreach ($data as $key => $value) {
             if (is_array($data[$key])) {
@@ -548,6 +527,26 @@ if (!function_exists('omitNullKeys')) {
             }
         }
         return $data;
+    }
+}
+
+if (!function_exists('trimming')) {
+    /**
+     * @param $array
+     * @return mixed
+     */
+    function trimming($array)
+    {
+        $blacklist = ['search', 'submit', 'save', 'generate', 'create', 'upload', 'login', 'forgot', 'is_active', 'deleted', 'role'];
+
+        if (!is_array($array)) {
+            return trim($array);
+        }
+
+        foreach ($blacklist as $key) {
+            unset($array[$key]);
+        }
+        return array_map('trimming', $array);
     }
 }
 
@@ -730,6 +729,16 @@ if (!function_exists('today')) {
     }
 }
 
+if (!function_exists('timeStamp')) {
+    /**
+     * @return false|string
+     */
+    function timeStamp()
+    {
+        return date('Y-m-d H:i:s');
+    }
+}
+
 if (!function_exists('jsonDie')) {
     /**
      * @param $data
@@ -823,6 +832,7 @@ if (!function_exists('blank')) {
     /**
      * @param $value
      * @return bool
+     * @deprecated
      */
     function blank($value)
     {
@@ -893,6 +903,14 @@ if (!function_exists('compress')) {
 
         imagejpeg($image, $destination, $quality);
         return $destination;
+    }
+}
+
+if (!function_exists('valid_comma_separated')) {
+    function valid_comma_separated($param)
+    {
+        if (preg_match('/^\d+(?:,\d+)*$/', $param)) return true;
+        return false;
     }
 }
 

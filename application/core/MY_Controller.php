@@ -47,10 +47,24 @@ class MY_Controller extends AppController
      * @var array $_skip_auth_methods
      */
     public $_skip_auth_methods = [];
+    private $offset;
 
     public function __construct()
     {
         parent::__construct();
+        $this->setOffset();
+    }
+
+    public function setOffset($limit = 10)
+    {
+        $offset = 0;
+        if (!empty($this->requestData['offset'])) $offset = $this->requestData['offset'];
+        $this->offset = "LIMIT {$limit} OFFSET {$offset}";
+    }
+
+    public function getOffset()
+    {
+        return $this->offset;
     }
 
     final public function view($page, $title = null)

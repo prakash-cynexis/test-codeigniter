@@ -67,7 +67,7 @@ class NotificationProvider
             curl_close($ch); // Close connection
             $result = isJson($result);
             if (!$result) return false;
-            $sent = !blank($result['success']);
+            $sent = !empty($result['success']);
         } catch (\Exception $exception) {
             log_activity($exception->getMessage(), 'iOS Notification Error:-');
         } finally {
@@ -105,7 +105,7 @@ class NotificationProvider
             curl_close($ch); // Close connection
             $result = isJson($result);
             if (!$result) return false;
-            $sent = !blank($result['success']);
+            $sent = !empty($result['success']);
         } catch (\Exception $exception) {
             log_activity($exception->getMessage(), 'Android Notification Error:-');
         } finally {
@@ -118,7 +118,7 @@ class NotificationProvider
     {
         return [
             'data' => $message,
-            "body" => "Prakash Test Hello",
+            "body" => $message['subject'],
             'sound' => "default",
             "badge" => 5,
             'color' => "#203E78"

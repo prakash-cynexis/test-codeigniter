@@ -18,7 +18,7 @@ class Request
             $data = $this->CI->input->post();
         }
         $data = array_merge($data, $this->filterFiles());
-        $this->requestData = omitNullKeys($data, true);
+        $this->requestData = omitNullKeys($data);
         $this->CI->requestData = $this->requestData;
     }
 
