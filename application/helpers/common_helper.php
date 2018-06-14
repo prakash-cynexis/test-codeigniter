@@ -750,7 +750,7 @@ if (!function_exists('isInt')) {
      */
     function isInt($str)
     {
-        $int = is_numeric($str) && floatval($str) - $str === 0;
+        $int = is_numeric($str) || floatval($str) - $str === 0;
         if (!$int) return false;
         $length = strlen((string)$str);
         return ($length > 9) ? floatval($str) : (int)$str;

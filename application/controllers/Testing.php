@@ -16,6 +16,12 @@ class Testing extends MY_Controller
         $this->load->model(["User_model"]);
     }
 
+    public function testInt()
+    {
+        $data = isInt('12345678');
+        dd($data);
+    }
+
     public function testFile()
     {
         $data = $this->request->input();
