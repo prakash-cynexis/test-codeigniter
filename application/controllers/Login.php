@@ -47,7 +47,7 @@ class Login extends MY_Controller
         if (!$user) return false;
 
         if (!password_verify($request['password'], $user['password'])) return false;
-        if (!booleanIntValue($user['is_active'])) $this->response->error(Response::LOGIN_NOT_APPROVED);
+        if (!booleanToInt($user['is_active'])) $this->response->error(Response::LOGIN_NOT_APPROVED);
 
         $user_details = $this->User_model->get_by(['email' => $user['email']]);
 

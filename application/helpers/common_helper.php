@@ -633,12 +633,12 @@ if (!function_exists('isAppRequest')) {
     }
 }
 
-if (!function_exists('booleanIntValue')) {
+if (!function_exists('booleanToInt')) {
     /**
      * @param integer|$int
      * @return bool
      */
-    function booleanIntValue($int)
+    function booleanToInt($int)
     {
         switch ($int) {
             case 0:
@@ -650,12 +650,12 @@ if (!function_exists('booleanIntValue')) {
         }
     }
 }
-if (!function_exists('intBooleanValue')) {
+if (!function_exists('intToBoolean')) {
     /**
      * @param bool|$boolean
      * @return bool|int
      */
-    function intBooleanValue($boolean)
+    function intToBoolean($boolean)
     {
         switch ($boolean) {
             case false:
