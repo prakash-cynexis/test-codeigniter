@@ -30,7 +30,7 @@ class Events
     {
         $result = [];
         if (!$data) response()->error('data not found.');
-        if (!$eventType) response()->error('A valid event type must be passed e.g WELCOME_EMAIL,CUSTOMER_ADDRESS_APPROVAL...');
+        if (!$eventType) response()->error('A valid event type must be passed e.g WELCOME_EMAIL..');
         self::initialize();
         self::$eventType = $eventType;
 
