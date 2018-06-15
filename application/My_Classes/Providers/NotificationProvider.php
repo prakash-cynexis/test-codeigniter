@@ -8,8 +8,8 @@ class NotificationProvider
     private $message;
     private $device_type;
     private $device_token;
-    private static $API_SERVER_KEY = '';
     private static $iOS_SERVER_KEY = '';
+    private static $ANDROID_SERVER_KEY = '';
 
     public function send()
     {
@@ -48,7 +48,9 @@ class NotificationProvider
             'Authorization:key=' . self::$iOS_SERVER_KEY,
             'Content-Type:application/json'
         ];
-        $fields = ['to' => $token, 'priority' => 'high', 'notification' => self::iPhoneFormat($message)];
+        $fields = ['to' => trim($token), 'priority' => 'high', 'notification' => self::iPhoneFormat($message)];
+        $json_encode_fields = json_encode($fields);
+        log_activity($json_encode_fields, 'ios json encode fields');
         try {
             // Open connection
             $ch = curl_init();
@@ -59,17 +61,21 @@ class NotificationProvider
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $json_encode_fields);
 
             $result = curl_exec($ch); // Execute post
             if ($result === FALSE) return false;
 
             curl_close($ch); // Close connection
             $result = isJson($result);
-            if (!$result) return false;
+            if (isset($result['failure']) && $result['failure'] == '1') {
+                log_activity($result, 'ios notification not send');
+                return false;
+            }
             $sent = !empty($result['success']);
         } catch (\Exception $exception) {
-            log_activity($exception->getMessage(), 'iOS Notification Error:-');
+            log_activity($exception->getMessage(), 'iphone Notification Error:-');
+            return false;
         } finally {
             if (!$sent) return false;
         }
@@ -80,13 +86,14 @@ class NotificationProvider
     {
         $sent = false;
         $headers = [
-            'Authorization:key=' . self::$API_SERVER_KEY,
+            'Authorization:key=' . self::$ANDROID_SERVER_KEY,
             'Content-Type:application/json'
         ];
 
         $fields['data'] = $message;
-        $fields['registration_ids'] = [$token];
-
+        $fields['registration_ids'] = [trim($token)];
+        $json_encode_fields = json_encode($fields);
+        log_activity($json_encode_fields, 'android json encode fields');
         try {
             // Open connection
             $ch = curl_init();
@@ -97,17 +104,21 @@ class NotificationProvider
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $json_encode_fields);
 
             $result = curl_exec($ch); // Execute post
             if ($result === FALSE) return false;
 
             curl_close($ch); // Close connection
             $result = isJson($result);
-            if (!$result) return false;
+            if (isset($result['failure']) && $result['failure'] == '1') {
+                log_activity($result, 'android notification not send');
+                return false;
+            }
             $sent = !empty($result['success']);
         } catch (\Exception $exception) {
             log_activity($exception->getMessage(), 'Android Notification Error:-');
+            return false;
         } finally {
             if (!$sent) return false;
         }
@@ -116,12 +127,7 @@ class NotificationProvider
 
     private static function iPhoneFormat($message)
     {
-        return [
-            'data' => $message,
-            "body" => $message['subject'],
-            'sound' => "default",
-            "badge" => 5,
-            'color' => "#203E78"
-        ];
+        $iPhoneFormatMessage = array_merge($message, ["body" => 'Grab-A-Gram']);
+        return $iPhoneFormatMessage;
     }
 }
