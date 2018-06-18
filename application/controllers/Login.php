@@ -68,9 +68,9 @@ class Login extends MY_Controller
             $updateToken = $this->User_model->update_by(['email' => $user['email']], ['auth_token' => $authToken]);
             if (!$updateToken) $this->response->error('Token not update in DB.');
 
-            $this->response->success('Authentication successful.',
-                ['user' => $user, 'Auth-Token' => $authToken]
-            );
+            $this->response->success('Authentication successful.', [
+                'data' => ['user' => $user, 'Auth-Token' => $authToken]
+            ]);
         }
         $this->session->set_userdata($user);
         if (!$this->session->userdata('logged_in')) $this->response->error('Session is not working on Server side. Please try after some time.');
