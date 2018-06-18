@@ -27,10 +27,10 @@ class Login extends MY_Controller
 
             switch (getCurrentUserRole()):
                 case 'Admin':
-                    $this->response->success('Welcome ' . variableToStr(getCurrentUserName()), null, 'dashboard');
+                    $this->response->success('Welcome ' . variableToStr(getCurrentUserName()), ['redirect' => 'dashboard']);
                     break;
                 case 'User':
-                    $this->response->success('Welcome ' . variableToStr(getCurrentUserName()), null, 'dashboard');
+                    $this->response->success('Welcome ' . variableToStr(getCurrentUserName()), ['redirect' => 'dashboard']);
                     break;
                 default:
                     $this->logout();

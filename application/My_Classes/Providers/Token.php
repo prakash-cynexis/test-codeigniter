@@ -17,11 +17,11 @@ class Token
 
     public function get()
     {
-        if (!$token = self::isExists()) $this->response->error('Auth-Token is not exists.', Response::HTTP_UNAUTHORIZED);
+        if (!$token = self::isExists()) $this->response->error('Auth-Token is not exists.', ['http_status' => Response::HTTP_UNAUTHORIZED]);
 
         $token = $this->aes->decrypt($token);
         if (!$token) $this->response->error('encrypted data is invalid.');
-        if (!self::validate($token)) $this->response->error('Invalid user data.', Response::HTTP_NOT_FOUND);
+        if (!self::validate($token)) $this->response->error('Invalid user data.');
         return $token;
     }
 

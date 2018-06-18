@@ -80,7 +80,7 @@ class Request
             }
         }
 
-        if (!$this->authUser) response()->error('Authentication required', null, true, 401);
+        if (!$this->authUser) response()->error('Authentication required', ['http_status' => Response::HTTP_UNAUTHORIZED]);
         return $this->authUser;
     }
 

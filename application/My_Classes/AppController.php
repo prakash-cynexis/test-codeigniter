@@ -23,6 +23,6 @@ abstract class AppController extends \CI_Controller
     public function logout()
     {
         $this->session->sess_destroy();
-        $this->response->success('logout successful.', null, 'login');
+        $this->response->success('logout successful.', ['redirect' => 'login']);
     }
 }

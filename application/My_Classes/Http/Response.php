@@ -163,19 +163,31 @@ class Response
     const UPDATING_FAILED = 'Data updating failed.';
     const UPDATING_SUCCESS = 'Data successfully update.';
 
-    public function success($message, $data = null, $redirect = true, $http_status = Response::HTTP_OK)
+    public function success($message, array $array = [])
     {
+        $data = null;
+        $redirect = true;
+        $http_status = Response::HTTP_OK;
+        if (isset($array['data'])) $data = $array['data'];
+        if (isset($array['redirect'])) $redirect = $array['redirect'];
+        if (isset($array['http_status'])) $http_status = $array['http_status'];
         self::CreateResponse(self::SUCCESS, $message, $data, $http_status, $redirect);
     }
 
-    public function error($message, $data = null, $redirect = true, $http_status = Response::HTTP_BAD_REQUEST)
+    public function error($message, array $array = [])
     {
+        $data = null;
+        $redirect = true;
+        $http_status = Response::HTTP_BAD_REQUEST;
+        if (isset($array['data'])) $data = $array['data'];
+        if (isset($array['redirect'])) $redirect = $array['redirect'];
+        if (isset($array['http_status'])) $http_status = $array['http_status'];
         self::CreateResponse(self::ERROR, $message, $data, $http_status, $redirect);
     }
 
     public function form_validation_exception($data = null, $redirect = true)
     {
-        $this->error(formatExceptionAsDataArray(get_instance()->form_validation->error_array()), typeCast($data), $redirect);
+        $this->error(formatExceptionAsDataArray(get_instance()->form_validation->error_array()), ['data' => typeCast($data), 'redirect' => $redirect]);
     }
 
     /**
