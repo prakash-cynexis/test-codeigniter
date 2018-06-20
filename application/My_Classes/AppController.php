@@ -17,7 +17,6 @@ abstract class AppController extends \CI_Controller
         parent::__construct();
         $this->request = new Request();
         $this->response = new Response();
-        $this->requestData = $this->request->input();
     }
 
     public function logout()
