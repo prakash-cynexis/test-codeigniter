@@ -38,7 +38,10 @@ class Events
         self::$email = (in_array('Email', $send_by)) ? true : false;
         self::$notification = (in_array('Notification', $send_by)) ? true : false;
 
-        if (self::$email) $result['email'] = self::emailSend($data);
+        if (self::$email) {
+            $data['template_name'] = strtolower("{$eventType}.php");
+            $result['email'] = self::emailSend($data);
+        }
 
         if (self::$notification) {
             switch ($eventType):
