@@ -39,8 +39,13 @@ class Request
         return (new \CI_User_agent())->is_browser();
     }
 
-    public function validate(array $rules, $data = null, $redirect = null)
+    public function validate(array $rules, array $array)
     {
+        $data = null;
+        $redirect = true;
+        if (isset($array['data'])) $data = $array['data'];
+        if (isset($array['redirect'])) $redirect = $array['redirect'];
+
         if (is_null($data)) $data = $this->input();
         if (is_null($redirect)) $redirect = true;
 
@@ -48,7 +53,7 @@ class Request
 
         $this->CI->form_validation->set_data($data);
         $this->CI->form_validation->set_rules($rules);
-        if (!$this->CI->form_validation->run()) response()->form_validation_exception($data, $redirect);
+        if (!$this->CI->form_validation->run()) response()->form_validation_exception(['data' => $data, 'redirect' => $redirect]);
         return $data;
     }
 

@@ -185,8 +185,13 @@ class Response
         self::CreateResponse(self::ERROR, $message, $data, $http_status, $redirect);
     }
 
-    public function form_validation_exception($data = null, $redirect = true)
+    public function form_validation_exception(array $array)
     {
+        $data = null;
+        $redirect = true;
+        if (isset($array['data'])) $data = $array['data'];
+        if (isset($array['redirect'])) $redirect = $array['redirect'];
+
         $this->error(formatExceptionAsDataArray(get_instance()->form_validation->error_array()), ['data' => typeCast($data), 'redirect' => $redirect]);
     }
 
