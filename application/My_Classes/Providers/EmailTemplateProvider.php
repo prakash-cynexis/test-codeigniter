@@ -4,7 +4,7 @@ namespace MYClasses\Providers;
 
 class EmailTemplateProvider
 {
-    private $path = VIEWPATH;
+    private $path = VIEWPATH . 'template/';
     protected $_openingTag = '{{';
     protected $_closingTag = '}}';
     protected $_emailValues;
