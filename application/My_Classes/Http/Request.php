@@ -39,7 +39,7 @@ class Request
         return (new \CI_User_agent())->is_browser();
     }
 
-    public function validate(array $rules, array $array)
+    public function validate(array $rules, array $array = [])
     {
         $data = null;
         $redirect = true;
