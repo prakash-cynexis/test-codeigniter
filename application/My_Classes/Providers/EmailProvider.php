@@ -63,31 +63,7 @@ class EmailProvider
 
     public function line($line)
     {
-        return $this->with($line);
-    }
-
-    public function action($text, $url)
-    {
-        $this->actionText[] = $text;
-        $this->actionUrl[] = $url;
-        $this->link[] = anchor($url, $text);
-        return $this;
-    }
-
-    protected function replaceTextToAction($message)
-    {
-        $newBody = [];
-        foreach ($message['body'] as $i => $line) {
-            if (!empty($this->actionText[$i])) $line = str_replace($this->_openingTag . $this->actionText[$i] . $this->_closingTag, $this->getLink()[$i], $line);
-            $newBody[] = $line;
-        }
-        $message['body'] = $newBody;
-        return $message;
-    }
-
-    private function with($line)
-    {
-        $this->messageLines[] = $this->formatLine($line);
+        $this->messageLines[] = $line;
         return $this;
     }
 
@@ -96,36 +72,9 @@ class EmailProvider
         $array = [
             'to' => $this->to,
             'subject' => $this->subject,
-            'body' => !($messageLine = $this->getMessageLines()) ? $this->getHtml() : $messageLine,
+            'body' => $this->messageLines ? $this->messageLines : $this->html,
         ];
-
-        if ($messageLine) $array = $this->replaceTextToAction($array);
         return $array;
-    }
-
-    protected function formatLine($line)
-    {
-        if (is_array($line)) {
-            return implode(' ', array_map('trim', $line));
-        }
-
-        $formattedLine = trim(implode(' ', array_map('trim', preg_split('/\\r\\n|\\r|\\n/', $line))));
-        return $formattedLine;
-    }
-
-    private function getHtml()
-    {
-        return $this->html;
-    }
-
-    private function getLink()
-    {
-        return $this->link;
-    }
-
-    private function getMessageLines()
-    {
-        return $this->messageLines;
     }
 
     private function emailConfig()

@@ -39,7 +39,8 @@ class Events
         self::$notification = (in_array('Notification', $send_by)) ? true : false;
 
         if (self::$email) {
-            $data['template_name'] = strtolower("{$eventType}.php");
+            $data['subject'] = variableToStr($eventType);
+            $data['template_name'] = strtolower($eventType) . '.php';
             $result['email'] = self::emailSend($data);
         }
 
@@ -56,11 +57,9 @@ class Events
                 if (is_null($user['device_type']) || is_null($user['device_token'])) log_activity('Unable notify user with ID ' . $user['id'] . '. device_token/device_type is NULL. For case ID: ' . $data['id'], 'Unable notify');
                 $result['notification'][$i] = self::notify($user, self::$notificationData);
             endforeach;
-
-            return $result;
         }
 
-        return false;
+        return !empty($result) ? $result : false;
     }
 
     private static function notify($user, $data)
