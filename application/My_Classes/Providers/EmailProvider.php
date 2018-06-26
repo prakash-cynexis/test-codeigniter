@@ -8,9 +8,6 @@ class EmailProvider
     private $to;
     private $html;
     private $subject;
-    private $actionUrl;
-    private $actionText;
-    private $link;
     private $messageLines;
     protected $_openingTag = '{{';
     protected $_closingTag = '}}';
