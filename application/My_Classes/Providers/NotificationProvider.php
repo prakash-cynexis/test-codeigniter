@@ -127,7 +127,7 @@ class NotificationProvider
 
     private static function iPhoneFormat($message)
     {
-        $iPhoneFormatMessage = array_merge($message, ["body" => 'Grab-A-Gram']);
+        $iPhoneFormatMessage = array_merge($message, ["body" => 'Test Notification']);
         return $iPhoneFormatMessage;
     }
 }
