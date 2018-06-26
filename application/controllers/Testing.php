@@ -43,7 +43,6 @@ class Testing extends MY_Controller
             'email' => 'prakash.cynexis@gmail.com',
             'password' => '123456',
             'user_name' => 'prakash',
-            'template_name' => 'welcome_email.php'
         ];
 
         $done = Events::emit($userInfo, Events::WELCOME_EMAIL, ['Email']);
