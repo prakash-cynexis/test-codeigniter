@@ -1,16 +1,20 @@
 <?php
+
+use MYClasses\Http\Response;
+
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 require_once 'BASE_Model.php';
 
 class MY_Model extends BASE_Model
 {
+    protected $protectedColumn;
     protected $table_original;
     protected $table_view;
 
     protected $before_get = ['changeTableToView'];
-    protected $before_create = ['revertViewToTable'];
-    protected $before_update = ['revertViewToTable'];
+    protected $before_create = ['removeUnknownColumn', 'revertViewToTable'];
+    protected $before_update = ['removeUnknownColumn', 'revertViewToTable'];
 
     public function __construct()
     {
@@ -35,6 +39,13 @@ class MY_Model extends BASE_Model
     {
         if (!isset($data['password'])) return $data;
         $data['password'] = password_hash($data['password'], PASSWORD_BCRYPT);
+        return $data;
+    }
+
+    protected function removeUnknownColumn($data)
+    {
+        if (empty($data)) response()->error(Response::DEFAULT_ERROR);
+        $data = array_intersect_key($data, array_flip($this->protectedColumn));
         return $data;
     }
 }

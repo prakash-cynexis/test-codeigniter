@@ -19,6 +19,7 @@ class Request
         }
         $data = array_merge($data, $this->filterFiles());
         $this->requestData = omitNullKeys($data);
+        log_activity($this->requestData, 'request data'); // Remove in production
         $this->CI->requestData = $this->requestData;
     }
 
