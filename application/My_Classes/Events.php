@@ -59,7 +59,7 @@ class Events
             endforeach;
         }
 
-        return !empty($result) ? $result : false;
+        return $result;
     }
 
     private static function notify($user, $data)
