@@ -537,7 +537,8 @@ if (!function_exists('trimming')) {
      */
     function trimming($array)
     {
-        $blacklist = ['search', 'submit', 'save', 'generate', 'create', 'upload', 'login', 'forgot', 'is_active', 'deleted', 'role'];
+        $blacklist = ['search', 'submit', 'save', 'generate', 'create', 'upload', 'login',
+            'forgot', 'is_active', 'deleted', 'is_approved', 'is_verify'];
 
         if (!is_array($array)) {
             return trim($array);
@@ -546,6 +547,8 @@ if (!function_exists('trimming')) {
         foreach ($blacklist as $key) {
             unset($array[$key]);
         }
+        if (isset($array['role']) && strtolower($array['role']) == 'admin') unset($array['role']);
+
         return array_map('trimming', $array);
     }
 }
@@ -632,29 +635,29 @@ if (!function_exists('isAppRequest')) {
     }
 }
 
-if (!function_exists('booleanToInt')) {
+if (!function_exists('intToBoolean')) {
     /**
      * @param integer|$int
      * @return bool
      */
-    function booleanToInt($int)
+    function intToBoolean($int)
     {
-        switch ($int) {
-            case 0:
+        switch (true) {
+            case $int <= 0:
                 return (bool)$int = false;
-            case 1:
+            case $int > 0:
                 return (bool)$int = true;
             default:
                 return false;
         }
     }
 }
-if (!function_exists('intToBoolean')) {
+if (!function_exists('booleanToInt')) {
     /**
      * @param bool|$boolean
      * @return bool|int
      */
-    function intToBoolean($boolean)
+    function booleanToInt($boolean)
     {
         switch ($boolean) {
             case false:

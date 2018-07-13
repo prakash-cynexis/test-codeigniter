@@ -44,35 +44,32 @@ class Login extends MY_Controller
     {
         $this->load->model("User_model");
         $user = $this->User_model->get_by(['email' => $request['email']]);
-        if (!$user) return false;
+        if (!$user) $this->response->error('You have entered an invalid email address.');
 
         if (!password_verify($request['password'], $user['password'])) return false;
-        if (!booleanToInt($user['is_active'])) $this->response->error(Response::LOGIN_NOT_APPROVED);
+        if (!intToBoolean($user['is_active'])) $this->response->error(Response::LOGIN_NOT_APPROVED);
 
-        $user_details = $this->User_model->get_by(['email' => $user['email']]);
+        if (!in_array($user['role'], $this->AUTH_ROLES)) $this->response->error("Role (" . ucfirst($user['role']) . ") is not permitted to log in.");
 
-        if (!$user_details) return false;
-        if (!in_array($user_details['role'], $this->AUTH_ROLES)) $this->response->error("'" . ucfirst($user_details['role']) . "' role is not permitted to log in.");
-
-        $user = [
-            'id' => $user_details['id'],
-            'role' => $user_details['role'],
-            'email' => $user_details['email'],
+        $user_data = [
+            'id' => $user['id'],
+            'role' => $user['role'],
+            'email' => $user['email'],
             'logged_in' => true,
-            'user_name' => $user_details['user_name'],
+            'user_name' => $user['user_name'],
             'created_at' => Carbon::now()->toDateTimeString()
         ];
 
         if (isAppRequest()) {
-            $authToken = (new Token())->set($user);
+            $authToken = (new Token())->set($user_data);
             $updateToken = $this->User_model->update_by(['email' => $user['email']], ['auth_token' => $authToken]);
             if (!$updateToken) $this->response->error('Token not update in DB.');
 
             $this->response->success('Authentication successful.', [
-                'data' => ['user' => $user, 'Auth-Token' => $authToken]
+                'data' => ['user' => $user_data, 'Auth-Token' => $authToken]
             ]);
         }
-        $this->session->set_userdata($user);
+        $this->session->set_userdata($user_data);
         if (!$this->session->userdata('logged_in')) $this->response->error('Session is not working on Server side. Please try after some time.');
 
         return true;

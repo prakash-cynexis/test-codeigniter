@@ -15,6 +15,49 @@ class Make extends MY_Controller
         $this->_class_name = $this->_openingTag . 'class_Name' . $this->_closingTag;
     }
 
+    public function table($table)
+    {
+        if (empty($table)) exit('Please provide table name.');
+        $this->load->dbforge();
+        $fields = [
+            "id INT(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY",
+            "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL",
+            "updated_at TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP",
+        ];
+        if ($table === 'users') {
+            $fields = [
+                "id INT(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY",
+                "user_name VARCHAR(50) NOT NULL",
+                "email VARCHAR(100) NOT NULL",
+                "password VARCHAR(100) NOT NULL",
+                "role_id INT(20) UNSIGNED NOT NULL",
+                "is_active ENUM('0','1') DEFAULT '0'",
+                "auth_token TEXT DEFAULT NULL",
+                "device_id TEXT DEFAULT NULL",
+                "device_type ENUM('android','iOS') NULL DEFAULT NULL",
+                "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL",
+                "updated_at TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP",
+                "FOREIGN KEY (role_id) REFERENCES roles(id)",
+            ];
+        }
+
+        if ($table === 'roles') {
+            $fields = [
+                "id INT(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY",
+                "role VARCHAR(20) NOT NULL",
+                "department VARCHAR(50) NOT NULL",
+                "description TEXT NOT NULL",
+                "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL",
+                "updated_at TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP",
+            ];
+        }
+
+        $this->dbforge->drop_table($table, true);
+        $done = $this->dbforge->add_field($fields)->create_table($table);
+        if ($done) exit($table . ' table created.');
+        exit('Some problem occurred.');
+    }
+
     public function request($fileName)
     {
         if (is_cli()) {
