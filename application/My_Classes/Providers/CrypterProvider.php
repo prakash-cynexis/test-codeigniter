@@ -10,21 +10,21 @@ class CrypterProvider
 {
     private $CI;
     private $response;
+    private $encryption_key;
 
     public function __construct()
     {
-        $this->CI = &get_instance();
         $this->response = new Response();
+        $this->encryption_key = config_item('encryption_key');
     }
 
     public function encrypt($value)
     {
         $cryptor = new Encryptor;
-        $encryption_key = $this->CI->config->item('encryption_key');
         $encrypted = null;
         if (empty($value)) $this->response->error('Can not allow null or empty field.');
         try {
-            $encrypted = $cryptor->encrypt($value, $encryption_key);
+            $encrypted = $cryptor->encrypt($value, $this->encryption_key);
         } catch (\Exception $e) {
             log_activity($e->getMessage(), 'encrypt:-');
         } finally {
@@ -36,11 +36,10 @@ class CrypterProvider
     public function decrypt($value)
     {
         $deCryptor = new Decryptor;
-        $encryption_key = $this->CI->config->item('encryption_key');
         $decrypted = null;
         if (empty($value)) $this->response->error('encrypted data is empty.');
         try {
-            $decrypted = $deCryptor->decrypt(rawurldecode($value), $encryption_key);
+            $decrypted = $deCryptor->decrypt(rawurldecode($value), $this->encryption_key);
         } catch (\Exception $e) {
             log_activity($e->getMessage(), 'decrypt:-');
         } finally {
