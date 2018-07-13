@@ -21,6 +21,16 @@ class MY_Form_validation extends CI_Form_validation
         return true;
     }
 
+    function invalid_values($value, $stringValues)
+    {
+        $list = explode(',', $stringValues);
+        if (in_array($value, $list)) {
+            $this->CI->form_validation->set_message('invalid_values', 'The {field} field\'s invalid values');
+            return false;
+        }
+        return true;
+    }
+
     function valid_timestamp($dateString)
     {
         if (!isValidTimeStamp($dateString)) {
@@ -58,5 +68,4 @@ class MY_Form_validation extends CI_Form_validation
         }
         return true;
     }
-
 }
