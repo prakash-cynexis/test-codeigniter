@@ -6,7 +6,7 @@ use MYClasses\Http\Response;
 use RNCryptor\RNCryptor\Decryptor;
 use RNCryptor\RNCryptor\Encryptor;
 
-class AESProvider
+class CrypterProvider
 {
     private $CI;
     private $response;

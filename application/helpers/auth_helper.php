@@ -1,7 +1,6 @@
 <?php
 
 use MYClasses\Providers\Token;
-use MYClasses\Providers\AESProvider;
 
 if (!function_exists('getCurrentUser')) {
     /**
@@ -94,7 +93,7 @@ if (!function_exists('get_token')) {
         if (!$auth_token) response()->error('Auth Token not exist.');
         if (empty($key)) return $auth_token;
 
-        $auth_token = aes()->decrypt($auth_token);
+        $auth_token = crypter()->decrypt($auth_token);
         return (!empty($auth_token[$key])) ? $auth_token[$key] : false;
     }
 }

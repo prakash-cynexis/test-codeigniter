@@ -6,12 +6,12 @@ use MYClasses\Http\Response;
 
 class Token
 {
-    private $aes;
+    private $crypter;
     private $response;
 
     public function __construct()
     {
-        $this->aes = new AESProvider();
+        $this->crypter = new CrypterProvider();
         $this->response = new Response();
     }
 
@@ -19,7 +19,7 @@ class Token
     {
         if (!$token = self::isExists()) $this->response->error('Auth-Token is not exists.', ['http_status' => Response::HTTP_UNAUTHORIZED]);
 
-        $token = $this->aes->decrypt($token);
+        $token = $this->crypter->decrypt($token);
         if (!$token) $this->response->error('encrypted data is invalid.');
         if (!self::validate($token)) $this->response->error('Invalid user data.');
         return $token;
@@ -27,7 +27,7 @@ class Token
 
     public function set($data)
     {
-        $token = $this->aes->encrypt(json_encode($data));
+        $token = $this->crypter->encrypt(json_encode($data));
         if (!$token) $this->response->error('invalid data for token.');
 
         return $token;

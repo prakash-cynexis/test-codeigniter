@@ -2,7 +2,7 @@
 
 use MYClasses\Http\Request;
 use MYClasses\Http\Response;
-use MYClasses\Providers\AESProvider;
+use MYClasses\Providers\CrypterProvider;
 use MYClasses\Providers\Token;
 
 if (!function_exists('arrayRemoveZero')) {
@@ -869,10 +869,10 @@ if (!function_exists('response')) {
     }
 }
 
-if (!function_exists('aes')) {
-    function aes()
+if (!function_exists('crypter')) {
+    function crypter()
     {
-        return new AESProvider();
+        return new CrypterProvider();
     }
 }
 
