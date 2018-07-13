@@ -35,8 +35,8 @@ class Events
         self::$eventType = $eventType;
 
         self::$send_by = $send_by;
-        self::$email = (in_array('Email', $send_by)) ? true : false;
-        self::$notification = (in_array('Notification', $send_by)) ? true : false;
+        self::$email = (in_array('email', array_map('strtolower', $send_by))) ? true : false;
+        self::$notification = (in_array('notification', array_map('strtolower', $send_by))) ? true : false;
 
         if (self::$email) {
             $data['subject'] = variableToStr($eventType);
@@ -52,6 +52,10 @@ class Events
                     break;
             endswitch;
 
+            if (empty(self::$usersToNotify)) {
+                log_activity(self::$usersToNotify, 'users To Notify data');
+                return false;
+            }
             foreach (self::$usersToNotify as $i => $user):
                 if (is_null($user['id'])) continue;
                 if (is_null($user['device_type']) || is_null($user['device_token'])) log_activity('Unable notify user with ID ' . $user['id'] . '. device_token/device_type is NULL. For case ID: ' . $data['id'], 'Unable notify');
@@ -92,18 +96,18 @@ class Events
             log_activity([
                 'email' => $data['email'],
                 'message' => 'Unable to send email'
-            ], 'send email');
+            ], 'event class send email');
         }
         return $done;
     }
 
     private static function setNotificationData($message, $data)
     {
-        if (!is_array($data)) $data = ['key' => $data];
+        if (!is_array($data)) $data = ['id' => $data];
         self::$notificationData['type'] = self::$eventType;
         self::$notificationData['message'] = $message;
         self::$notificationData = array_merge(self::$notificationData, $data);
         log_activity(self::$notificationData, 'notification data'); // test only, remove for production
-        return self::$notificationData;
+        return typeCast(self::$notificationData);
     }
 }
