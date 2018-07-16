@@ -96,5 +96,5 @@ defined('LIBRARIES') OR define('LIBRARIES', APPPATH . 'libraries/');
 defined('CORE') OR define('CORE', APPPATH . 'core/');
 
 //COMPANY DETAILS
-defined('COMPANY_EMAIL') OR define('COMPANY_EMAIL', 'prakash@cynexis.com');
+defined('COMPANY_EMAIL') OR define('COMPANY_EMAIL', 'prakash@gmail.com');
 defined('COMPANY_NAME') OR define('COMPANY_NAME', 'Company Name');
