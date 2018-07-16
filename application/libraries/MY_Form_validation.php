@@ -25,7 +25,7 @@ class MY_Form_validation extends CI_Form_validation
     {
         $list = explode(',', $stringValues);
         if (in_array($value, $list)) {
-            $this->CI->form_validation->set_message('invalid_values', 'The {field} field\'s invalid values');
+            $this->CI->form_validation->set_message('invalid_values', 'The {field} field\'s invalid values are' . $stringValues);
             return false;
         }
         return true;
