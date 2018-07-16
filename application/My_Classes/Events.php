@@ -2,14 +2,13 @@
 
 namespace MYClasses;
 
+use MYClasses\Providers\FCMProvider;
 use MYClasses\Providers\EmailProvider;
 use MYClasses\Providers\EmailTemplateProvider;
-use MYClasses\Providers\NotificationProvider;
 
 class Events
 {
     const WELCOME_EMAIL = 'WELCOME_EMAIL';
-
     private static $CI;
     private static $email;
     private static $send_by = [];
@@ -68,7 +67,7 @@ class Events
 
     private static function notify($user, $data)
     {
-        $notifyContent = new NotificationProvider();
+        $notifyContent = new Notification(new FCMProvider());
         $notifyContent->device_type($user['device_type']);
         $notifyContent->device_token($user['device_token']);
         $notifyContent->message($data);

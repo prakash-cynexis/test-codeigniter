@@ -2,14 +2,14 @@
 
 namespace MYClasses\Providers;
 
-class NotificationProvider
+class FCMProvider implements NotificationInterface
 {
-    private static $FCM_PATH = 'https://fcm.googleapis.com/fcm/send';
     private $message;
     private $device_type;
     private $device_token;
     private static $iOS_SERVER_KEY = '';
     private static $ANDROID_SERVER_KEY = '';
+    private static $FCM_PATH = 'https://fcm.googleapis.com/fcm/send';
 
     public function send()
     {
