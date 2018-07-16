@@ -15,14 +15,15 @@ class Events
     private static $eventType;
     private static $usersToNotify;
     private static $notification;
+    private static $template_name;
     private static $notificationData;
 
     private static function initialize()
     {
         self::$CI = &get_instance();
         self::$CI->load->model("User_model");
-        self::$usersToNotify = self::$notificationData = NULL;
-        self::$eventType = NULL;
+        self::$usersToNotify = self::$notificationData = [];
+        self::$eventType = self::$template_name = null;
     }
 
     public static function emit($data, $eventType, array $send_by)
@@ -38,8 +39,8 @@ class Events
         self::$notification = (in_array('notification', array_map('strtolower', $send_by))) ? true : false;
 
         if (self::$email) {
+            self::$template_name = strtolower($eventType) . 'php';
             $data['subject'] = variableToStr($eventType);
-            $data['template_name'] = strtolower($eventType) . '.php';
             $result['email'] = self::emailSend($data);
         }
 
@@ -53,7 +54,7 @@ class Events
 
             if (empty(self::$usersToNotify)) {
                 log_activity(self::$usersToNotify, 'users To Notify data');
-                return false;
+                return $result['notification'] = false;
             }
             foreach (self::$usersToNotify as $i => $user):
                 if (is_null($user['id'])) continue;
@@ -78,7 +79,7 @@ class Events
     private static function emailSend($data)
     {
         if (empty($data['template_name'])) response()->error('Email Template name can not be null.');
-        $emailTemplate = new EmailTemplateProvider($data['template_name']);
+        $emailTemplate = new EmailTemplateProvider(self::$template_name);
         $setData['name'] = $data['user_name'];
         if (!empty($data['action_url'])) $setData['action_url'] = $data['action_url'];
 
@@ -90,13 +91,6 @@ class Events
         $email->subject($data['subject']);
         $email->html($content);
         $done = $email->send();
-
-        if (!$done) {
-            log_activity([
-                'email' => $data['email'],
-                'message' => 'Unable to send email'
-            ], 'event class send email');
-        }
         return $done;
     }
 
