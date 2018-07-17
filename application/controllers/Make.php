@@ -17,6 +17,8 @@ class Make extends MY_Controller
 
     public function table($table_name)
     {
+        if (!is_cli()) exit("No direct script access allowed");
+
         $this->load->dbforge();
         $table_array = ['roles', 'users'];
 
@@ -51,80 +53,70 @@ class Make extends MY_Controller
 
     public function request($fileName)
     {
-        if (is_cli()) {
-            $file = $this->_resource_path . 'formatOfRequestClass.txt';
+        if (!is_cli()) exit("No direct script access allowed");
 
-            if (!file_exists($file)) exit("Formatted file not found. please check core files.");
+        $file = $this->_resource_path . 'formatOfRequestClass.txt';
+        if (!file_exists($file)) exit("Formatted file not found. please check core files.");
 
-            $this->_file = file_get_contents($file);
-            $text = str_replace($this->_class_name, $fileName, $this->_file);
+        $this->_file = file_get_contents($file);
+        $text = str_replace($this->_class_name, $fileName, $this->_file);
 
-            $fileName = APPPATH . "/My_Classes/http/requests/{$fileName}.php";
-            $this->createFile($text, $fileName);
-        }
-        exit("No direct script access allowed");
+        $fileName = APPPATH . "/My_Classes/http/requests/{$fileName}.php";
+        $this->createFile($text, $fileName);
     }
 
     public function controller($fileName)
     {
-        if (is_cli()) {
-            $file = $this->_resource_path . 'formatOfController.txt';
+        if (!is_cli()) exit("No direct script access allowed");
 
-            if (!file_exists($file)) exit("Formatted file not found. please check core files.");
+        $file = $this->_resource_path . 'formatOfController.txt';
+        if (!file_exists($file)) exit("Formatted file not found. please check core files.");
 
-            $this->_file = file_get_contents($file);
-            $text = str_replace($this->_class_name, $fileName, $this->_file);
+        $this->_file = file_get_contents($file);
+        $text = str_replace($this->_class_name, $fileName, $this->_file);
 
-            $fileName = APPPATH . "/controllers/{$fileName}.php";
-            $this->createFile($text, $fileName);
-        }
-        exit("No direct script access allowed");
+        $fileName = APPPATH . "/controllers/{$fileName}.php";
+        $this->createFile($text, $fileName);
     }
 
     public function model($fileName)
     {
-        if (is_cli()) {
-            $file = $this->_resource_path . 'formatOfModel.txt';
+        if (!is_cli()) exit("No direct script access allowed");
 
-            if (!file_exists($file)) exit("Formatted file not found. please check core files.");
+        $file = $this->_resource_path . 'formatOfModel.txt';
+        if (!file_exists($file)) exit("Formatted file not found. please check core files.");
 
-            $this->_file = file_get_contents($file);
-            $text = str_replace($this->_class_name, $fileName, $this->_file);
+        $this->_file = file_get_contents($file);
+        $text = str_replace($this->_class_name, $fileName, $this->_file);
 
-            $fileName = APPPATH . "/models/{$fileName}_model.php";
-            $this->createFile($text, $fileName);
-        }
-        exit("No direct script access allowed");
+        $fileName = APPPATH . "/models/{$fileName}_model.php";
+        $this->createFile($text, $fileName);
     }
 
     public function web_view($fileName)
     {
-        if (is_cli()) {
-            $file = $this->_resource_path . 'formatOfView.txt';
+        if (!is_cli()) exit("No direct script access allowed");
 
-            if (!file_exists($file)) exit("Formatted file not found. please check core files.");
+        $file = $this->_resource_path . 'formatOfView.txt';
+        if (!file_exists($file)) exit("Formatted file not found. please check core files.");
 
-            $text = $this->_file = file_get_contents($file);
+        $text = $this->_file = file_get_contents($file);
 
-            $fileName = APPPATH . "/views/layout/web/pages/{$fileName}.php";
-            $this->createFile($text, $fileName);
-        }
-        exit("No direct script access allowed");
+        $fileName = APPPATH . "/views/layout/web/pages/{$fileName}.php";
+        $this->createFile($text, $fileName);
     }
 
     public function admin_view($fileName)
     {
-        if (is_cli()) {
-            $file = $this->_resource_path . 'formatOfView.txt';
+        if (!is_cli()) exit("No direct script access allowed");
 
-            if (!file_exists($file)) exit("Formatted file not found. please check core files.");
+        $file = $this->_resource_path . 'formatOfView.txt';
+        if (!file_exists($file)) exit("Formatted file not found. please check core files.");
 
-            $text = $this->_file = file_get_contents($file);
+        $text = $this->_file = file_get_contents($file);
 
-            $fileName = APPPATH . "/views/layout/backend/pages/{$fileName}.php";
-            $this->createFile($text, $fileName);
-        }
-        exit("No direct script access allowed");
+        $fileName = APPPATH . "/views/layout/backend/pages/{$fileName}.php";
+        $this->createFile($text, $fileName);
     }
 
     private function createFile($content, $fileName)
