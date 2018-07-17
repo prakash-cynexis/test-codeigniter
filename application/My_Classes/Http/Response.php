@@ -169,7 +169,7 @@ class Response
     {
         $data = null;
         $redirect = true;
-        if (isset($array['data'])) $data = $array['data'];
+        if (isset($array['data']) && !isAppRequest()) $data = $array['data'];
         if (isset($array['redirect'])) $redirect = $array['redirect'];
 
         $this->error(formatExceptionAsDataArray(get_instance()->form_validation->error_array()), ['data' => typeCast($data), 'redirect' => $redirect]);
