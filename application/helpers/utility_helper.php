@@ -7,7 +7,7 @@ if (!function_exists('getLatLng')) {
         }
         $geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&sensor=false');
         $geo = isJson($geo);
-        if (!$geo) return ['latitude' => 00.000000, 'longitude' => 00.000000];
+        if (!$geo) return ['latitude' => '00.000000', 'longitude' => '00.000000'];
 
         if (!empty($geo['status']) && strtolower($geo['status']) !== strtolower('OK')) return ['latitude' => 00.000000, 'longitude' => 00.000000];
         $latitude = $geo['results'][0]['geometry']['location']['lat'];
