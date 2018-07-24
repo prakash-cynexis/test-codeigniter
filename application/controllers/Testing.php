@@ -16,20 +16,6 @@ class Testing extends MY_Controller
         $this->load->model(["User_model"]);
     }
 
-    public function test()
-    {
-        if (isPost()) {
-            $data = $this->requestData;
-            $data = $this->security->xss_clean($data);
-
-            $data['role_id'] = 1;
-            $this->load->model("User_model");
-            $this->User_model->insert($data);
-            dd($data);
-        }
-        $this->load->view("testing");
-    }
-
     public function testInput()
     {
         $data = $this->requestData;
