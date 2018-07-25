@@ -102,7 +102,7 @@ class Request
         if (empty($_FILES)) return $files;
 
         foreach ($_FILES as $key => $file) {
-            $files[$key] = $this->security->xss_clean($file['name'], true);;
+            $files[$key] = $this->CI->security->xss_clean($file['name'], true);;
         }
 
         return $files;
