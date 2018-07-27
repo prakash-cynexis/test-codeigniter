@@ -8,14 +8,13 @@ use RNCryptor\RNCryptor\Encryptor;
 
 class CrypterProvider
 {
-    private $CI;
     private $response;
     private $encryption_key;
 
     public function __construct()
     {
         $this->response = new Response();
-        $this->encryption_key = config_item('encryption_key');
+        $this->encryption_key = ENCRYPTION_KEY;
     }
 
     public function encrypt($value)
