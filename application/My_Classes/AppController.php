@@ -10,7 +10,6 @@ abstract class AppController extends \CI_Controller
     public $request;
     public $requestData;
     public $response;
-    public $auth;
 
     public function __construct()
     {
