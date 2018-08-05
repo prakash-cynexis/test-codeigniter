@@ -1,7 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-use Carbon\Carbon;
 use MYClasses\Http\Response;
 use MYClasses\Providers\Token;
 
@@ -29,7 +28,7 @@ class Login extends MY_Controller
                 case 'Admin':
                     $this->response->success('Welcome ' . variableToStr(getCurrentUserName()), ['redirect' => 'admin/dashboard']);
                     break;
-                    //Create User controller if have any user role in this project.
+                //Create User controller if have any user role in this project.
                 case 'User':
                     $this->response->success('Welcome ' . variableToStr(getCurrentUserName()), ['redirect' => 'user/dashboard']);
                     break;
@@ -58,7 +57,7 @@ class Login extends MY_Controller
             'email' => $user['email'],
             'logged_in' => true,
             'user_name' => $user['user_name'],
-            'created_at' => Carbon::now()->toDateTimeString()
+            'created_at' => timeStamp()
         ];
 
         if (isAppRequest()) {

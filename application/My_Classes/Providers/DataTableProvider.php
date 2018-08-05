@@ -18,7 +18,7 @@ class DataTableProvider
     public static function userLists()
     {
         self::initialize();
-        self::$CI->db->select('id, user_name, email, role, id as action');
+        self::$CI->db->select('id, user_name, email, role_id, id as action');
         self::$CI->db->from('users');
         self::$CI->db->get();
         self::$query = self::$CI->db->last_query();

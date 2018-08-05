@@ -13,11 +13,7 @@
   "require": {
     "php": ">=5.6",
     "rncryptor/rncryptor": "4.0",
-    "ozdemir/datatables": "1.6.9",
-    "nesbot/carbon": "1.27.0"
-  },
-  "suggest": {
-    "paragonie/random_compat": "Provides better randomness in PHP 5.x"
+    "ozdemir/datatables": "1.6.9"
   },
   "autoload": {
     "psr-4": {

@@ -17,6 +17,7 @@ class Request
         } elseif ($this->CI->input->server('REQUEST_METHOD') === 'POST') {
             $data = $this->CI->input->post();
         }
+        $data = $this->CI->security->xss_clean($data);
         $data = array_merge($data, $this->filterFiles());
         $this->requestData = omitNullKeys($data);
         log_activity($this->requestData, 'request data'); // Remove in production
@@ -101,7 +102,7 @@ class Request
         if (empty($_FILES)) return $files;
 
         foreach ($_FILES as $key => $file) {
-            $files[$key] = $file['name'];
+            $files[$key] = $this->CI->security->xss_clean($file['name'], true);;
         }
 
         return $files;
