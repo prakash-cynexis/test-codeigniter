@@ -506,6 +506,51 @@ if (!function_exists('typeCast')) {
     }
 }
 
+if (!function_exists('intToString')) {
+    /**
+     * @param array $array
+     * @return array|bool
+     */
+    function intToString($array)
+    {
+        if (!is_array($array)) return $array;
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $value = intToString($value);
+                $array[$key] = $value;
+                continue;
+            }
+            if (is_string($value) && ctype_digit($value)) {
+                $array[$key] = strval($value);
+            }
+        }
+        return $array;
+    }
+}
+
+if (!function_exists('typeCasting')) {
+    /**
+     * @param array $array
+     * @return array|bool
+     */
+    function typeCasting($array)
+    {
+        if (!is_array($array)) return $array;
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $value = typeCasting($value);
+                $array[$key] = $value;
+                continue;
+            }
+            if (is_string($value) && ctype_digit($value)) {
+                $length = strlen((string)$value);
+                $array[$key] = ($length > 9) ? floatval($value) : (int)$value;
+            }
+        }
+        return $array;
+    }
+}
+
 if (!function_exists('omitNullKeys')) {
     /**
      * @param array $data
