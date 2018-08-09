@@ -16,6 +16,15 @@ class Testing extends MY_Controller
         $this->load->model(["User_model"]);
     }
 
+    public function testPos()
+    {
+        $domain = 'google.calender.com';
+        if (($count = substr_count($domain, '.')) === 2) {
+            exit($count . ' dot available.');
+        }
+        exit('Many dot available.');
+    }
+
     public function testXssClean()
     {
         //$this->load->helper("security");
