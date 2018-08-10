@@ -582,13 +582,12 @@ if (!function_exists('trimming')) {
      */
     function trimming($array)
     {
-        $blacklist = ['search', 'submit', 'save', 'generate', 'create', 'upload', 'login',
-            'forgot', 'is_active', 'deleted', 'is_approved', 'is_verify'];
+        $blacklist = [
+            'search', 'submit', 'save', 'generate', 'create', 'upload', 'login', 'forgot', 'is_active',
+            'deleted', 'is_approved', 'is_verify'
+        ];
 
-        if (!is_array($array)) {
-            return trim($array);
-        }
-
+        l
         foreach ($blacklist as $key) {
             unset($array[$key]);
         }

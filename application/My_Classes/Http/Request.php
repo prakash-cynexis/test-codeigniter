@@ -5,29 +5,28 @@ namespace MYClasses\Http;
 class Request
 {
     protected $CI;
+    protected $_requestData;
     protected $authUser = false;
-    private $requestData;
 
     public function __construct()
     {
         $data = [];
         $this->CI = &get_instance();
         if ($this->CI->input->server('REQUEST_METHOD') === 'GET') {
-            $data = $this->CI->input->get();
+            $data = $this->CI->input->get(null, true);
         } elseif ($this->CI->input->server('REQUEST_METHOD') === 'POST') {
-            $data = $this->CI->input->post();
+            $data = $this->CI->input->post(null, true);
         }
-        $data = $this->CI->security->xss_clean($data);
         $data = array_merge($data, $this->filterFiles());
-        $this->requestData = omitNullKeys($data);
-        log_activity($this->requestData, 'request data'); // Remove in production
-        $this->CI->requestData = $this->requestData;
+        $this->_requestData = omitNullKeys($data);
+        log_activity($this->_requestData, 'request data'); // Remove in production
+        $this->CI->requestData = $this->_requestData;
     }
 
     public function input($key = null)
     {
-        if (is_string($key)) return (!empty($this->requestData[$key])) ? $this->requestData[$key] : [];
-        return !empty($this->requestData) ? $this->requestData : [];
+        if (is_string($key)) return (!empty($this->_requestData[$key])) ? $this->_requestData[$key] : [];
+        return !empty($this->_requestData) ? $this->_requestData : [];
     }
 
     public function isApp()

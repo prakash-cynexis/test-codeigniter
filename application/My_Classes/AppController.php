@@ -8,8 +8,8 @@ use MYClasses\Http\Response;
 abstract class AppController extends \CI_Controller
 {
     public $request;
-    public $requestData;
     public $response;
+    public $requestData;
 
     public function __construct()
     {

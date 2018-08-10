@@ -16,6 +16,11 @@ class Testing extends MY_Controller
         $this->load->model(["User_model"]);
     }
 
+    public function testTrim()
+    {
+        dd($this->requestData['test']);
+    }
+
     public function testPos()
     {
         $domain = 'google.calender.com';
