@@ -78,7 +78,7 @@ class Events
 
     private static function emailSend($data)
     {
-        if (empty($data['template_name'])) response()->error('Email Template name can not be null.');
+        if (empty(self::$template_name)) response()->error('Email Template name can not be null.');
         $emailTemplate = new EmailTemplateProvider(self::$template_name);
         $setData['name'] = $data['user_name'];
         if (!empty($data['action_url'])) $setData['action_url'] = $data['action_url'];
