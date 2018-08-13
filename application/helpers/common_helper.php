@@ -588,11 +588,11 @@ if (!function_exists('trimming')) {
         ];
 
         foreach ($blacklist as $key) {
-            unset($array[$key]);
+            if (isset($array[$key])) unset($array[$key]);
         }
         if (isset($array['role']) && strtolower($array['role']) == 'admin') unset($array['role']);
 
-        return array_map('trimming', $array);
+        return $array;
     }
 }
 
@@ -885,13 +885,12 @@ if (!function_exists('blank')) {
     /**
      * @param $value
      * @return bool
-     * @deprecated
      */
     function blank($value)
     {
         if (is_null($value)) return true;
+        if (is_numeric($value)) return false;
         if (is_string($value)) return trim($value) === '';
-        if (is_numeric($value) && (int)$value === 0) return true;
         if (is_bool($value) && (bool)$value === false) return true;
         if ($value instanceof Countable) return count($value) === 0;
         return empty($value);
@@ -1006,12 +1005,9 @@ if (!function_exists('input_clean')) {
 if (!function_exists('is_digit')) {
     function is_digit($digit)
     {
-        if (is_int($digit)) {
-            return true;
-        } elseif (is_string($digit)) {
-            return ctype_digit($digit);
-        } else {
-            return false;
-        }
+        if (is_int($digit)) return true;
+        if (is_numeric($digit)) return true;
+        if (is_string($digit)) return ctype_digit($digit);
+        return false;
     }
 }
