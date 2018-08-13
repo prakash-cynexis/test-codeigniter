@@ -15,7 +15,16 @@ class Make extends MY_Controller
         $this->_class_name = $this->_openingTag . 'class_Name' . $this->_closingTag;
     }
 
-    public function table($table_name)
+    public function seed()
+    {
+        $this->table();
+        echo "-------------------" . PHP_EOL;
+        $this->upload_data();
+        echo "-------------------" . PHP_EOL;
+        $this->views();
+    }
+
+    public function table($table_name = null)
     {
         if (!is_cli()) exit("No direct script access allowed");
 
@@ -31,7 +40,9 @@ class Make extends MY_Controller
 
         $fields['users'] = [
             "id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY",
-            "mobile BIGINT(10) NOT NULL UNIQUE",
+            "user_name VARCHAR(100) NOT NULL UNIQUE",
+            "email VARCHAR(250) NOT NULL UNIQUE",
+            "password VARCHAR(250) NOT NULL UNIQUE",
             "role_id BIGINT(20) UNSIGNED NOT NULL",
             "is_active ENUM('0','1') DEFAULT '0'",
             "auth_token TEXT DEFAULT NULL",
@@ -42,11 +53,39 @@ class Make extends MY_Controller
             "FOREIGN KEY (role_id) REFERENCES roles(id)",
         ];
 
-        if ($table_name) $table_array = [$table_name];
+        if (!empty($table_name)) $table_array = [$table_name];
         foreach ($table_array as $index => $table) {
             $this->dbforge->drop_table($table, true);
             $done = $this->dbforge->add_field($fields[$table])->create_table($table);
             if ($done) echo $table . ' table created.' . PHP_EOL;
+            if (!$done) exit('Some problem occurred.');
+        }
+    }
+
+    public function views($view_name = null)
+    {
+        $views = ['v_users'];
+
+        if (!empty($view_name)) $views = [$view_name];
+        foreach ($views as $index => $view) {
+            $file = $this->_resource_path . 'v_views/' . $view . '.sql';
+            $this->_file = file_get_contents($file);
+            $done = $this->db->query($this->_file);
+            if ($done) echo $view . ' view created.' . PHP_EOL;
+            if (!$done) exit('Some problem occurred.');
+        }
+    }
+
+    public function upload_data($file_name = null)
+    {
+        $uploads = ['roles', 'users'];
+
+        if (!empty($file_name)) $uploads = [$file_name];
+        foreach ($uploads as $index => $upload) {
+            $file = $this->_resource_path . 'upload_data/' . $upload . '.sql';
+            $this->_file = file_get_contents($file);
+            $done = $this->db->query($this->_file);
+            if ($done) echo $upload . ' upload data.' . PHP_EOL;
             if (!$done) exit('Some problem occurred.');
         }
     }

@@ -1,8 +1,7 @@
 <?php
+if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use MYClasses\Http\Response;
-
-if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 require_once 'BASE_Model.php';
 
@@ -11,7 +10,6 @@ class MY_Model extends BASE_Model
     protected $protectedColumn;
     protected $table_original;
     protected $table_view;
-
     protected $before_get = ['changeTableToView'];
     protected $before_create = ['removeUnknownColumn', 'revertViewToTable'];
     protected $before_update = ['removeUnknownColumn', 'revertViewToTable'];
@@ -46,6 +44,7 @@ class MY_Model extends BASE_Model
     {
         if (empty($data)) response()->error(Response::DEFAULT_ERROR);
         $data = array_intersect_key($data, array_flip($this->protectedColumn));
+        if (blank($data)) dd('after remove column data is empty.');
         return $data;
     }
 }

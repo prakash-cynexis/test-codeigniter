@@ -18,7 +18,7 @@ class Testing extends MY_Controller
 
     public function testTrim()
     {
-        dd($this->requestData['test']);
+        dd($this->requestData);
     }
 
     public function testPos()
