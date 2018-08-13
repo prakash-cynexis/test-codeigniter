@@ -542,7 +542,7 @@ if (!function_exists('typeCasting')) {
                 $array[$key] = $value;
                 continue;
             }
-            if (is_string($value) && ctype_digit($value)) {
+            if (is_digit($value)) {
                 $length = strlen((string)$value);
                 $array[$key] = ($length > 9) ? floatval($value) : (int)$value;
             }
@@ -587,7 +587,6 @@ if (!function_exists('trimming')) {
             'deleted', 'is_approved', 'is_verify'
         ];
 
-        l
         foreach ($blacklist as $key) {
             unset($array[$key]);
         }
@@ -968,20 +967,6 @@ if (!function_exists('valid_comma_separated')) {
     }
 }
 
-/*if (!function_exists('app')) {
-    function app($abstract, $parameters = [])
-    {
-        $obj = null;
-        $container = new Container();
-        try {
-            $obj = $container->get($abstract, $parameters);
-        } catch (Exception $e) {
-            dd($e->getMessage());
-        }
-        return $obj;
-    }
-}*/
-
 if (!function_exists('input_clean')) {
     function input_clean($data)
     {
@@ -1015,5 +1000,18 @@ if (!function_exists('input_clean')) {
 
         // we are done...
         return $data;
+    }
+}
+
+if (!function_exists('is_digit')) {
+    function is_digit($digit)
+    {
+        if (is_int($digit)) {
+            return true;
+        } elseif (is_string($digit)) {
+            return ctype_digit($digit);
+        } else {
+            return false;
+        }
     }
 }
