@@ -3,12 +3,10 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use MYClasses\Events;
 use MYClasses\Providers\DataTableProvider;
-use MYClasses\Providers\EmailProvider;
-use MYClasses\Providers\EmailTemplateProvider;
 use Ozdemir\Datatables\Datatables;
 use Ozdemir\Datatables\DB\CodeigniterAdapter;
 
-class Testing extends MY_Controller
+class Code extends MY_Controller
 {
     public function __construct()
     {
