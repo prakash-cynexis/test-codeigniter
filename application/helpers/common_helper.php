@@ -520,7 +520,7 @@ if (!function_exists('intToString')) {
                 $array[$key] = $value;
                 continue;
             }
-            if (is_string($value) && ctype_digit($value)) {
+            if (is_digit($value)) {
                 $array[$key] = strval($value);
             }
         }
