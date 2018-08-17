@@ -6,7 +6,7 @@ class Dashboard extends MY_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->request->authorize(['admin']);
+        $this->request->is_admin;
     }
 
     public function index()

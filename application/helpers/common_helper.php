@@ -72,7 +72,7 @@ if (!function_exists('errorResponse')) {
      */
     function errorResponse($message)
     {
-        $response = ['error' => true];
+        $response['error'] = true;
         $response['message'] = !is_array($message) ? [$message] : $message;
         return $response;
     }
@@ -86,7 +86,7 @@ if (!function_exists('successResponse')) {
      */
     function successResponse($message, $data = null)
     {
-        $response = ['error' => false];
+        $response['error'] = false;
         $response['message'] = !is_array($message) ? [$message] : $message;
         if (!is_null($data)) $response['data'] = $data;
         return $response;
@@ -96,8 +96,8 @@ if (!function_exists('successResponse')) {
 if (!function_exists('back')) {
     function back()
     {
-        if (isAjaxRequest() || isAppRequest()) apiError('You are not authorized to access', 401);
         $url = null;
+        if (isAjaxRequest() || isAppRequest()) apiError('You are not authorized to access', 401);
         if (isset($_SERVER['HTTP_REFERER'])) $url = $_SERVER['HTTP_REFERER'];
         if (!empty($url)) redirect($url);
         redirect(base_url());
@@ -674,7 +674,7 @@ if (!function_exists('isAppRequest')) {
     function isAppRequest()
     {
         $header = get_instance()->input->request_headers();
-        return isset($header['Response-Type']) && $header['Response-Type'] === 'Json';
+        return isset($header['Response-Type']) && $header['Response-Type'] === 'application/json';
     }
 }
 
@@ -717,6 +717,7 @@ if (!function_exists('validImage')) {
     /**
      * @param string $name
      * @return bool|string
+     * @deprecated
      */
     function validImage($name)
     {
@@ -772,9 +773,9 @@ if (!function_exists('input')) {
      * @param $key
      * @return string
      */
-    function input($key)
+    function input($key = null)
     {
-        return trim(get_instance()->input->get_post($key, true));
+        return get_instance()->input->get_post($key, true);
     }
 }
 

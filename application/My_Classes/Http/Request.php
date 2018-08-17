@@ -2,6 +2,10 @@
 
 namespace MYClasses\Http;
 
+/**
+ * @property bool is_admin
+ * @property bool is_user
+ */
 class Request
 {
     protected $CI;
@@ -32,7 +36,7 @@ class Request
     public function isApp()
     {
         $header = get_instance()->input->request_headers();
-        return isset($header['Response-Type']) && $header['Response-Type'] === 'Json';
+        return isset($header['Response-Type']) && $header['Response-Type'] === 'application/json';
     }
 
     public function isWeb()
@@ -105,5 +109,12 @@ class Request
         }
 
         return $files;
+    }
+
+    public function __get($role)
+    {
+        $role = str_replace('_', ' ', $role);
+        $role = trim(trim($role, 'is'));
+        return $this->authorize(ucfirst($role));
     }
 }
