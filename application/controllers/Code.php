@@ -16,7 +16,8 @@ class Code extends MY_Controller
 
     public function testRole()
     {
-        dd($this->request->is_user);
+        $this->request->is_user;
+        dd($this->requestData);
     }
 
     public function testTrim()

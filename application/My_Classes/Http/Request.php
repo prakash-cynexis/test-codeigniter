@@ -77,6 +77,8 @@ class Request
 
         // The code for all app request are authenticate.
         if ($this->isApp()) {
+            $this->authUser = true;
+
             if (!in_array($this->CI->router->method, $this->CI->_skip_auth_methods)) {
                 $this->CI->authToken = is_authenticated();
                 $this->authUser = true;
@@ -85,8 +87,6 @@ class Request
                     if (is_string($roles)) $roles = [$roles];
                     $this->authUser = in_array($this->CI->authToken['role'], $roles);
                 }
-            } else {
-                $this->authUser = true;
             }
         }
 
