@@ -1,8 +1,8 @@
 <?php
 
-namespace MYClasses;
+namespace MyClasses;
 
-use MYClasses\Providers\NotificationInterface;
+use MyClasses\Providers\NotificationInterface;
 
 class Notification
 {

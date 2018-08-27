@@ -1,8 +1,8 @@
 <?php
 
-namespace MYClasses\Providers;
+namespace MyClasses\Providers;
 
-use MYClasses\Http\Response;
+use MyClasses\Http\Response;
 use RNCryptor\RNCryptor\Decryptor;
 use RNCryptor\RNCryptor\Encryptor;
 

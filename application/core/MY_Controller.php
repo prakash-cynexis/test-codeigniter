@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-use MYClasses\AppController;
+use MyClasses\AppController;
 
 class MY_Controller extends AppController
 {

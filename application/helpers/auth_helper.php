@@ -1,6 +1,6 @@
 <?php
 
-use MYClasses\Providers\Token;
+use MyClasses\Providers\Token;
 
 if (!function_exists('getCurrentUser')) {
     /**

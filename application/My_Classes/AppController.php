@@ -1,9 +1,9 @@
 <?php
 
-namespace MYClasses;
+namespace MyClasses;
 
-use MYClasses\Http\Request;
-use MYClasses\Http\Response;
+use MyClasses\Http\Request;
+use MyClasses\Http\Response;
 
 abstract class AppController extends \CI_Controller
 {

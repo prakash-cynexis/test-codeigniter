@@ -1,6 +1,6 @@
 <?php
 
-namespace MYClasses\Providers;
+namespace MyClasses\Providers;
 
 interface NotificationInterface
 {

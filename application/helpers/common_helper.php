@@ -1,9 +1,9 @@
 <?php
 
-use MYClasses\Http\Request;
-use MYClasses\Http\Response;
-use MYClasses\Providers\CrypterProvider;
-use MYClasses\Providers\Token;
+use MyClasses\Http\Request;
+use MyClasses\Http\Response;
+use MyClasses\Providers\CrypterProvider;
+use MyClasses\Providers\Token;
 
 if (!function_exists('arrayRemoveZero')) {
     /**

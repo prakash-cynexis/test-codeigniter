@@ -1,8 +1,8 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-use MYClasses\Http\Response;
-use MYClasses\Providers\Token;
+use MyClasses\Http\Response;
+use MyClasses\Providers\Token;
 
 class Login extends MY_Controller
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace MYClasses;
+namespace MyClasses;
 
-use MYClasses\Providers\FCMProvider;
-use MYClasses\Providers\EmailProvider;
-use MYClasses\Providers\EmailTemplateProvider;
+use MyClasses\Providers\FCMProvider;
+use MyClasses\Providers\EmailProvider;
+use MyClasses\Providers\EmailTemplateProvider;
 
 class Events
 {

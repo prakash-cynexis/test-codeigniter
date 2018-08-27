@@ -17,7 +17,7 @@
   },
   "autoload": {
     "psr-4": {
-      "MYClasses\\": "application/My_Classes/"
+      "MyClasses\\": "application/My_Classes/"
     }
   }
 }

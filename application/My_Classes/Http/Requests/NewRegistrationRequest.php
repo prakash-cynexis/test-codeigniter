@@ -1,8 +1,8 @@
 <?php
 
-namespace MYClasses\Http\Requests;
+namespace MyClasses\Http\Requests;
 
-use MYClasses\Providers\ValidatorProvider;
+use MyClasses\Providers\ValidatorProvider;
 
 class NewRegistrationRequest extends ValidatorProvider
 {

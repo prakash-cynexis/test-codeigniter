@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-use MYClasses\Http\Response;
+use MyClasses\Http\Response;
 
 require_once 'BASE_Model.php';
 

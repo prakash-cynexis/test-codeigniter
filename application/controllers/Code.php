@@ -1,8 +1,8 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-use MYClasses\Events;
-use MYClasses\Providers\DataTableProvider;
+use MyClasses\Events;
+use MyClasses\Providers\DataTableProvider;
 use Ozdemir\Datatables\Datatables;
 use Ozdemir\Datatables\DB\CodeigniterAdapter;
 
