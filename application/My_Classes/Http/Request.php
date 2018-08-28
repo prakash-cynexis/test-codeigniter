@@ -22,8 +22,8 @@ class Request
             $data = $this->CI->input->post(null, true);
         }
         $data = array_merge($data, $this->filterFiles());
+        log_activity($data, 'request data'); // Remove in production
         $this->_requestData = omitNullKeys($data);
-        log_activity($this->_requestData, 'request data'); // Remove in production
         $this->CI->requestData = $this->_requestData;
     }
 
