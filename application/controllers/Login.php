@@ -57,7 +57,7 @@ class Login extends MY_Controller
             'email' => $user['email'],
             'logged_in' => true,
             'user_name' => $user['user_name'],
-            'created_at' => timeStamp()
+            'created_at' => time()
         ];
 
         if (isAppRequest()) {

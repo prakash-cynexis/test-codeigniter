@@ -16,8 +16,9 @@ class Code extends MY_Controller
 
     public function testRole()
     {
-        $this->request->is_user;
-        dd($this->requestData);
+        $this->request->authorize();
+        $requestData = $this->authToken;
+        dd($requestData);
     }
 
     public function testTrim()

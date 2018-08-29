@@ -27,7 +27,7 @@ class Token
 
     public function set($data)
     {
-        $token = $this->crypter->encrypt(json_encode($data));
+        $token = $this->crypter->encrypt($data);
         if (!$token) $this->response->error('invalid data for token.');
 
         return $token;
