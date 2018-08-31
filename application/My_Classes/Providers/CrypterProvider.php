@@ -39,7 +39,7 @@ class CrypterProvider
             $decrypted = JWT::decode($value, $this->encryption_key, ['HS256']);
         } catch (\Exception $e) {
             log_activity($e->getMessage(), 'decrypt:-');
-            if ($e->getMessage() === 'Expired token') $this->response->error('Expired token.');
+            if ($e->getMessage() === 'Expired token') $this->response->error('The Auth-Token provided has expired.', ['http_status' => 401]);
         } finally {
             if (!$decrypted) $this->response->error('encrypted data is invalid.');
         }

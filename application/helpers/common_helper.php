@@ -1012,3 +1012,49 @@ if (!function_exists('is_digit')) {
         return false;
     }
 }
+
+if (!function_exists('hasComma')) {
+    function hasComma($element)
+    {
+        if (strpos($element, ',')) {
+            return true;
+        }
+        return false;
+    }
+}
+
+if (!function_exists('addValueInComma')) {
+    function addValueInComma($value, $add)
+    {
+        if (strpos($value, ',')) {
+            if (is_string($add)) $add = [$add];
+            $arrayValue = explode(',', $value);
+            $arrayValue = array_filter($arrayValue, function ($value) {
+                return $value !== '';
+            });
+            $arrayValue = array_merge($arrayValue, $add);
+            $value = implode(',', array_unique($arrayValue));
+        }
+        if (is_string($value) && !hasComma($value)) {
+            $value = $value . ',' . $add;
+        }
+        return $value;
+    }
+}
+
+if (!function_exists('removeValueInComma')) {
+    function removeValueInComma($value, $remove)
+    {
+        if (strpos($value, ',')) {
+            $arrayValue = explode(',', $value);
+            $arrayValue = array_filter($arrayValue, function ($value) {
+                return $value !== '';
+            });
+            $arrayValue = array_flip($arrayValue);
+            unset($arrayValue[$remove]);
+            $arrayValue = array_flip($arrayValue);
+            return implode(',', array_unique($arrayValue));
+        }
+        return $value;
+    }
+}
