@@ -2,8 +2,9 @@
 
 namespace MyClasses\Providers;
 
-use Firebase\JWT\JWT;
 use MyClasses\Http\Response;
+use RNCryptor\RNCryptor\Decryptor;
+use RNCryptor\RNCryptor\Encryptor;
 
 class CrypterProvider
 {
@@ -18,33 +19,33 @@ class CrypterProvider
 
     public function encrypt($value)
     {
-        $value['exp'] = $value['created_at'] + 3600;
+        $cryptor = new Encryptor;
         $encrypted = null;
         if (empty($value)) $this->response->error('Can not allow null or empty field.');
         try {
-            $encrypted = JWT::encode($value, $this->encryption_key);
+            $encrypted = $cryptor->encrypt(json_encode($value), $this->encryption_key);
         } catch (\Exception $e) {
             log_activity($e->getMessage(), 'encrypt:-');
         } finally {
             if (!$encrypted) $this->response->error('decrypted data is invalid.');
         }
-        return $encrypted;
+        return rawurlencode($encrypted);
     }
 
     public function decrypt($value)
     {
+        $deCryptor = new Decryptor;
         $decrypted = null;
         if (empty($value)) $this->response->error('encrypted data is empty.');
         try {
-            $decrypted = JWT::decode($value, $this->encryption_key, ['HS256']);
+            $decrypted = $deCryptor->decrypt(rawurldecode($value), $this->encryption_key);
         } catch (\Exception $e) {
             log_activity($e->getMessage(), 'decrypt:-');
-            if ($e->getMessage() === 'Expired token') $this->response->error('The Auth-Token provided has expired.', ['http_status' => 401]);
         } finally {
             if (!$decrypted) $this->response->error('encrypted data is invalid.');
         }
-        if (!$decrypted) $this->response->error('encrypted data is invalid.');
-        $decrypted = json_decode(json_encode($decrypted), true);
-        return $decrypted;
+        $encrypted = isJson($decrypted);
+        if (!$encrypted) $this->response->error('encrypted data is invalid.');
+        return $encrypted;
     }
 }
