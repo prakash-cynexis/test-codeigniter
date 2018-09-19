@@ -591,7 +591,7 @@ if (!function_exists('trimming')) {
             if (isset($array[$key])) unset($array[$key]);
         }
         if (isset($array['role']) && strtolower($array['role']) == 'admin') unset($array['role']);
-
+        trim_associative_array($array);
         return $array;
     }
 }
@@ -1056,5 +1056,20 @@ if (!function_exists('removeValueInComma')) {
             return implode(',', array_unique($arrayValue));
         }
         return $value;
+    }
+}
+
+if (!function_exists('trim_associative_array')) {
+    function trim_associative_array(array &$input_array)
+    {
+        if (is_array($input_array)) {
+            foreach ($input_array as $key => &$val) {
+                if (is_array($val)) {
+                    trim_associative_array($val);
+                } else {
+                    $input_array[$key] = trim($val);
+                }
+            }
+        }
     }
 }
