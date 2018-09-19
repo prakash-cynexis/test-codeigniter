@@ -63,7 +63,7 @@ class Login extends MY_Controller
         if (isAppRequest()) {
             $authToken = (new Token())->set($user_data);
             $updateToken = $this->User_model->update_by(['email' => $user['email']], ['auth_token' => $authToken]);
-            if (!$updateToken) $this->response->error('Token not update in DB.');
+            if (!$updateToken) $this->response->error('Token not update in DB.', ['http_status' => Response::HTTP_UNAUTHORIZED]);
 
             $this->response->success('Authentication successful.', [
                 'data' => ['user' => $user_data, 'Auth-Token' => $authToken]
