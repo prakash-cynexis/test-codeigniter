@@ -39,7 +39,7 @@ class Events
         self::$notification = (in_array('notification', array_map('strtolower', $send_by))) ? true : false;
 
         if (self::$email) {
-            self::$template_name = strtolower($eventType) . 'php';
+            self::$template_name = strtolower($eventType) . '.php';
             $data['subject'] = variableToStr($eventType);
             $result['email'] = self::emailSend($data);
         }
