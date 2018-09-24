@@ -45,6 +45,18 @@ class Request
         return (new \CI_User_agent())->is_browser();
     }
 
+    public function isPost()
+    {
+        if (!isPost()) response()->error('Only POST Method Is Allowed.');
+        return $this;
+    }
+
+    public function isGet()
+    {
+        if (!isGet()) response()->error('Only GET Method Is Allowed.');
+        return $this;
+    }
+
     public function validate(array $rules, array $array = [])
     {
         $data = null;

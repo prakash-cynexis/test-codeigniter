@@ -14,6 +14,15 @@ class Code extends MY_Controller
         $this->load->model(["User_model"]);
     }
 
+    public function checkIsPost()
+    {
+        $request = $this->request->isGet()->validate([
+            ['field' => 'email', 'label' => 'Email', 'rules' => 'required|valid_email'],
+        ]);
+
+        dd($request);
+    }
+
     public function testRole()
     {
         $this->request->authorize();
