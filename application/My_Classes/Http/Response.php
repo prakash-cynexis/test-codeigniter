@@ -200,6 +200,7 @@ class Response
         if (self::$_status == self::ERROR) self::$_response = errorResponse(self::$_message);
 
         if (!is_null(self::$_data)) self::$_response['data'] = self::$_data;
+        log_activity(['http_response_code' => self::$_http_status, 'data' => self::$_response], 'response');
         jsonDie(self::$_response, self::$_http_status);
     }
 

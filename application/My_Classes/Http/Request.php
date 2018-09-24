@@ -22,9 +22,9 @@ class Request
             $data = $this->CI->input->post(null, true);
         }
         $data = array_merge($data, $this->filterFiles());
-        log_activity($data, 'before omit request data ' . $this->CI->router->class . ' ' . $this->CI->router->method . ' ' . $this->CI->input->server('REQUEST_METHOD')); // Remove in production
+        log_activity(['url' => base_url() . $this->CI->router->class . '/' . $this->CI->router->method, 'method' => $this->CI->input->server('REQUEST_METHOD'), 'data' => $data], 'before filter request'); // Remove in production
         $this->_requestData = omitNullKeys($data);
-        log_activity($this->_requestData, 'after omit request data ' . $this->CI->router->class . ' ' . $this->CI->router->method . ' ' . $this->CI->input->server('REQUEST_METHOD')); // Remove in production
+        log_activity(['url' => base_url() . $this->CI->router->class . '/' . $this->CI->router->method, 'method' => $this->CI->input->server('REQUEST_METHOD'), 'data' => $this->_requestData], 'after filter request'); // Remove in production
         $this->CI->requestData = $this->_requestData;
     }
 
