@@ -1,5 +1,5 @@
 create view v_users as
-  select `users`.`id`          AS `id`,
+  select `users`.`user_id`          AS `user_id`,
          `users`.`user_name`   AS `user_name`,
          `users`.`email`       AS `email`,
          `users`.`password`    AS `password`,

@@ -35,7 +35,7 @@ class Token
 
     private function validate($token)
     {
-        $keys = ['id', 'role', 'email', 'logged_in', 'user_name'];
+        $keys = ['id', 'role', 'email', 'user_name', 'created_at'];
         foreach ($keys as $index => $key) {
             if (!isset($token[$key]) && empty($token[$key])) return false;
         }

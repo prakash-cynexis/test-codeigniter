@@ -80,10 +80,9 @@ class Events
     {
         if (empty(self::$template_name)) response()->error('Email Template name can not be null.');
         $emailTemplate = new EmailTemplateProvider(self::$template_name);
-        $setData['name'] = $data['user_name'];
-        if (!empty($data['action_url'])) $setData['action_url'] = $data['action_url'];
+        $data['name'] = $data['user_name'];
 
-        $emailTemplate->setData($setData);
+        $emailTemplate->setData($data);
         $content = $emailTemplate->output();
 
         $email = new EmailProvider();

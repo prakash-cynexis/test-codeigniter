@@ -2,7 +2,6 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 use MyClasses\Http\Response;
-use MyClasses\Providers\Token;
 
 class Login extends MY_Controller
 {
@@ -42,6 +41,8 @@ class Login extends MY_Controller
 
     private function login($request)
     {
+        if (isAppRequest()) $this->app_login($request);
+
         $this->load->model("User_model");
         $user = $this->User_model->get_by(['email' => $request['email']]);
         if (!$user) $this->response->error('You have entered an invalid email address.');
@@ -60,18 +61,37 @@ class Login extends MY_Controller
             'created_at' => time()
         ];
 
-        if (isAppRequest()) {
-            $authToken = (new Token())->set($user_data);
-            $updateToken = $this->User_model->update_by(['email' => $user['email']], ['auth_token' => $authToken]);
-            if (!$updateToken) $this->response->error('Token not update in DB.', ['http_status' => Response::HTTP_UNAUTHORIZED]);
-
-            $this->response->success('Authentication successful.', [
-                'data' => ['user' => $user_data, 'Auth-Token' => $authToken]
-            ]);
-        }
         $this->session->set_userdata($user_data);
         if (!$this->session->userdata('logged_in')) $this->response->error('Session is not working on Server side. Please try after some time.');
 
         return true;
+    }
+
+    private function app_login($request)
+    {
+        $this->load->model("User_model");
+        $user = $this->User_model->get_by(['email' => $request['email']]);
+        if (!$user) $this->response->error('You have entered an invalid email address.');
+
+        if (!password_verify($request['password'], $user['password'])) $this->response->error(Response::INVALID_CREDENTIALS);
+        if (!intToBoolean($user['is_active'])) $this->response->error(Response::LOGIN_NOT_APPROVED);
+
+        if (!in_array($user['role'], $this->AUTH_ROLES)) $this->response->error("Role (" . ucfirst($user['role']) . ") is not permitted to log in.");
+
+        $user_data = [
+            'id' => $user['id'],
+            'role' => $user['role'],
+            'email' => $user['email'],
+            'user_name' => $user['user_name'],
+            'created_at' => time()
+        ];
+
+        $authToken = token()->set($user_data);
+        $updateToken = $this->User_model->update_by(['email' => $user['email']], ['auth_token' => $authToken]);
+        if (!$updateToken) $this->response->error('Token not update in DB.', ['http_status' => Response::HTTP_UNAUTHORIZED]);
+
+        $this->response->success('Authentication successful.', [
+            'data' => ['user' => $user_data, 'Auth-Token' => $authToken]
+        ]);
     }
 }

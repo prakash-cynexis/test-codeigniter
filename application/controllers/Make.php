@@ -39,7 +39,7 @@ class Make extends MY_Controller
         ];
 
         $fields['users'] = [
-            "id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY",
+            "user_id BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY",
             "user_name VARCHAR(100) NOT NULL UNIQUE",
             "email VARCHAR(250) NOT NULL UNIQUE",
             "password VARCHAR(250) NOT NULL UNIQUE",
