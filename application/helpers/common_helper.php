@@ -768,6 +768,20 @@ if (!function_exists('lastUriString')) {
     }
 }
 
+if (!function_exists('lastUriStringIs')) {
+    /**
+     * @param $str
+     * @return mixed|null
+     */
+    function lastUriStringIs($str)
+    {
+        $string = get_instance()->uri->uri_string();
+        $string = explode('/', $string);
+        $string = end($string);
+        return !empty($string) && $string === $str ? true : false;
+    }
+}
+
 if (!function_exists('input')) {
     /**
      * @param $key
