@@ -1087,3 +1087,19 @@ if (!function_exists('trim_associative_array')) {
         }
     }
 }
+
+if (!function_exists('in_comma')) {
+    function in_comma($needle, $value)
+    {
+        if (!strpos($value, ',')) return false;
+
+        $arrayValue = explode(',', $value);
+        $arrayValue = array_filter($arrayValue, function ($value) {
+            return trim($value) !== '';
+        });
+        $arrayValue = array_flip($arrayValue);
+
+        if (isset($arrayValue[$needle])) return true;
+        return false;
+    }
+}

@@ -14,6 +14,12 @@ class Code extends MY_Controller
         $this->load->model(["User_model"]);
     }
 
+    public function getData()
+    {
+        $data = $this->db->query('CALL getUsersById(2)')->result_array();
+        dd($data);
+    }
+
     public function checkIsPost()
     {
         $request = $this->request->isGet()->validate([
