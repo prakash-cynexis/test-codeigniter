@@ -1089,11 +1089,11 @@ if (!function_exists('trim_associative_array')) {
 }
 
 if (!function_exists('in_comma')) {
-    function in_comma($needle, $value)
+    function in_comma($needle, $value, $delimiter = ',')
     {
-        if (!strpos($value, ',')) return false;
+        if (!strpos($value, $delimiter)) return false;
 
-        $arrayValue = explode(',', $value);
+        $arrayValue = explode($delimiter, $value);
         $arrayValue = array_filter($arrayValue, function ($value) {
             return trim($value) !== '';
         });
