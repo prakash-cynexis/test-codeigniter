@@ -9,6 +9,9 @@ namespace MyClasses\Http;
 class Request
 {
     protected $CI;
+    protected $_files = [];
+    protected $_inputs = [];
+    protected $_inputStream = [];
     protected $_requestData;
     protected $authUser = false;
 
@@ -16,15 +19,23 @@ class Request
     {
         $data = [];
         $this->CI = &get_instance();
-        if ($this->CI->input->server('REQUEST_METHOD') === 'GET') {
-            $data = $this->CI->input->get(null, true);
-        } elseif ($this->CI->input->server('REQUEST_METHOD') === 'POST') {
-            $data = $this->CI->input->post(null, true);
-        }
-        $data = array_merge($data, $this->filterFiles());
-        log_activity(['url' => base_url() . $this->CI->router->class . '/' . $this->CI->router->method, 'method' => $this->CI->input->server('REQUEST_METHOD'), 'data' => $data], 'before filter request'); // Remove in production
-        $this->_requestData = omitNullKeys($data);
-        log_activity(['url' => base_url() . $this->CI->router->class . '/' . $this->CI->router->method, 'method' => $this->CI->input->server('REQUEST_METHOD'), 'data' => $this->_requestData], 'after filter request'); // Remove in production
+
+        switch ($this->CI->input->server('REQUEST_METHOD')) :
+            case 'GET':
+                $inputs = $this->getInputs();
+                $data = array_merge($data, $inputs);
+                break;
+            case 'POST':
+                $files = $this->getFiles();
+                $inputs = $this->getInputs();
+                $input_stream = $this->getInputStream();
+                $data = array_merge($data, $files, $inputs, $input_stream);
+                break;
+        endswitch;
+
+        $this->custom_log($data, 'before filter request');
+        $this->_requestData = omitNullKeys($data); // filter for null and html values trimming
+        $this->custom_log($data, 'after filter request');
         $this->CI->requestData = $this->_requestData;
     }
 
@@ -37,7 +48,7 @@ class Request
     public function isApp()
     {
         $header = get_instance()->input->request_headers();
-        return isset($header['Response-Type']) && $header['Response-Type'] === 'application/json';
+        return (isset($header['Response-Type']) && $header['Response-Type']) || (isset($header['Content-Type']) && $header['Content-Type']) === 'application/json';
     }
 
     public function isWeb()
@@ -107,21 +118,37 @@ class Request
         return $this->authUser;
     }
 
-    public function files()
+    public function getFiles()
     {
-        return $this->filterFiles();
+        if (!empty($_FILES)) {
+            foreach ($_FILES as $key => $file) {
+                $this->_files[$key] = str_replace(' ', '_', trim($file['name']));
+            }
+        }
+        return $this->_files;
     }
 
-    protected function filterFiles()
+    public function getInputs()
     {
-        $files = [];
-        if (empty($_FILES)) return $files;
-
-        foreach ($_FILES as $key => $file) {
-            $files[$key] = $this->CI->security->xss_clean($file['name'], true);;
+        if ($inputs = $this->CI->input->get(null, true)) {
+            $this->_inputs = $inputs;
+        } elseif ($inputs = $this->CI->input->post(null, true)) {
+            $this->_inputs = $inputs;
         }
+        return $this->_inputs;
+    }
 
-        return $files;
+    public function getInputStream()
+    {
+        if ($this->CI->input->get_request_header('Content-Type') === 'application/json') {
+            $this->_inputStream = isJson(file_get_contents('php://input'));
+        }
+        return $this->_inputStream;
+    }
+
+    public function custom_log($data, $message)
+    {
+        log_activity(['url' => base_url() . $this->CI->router->class . '/' . $this->CI->router->method, 'method' => $this->CI->input->server('REQUEST_METHOD'), 'data' => $data], $message); // Remove in production
     }
 
     public function __get($role)

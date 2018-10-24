@@ -16,7 +16,7 @@ class Code extends MY_Controller
 
     public function getData()
     {
-        $data = $this->db->query('CALL getUsersById(2)')->result_array();
+        $data = $this->requestData;
         dd($data);
     }
 

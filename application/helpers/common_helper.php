@@ -674,7 +674,7 @@ if (!function_exists('isAppRequest')) {
     function isAppRequest()
     {
         $header = get_instance()->input->request_headers();
-        return isset($header['Response-Type']) && $header['Response-Type'] === 'application/json';
+        return (isset($header['Response-Type']) && $header['Response-Type']) || (isset($header['Content-Type']) && $header['Content-Type']) === 'application/json';
     }
 }
 
