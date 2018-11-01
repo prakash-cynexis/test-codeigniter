@@ -48,7 +48,14 @@ class Request
     public function isApp()
     {
         $header = get_instance()->input->request_headers();
-        return (isset($header['Response-Type']) && $header['Response-Type']) || (isset($header['Content-Type']) && $header['Content-Type']) === 'application/json';
+        if (isset($header['Content-Type'])) {
+            return $header['Content-Type'] === 'application/json';
+        }
+
+        if (isset($header['Response-Type'])) {
+            return $header['Response-Type'] === 'application/json';
+        }
+        return false;
     }
 
     public function isWeb()
