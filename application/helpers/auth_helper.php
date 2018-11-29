@@ -6,8 +6,7 @@ if (!function_exists('getCurrentUser')) {
     /**
      * @return array|bool
      */
-    function getCurrentUser()
-    {
+    function getCurrentUser() {
         $user = get_instance()->session->userdata();
         $user = removePassedArrayKeys($user, ['__ci_last_regenerate']);
         return !empty($user) ? $user : false;
@@ -18,8 +17,7 @@ if (!function_exists('getCurrentUserID')) {
     /**
      * @return bool|mixed
      */
-    function getCurrentUserID()
-    {
+    function getCurrentUserID() {
         $user_id = get_instance()->session->userdata('id');
         return !empty($user_id) ? $user_id : false;
     }
@@ -29,8 +27,7 @@ if (!function_exists('getCurrentUserRole')) {
     /**
      * @return bool|mixed
      */
-    function getCurrentUserRole()
-    {
+    function getCurrentUserRole() {
         $role = get_instance()->session->userdata('role');
         return !empty($role) ? $role : false;
     }
@@ -40,8 +37,7 @@ if (!function_exists('getCurrentUserName')) {
     /**
      * @return bool|mixed
      */
-    function getCurrentUserName()
-    {
+    function getCurrentUserName() {
         $user_name = get_instance()->session->userdata('user_name');
         return !empty($user_name) ? $user_name : false;
     }
@@ -52,8 +48,7 @@ if (!function_exists('is_authenticated')) {
     /**
      * @return bool|false|string
      */
-    function is_authenticated()
-    {
+    function is_authenticated() {
         $authToken = (new Token())->get();
         // token from request not matching with the token in DB, meaning user is logged in via another device
         if (!validAuthToken($authToken)) response()->error('You have been logged out from this device. Please login again.', ['http_status' => 401]); // 401 HTTPS status code = UNAUTHORIZED
@@ -66,8 +61,7 @@ if (!function_exists('validAuthToken')) {
      * @param $authToken
      * @return bool
      */
-    function validAuthToken($authToken)
-    {
+    function validAuthToken($authToken) {
         $CI = &get_instance();
         $CI->load->model('User_model');
         $userID = $authToken['id'];
@@ -84,8 +78,7 @@ if (!function_exists('get_token')) {
      * @param null $key
      * @return bool|false|string
      */
-    function get_token($key = null)
-    {
+    function get_token($key = null) {
         $CI = &get_instance();
         $headers = $CI->input->request_headers();
         $auth_token = !empty($headers['Auth-Token']) ? $headers['Auth-Token'] : false;

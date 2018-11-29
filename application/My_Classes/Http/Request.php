@@ -6,8 +6,8 @@ namespace MyClasses\Http;
  * @property bool is_admin
  * @property bool is_user
  */
-class Request
-{
+class Request {
+
     protected $CI;
     protected $_files = [];
     protected $_inputs = [];
@@ -15,8 +15,7 @@ class Request
     protected $_requestData;
     protected $authUser = false;
 
-    public function __construct()
-    {
+    public function __construct() {
         $data = [];
         $this->CI = &get_instance();
 
@@ -39,44 +38,39 @@ class Request
         $this->CI->requestData = $this->_requestData;
     }
 
-    public function input($key = null)
-    {
+    public function input($key = null) {
         if (is_string($key)) return (!empty($this->_requestData[$key])) ? $this->_requestData[$key] : [];
         return !empty($this->_requestData) ? $this->_requestData : [];
     }
 
-    public function isApp()
-    {
+    public function isApp() {
         $header = get_instance()->input->request_headers();
-        if (isset($header['Content-Type'])) {
-            return $header['Content-Type'] === 'application/json';
-        }
 
-        if (isset($header['Response-Type'])) {
-            return $header['Response-Type'] === 'application/json';
+        $isApp = false;
+        if (isset($header['Response-Type']) && $header['Response-Type'] === "application/json") {
+            $isApp = true;
         }
-        return false;
+        if (isset($header['Content-Type']) && $header['Content-Type'] === "application/json") {
+            $isApp = true;
+        }
+        return $isApp;
     }
 
-    public function isWeb()
-    {
+    public function isWeb() {
         return (new \CI_User_agent())->is_browser();
     }
 
-    public function isPost()
-    {
+    public function isPost() {
         if (!isPost()) response()->error('Only POST Method Is Allowed.');
         return $this;
     }
 
-    public function isGet()
-    {
+    public function isGet() {
         if (!isGet()) response()->error('Only GET Method Is Allowed.');
         return $this;
     }
 
-    public function validate(array $rules, array $array = [])
-    {
+    public function validate(array $rules, array $array = []) {
         $data = null;
         $redirect = true;
         if (isset($array['data'])) $data = $array['data'];
@@ -93,8 +87,7 @@ class Request
         return $data;
     }
 
-    final public function authorize($roles = null)
-    {
+    final public function authorize($roles = null) {
         if ($this->isWeb()) {
             if (!empty(getCurrentUserRole()) && !empty(getCurrentUser())) {
                 $this->authUser = true;
@@ -125,18 +118,16 @@ class Request
         return $this->authUser;
     }
 
-    public function getFiles()
-    {
+    public function getFiles() {
         if (!empty($_FILES)) {
             foreach ($_FILES as $key => $file) {
-                $this->_files[$key] = str_replace(' ', '_', trim($file['name']));
+                $this->_files[$key] = $file['name'];
             }
         }
         return $this->_files;
     }
 
-    public function getInputs()
-    {
+    public function getInputs() {
         if ($inputs = $this->CI->input->get(null, true)) {
             $this->_inputs = $inputs;
         } elseif ($inputs = $this->CI->input->post(null, true)) {
@@ -145,21 +136,18 @@ class Request
         return $this->_inputs;
     }
 
-    public function getInputStream()
-    {
+    public function getInputStream() {
         if ($this->CI->input->get_request_header('Content-Type') === 'application/json') {
             $this->_inputStream = isJson(file_get_contents('php://input'));
         }
         return $this->_inputStream;
     }
 
-    public function custom_log($data, $message)
-    {
+    public function custom_log($data, $message) {
         log_activity(['url' => base_url() . $this->CI->router->class . '/' . $this->CI->router->method, 'method' => $this->CI->input->server('REQUEST_METHOD'), 'data' => $data], $message); // Remove in production
     }
 
-    public function __get($role)
-    {
+    public function __get($role) {
         $role = str_replace('_', ' ', $role);
         $role = trim(trim($role, 'is'));
         return $this->authorize(ucfirst($role));

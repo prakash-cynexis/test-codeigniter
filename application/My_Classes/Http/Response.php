@@ -2,8 +2,8 @@
 
 namespace MyClasses\Http;
 
-class Response
-{
+class Response {
+
 // Note: Only the widely used HTTP status codes are documented
 
     // Informational
@@ -143,8 +143,7 @@ class Response
     const UPDATING_FAILED = 'Data updating failed.';
     const UPDATING_SUCCESS = 'Data successfully update.';
 
-    public function success($message, array $array = [])
-    {
+    public function success($message, array $array = []) {
         $data = null;
         $redirect = true;
         $http_status = Response::HTTP_OK;
@@ -154,8 +153,7 @@ class Response
         self::CreateResponse(self::SUCCESS, $message, $data, $http_status, $redirect);
     }
 
-    public function error($message, array $array = [])
-    {
+    public function error($message, array $array = []) {
         $data = null;
         $redirect = true;
         $http_status = Response::HTTP_BAD_REQUEST;
@@ -165,8 +163,7 @@ class Response
         self::CreateResponse(self::ERROR, $message, $data, $http_status, $redirect);
     }
 
-    public function form_validation_exception(array $array)
-    {
+    public function form_validation_exception(array $array) {
         $data = null;
         $redirect = true;
         if (isset($array['data']) && !isAppRequest()) $data = $array['data'];
@@ -182,8 +179,7 @@ class Response
      * @param null $http_status
      * @param bool $redirect
      */
-    private static function CreateResponse($status, $message, $data = null, $http_status = null, $redirect = true)
-    {
+    private static function CreateResponse($status, $message, $data = null, $http_status = null, $redirect = true) {
         if (!empty($data)) self::$_data = typeCast($data);
         if (!empty($status)) self::$_status = $status;
         if (!empty($message)) self::$_message = $message;
@@ -194,8 +190,7 @@ class Response
         self::htmlSerialize();
     }
 
-    private static function jsonSerialize()
-    {
+    private static function jsonSerialize() {
         if (self::$_status == self::SUCCESS) self::$_response = successResponse(self::$_message);
         if (self::$_status == self::ERROR) self::$_response = errorResponse(self::$_message);
 
@@ -204,8 +199,7 @@ class Response
         jsonDie(self::$_response, self::$_http_status);
     }
 
-    private static function htmlSerialize()
-    {
+    private static function htmlSerialize() {
         if (self::$_status == self::SUCCESS) success(self::$_message, self::$_redirect, self::$_data);
         if (self::$_status == self::ERROR) error(self::$_message, self::$_redirect, self::$_data);
     }

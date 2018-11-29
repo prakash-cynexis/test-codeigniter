@@ -1,7 +1,6 @@
 <?php
 if (!function_exists('getLatLng')) {
-    function getLatLng($address)
-    {
+    function getLatLng($address) {
         if (is_array($address)) {
             $address = $address['address_line_1'] . ' ' . $address['address_line_2'] . ' ' . $address['state'] . ' ' . $address['city'] . ' ' . $address['zip'];
         }
@@ -19,15 +18,13 @@ if (!function_exists('getLatLng')) {
 }
 
 if (!function_exists('validateLatitude')) {
-    function validateLatitude($lat)
-    {
+    function validateLatitude($lat) {
         return preg_match('/^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$/', $lat);
     }
 }
 
 if (!function_exists('validateLongitude')) {
-    function validateLongitude($long)
-    {
+    function validateLongitude($long) {
         return preg_match('/^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$/', $long);
     }
 }

@@ -11,7 +11,8 @@
         <div class="test">
             <div class="text">
                 <h1>PAGE NOT FOUND</h1>
-                <p>You have been tricked into click on a link that can not be found. Please check the url or go to <a href="http://localhost/ci_testing">main page</a> and see if you can locate what you are looking for</p>
+                <p>You have been tricked into click on a link that can not be found. Please check the url or go to <a href="http://localhost/ci_testing">main page</a> and see if you can locate what you are looking for
+                </p>
             </div>
             <div class="image">
                 <img src="http://localhost/ci_testing/assets/error/smile.png">

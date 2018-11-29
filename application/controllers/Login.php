@@ -3,17 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 use MyClasses\Http\Response;
 
-class Login extends MY_Controller
-{
+class Login extends MY_Controller {
+
     private $AUTH_ROLES = ['Admin', 'User'];
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
     }
 
-    public function index()
-    {
+    public function index() {
         if (isPost()) {
             $request = $this->request->validate([
                 ['field' => 'email', 'label' => 'Email', 'rules' => 'required|valid_email'],
@@ -39,8 +37,7 @@ class Login extends MY_Controller
         $this->view('login');
     }
 
-    private function login($request)
-    {
+    private function login($request) {
         if (isAppRequest()) $this->app_login($request);
 
         $this->load->model("User_model");
@@ -67,8 +64,7 @@ class Login extends MY_Controller
         return true;
     }
 
-    private function app_login($request)
-    {
+    private function app_login($request) {
         $this->load->model("User_model");
         $user = $this->User_model->get_by(['email' => $request['email']]);
         if (!$user) $this->response->error('You have entered an invalid email address.');

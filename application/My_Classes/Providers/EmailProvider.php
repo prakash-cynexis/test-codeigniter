@@ -2,8 +2,8 @@
 
 namespace MyClasses\Providers;
 
-class EmailProvider
-{
+class EmailProvider {
+
     private $CI;
     private $to;
     private $html;
@@ -12,13 +12,11 @@ class EmailProvider
     protected $_openingTag = '{{';
     protected $_closingTag = '}}';
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->CI = &get_instance();
     }
 
-    public function send()
-    {
+    public function send() {
         $this->CI->load->library('encrypt');
         $this->CI->load->library('email');
 
@@ -41,31 +39,26 @@ class EmailProvider
         return true;
     }
 
-    public function to($to)
-    {
+    public function to($to) {
         $this->to = $to;
         return $this;
     }
 
-    public function subject($subject)
-    {
+    public function subject($subject) {
         $this->subject = $subject;
         return $this;
     }
 
-    public function html($body)
-    {
+    public function html($body) {
         return $this->html = $body;
     }
 
-    public function line($line)
-    {
+    public function line($line) {
         $this->messageLines[] = $line;
         return $this;
     }
 
-    private function toArray()
-    {
+    private function toArray() {
         $array = [
             'to' => $this->to,
             'subject' => $this->subject,
@@ -74,8 +67,7 @@ class EmailProvider
         return $array;
     }
 
-    private function emailConfig()
-    {
+    private function emailConfig() {
         return $config = [
             'protocol' => 'smtp',
             'smtp_host' => 'smtp.gmail.com',

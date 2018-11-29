@@ -10,8 +10,7 @@ if (!function_exists('arrayRemoveZero')) {
      * @param array $array
      * @return array
      */
-    function arrayRemoveZero(array $array)
-    {
+    function arrayRemoveZero(array $array) {
         if (empty($array)) return $array;
         foreach ($array as $key => $value) {
             if ($value === 0 || $value === '0') unset($array[$key]);
@@ -26,8 +25,7 @@ if (!function_exists('dd')) {
      * @param $x
      * @param bool $exit
      */
-    function dd($x, $exit = true)
-    {
+    function dd($x, $exit = true) {
         if (is_array($x) || is_object($x)) {
             echo "<pre>";
             print_r($x);
@@ -46,8 +44,7 @@ if (!function_exists('apiSuccess')) {
      * @param null $data
      * @param int $http_status
      */
-    function apiSuccess($message, $data = null, $http_status = 200)
-    {
+    function apiSuccess($message, $data = null, $http_status = 200) {
         header('Content-Type: application/json', true, $http_status);
         die(json_encode(successResponse($message, $data)));
     }
@@ -58,8 +55,7 @@ if (!function_exists('apiError')) {
      * @param $message
      * @param int $http_status
      */
-    function apiError($message, $http_status = 400)
-    {
+    function apiError($message, $http_status = 400) {
         header('Content-Type: application/json', true, $http_status);
         die(json_encode(errorResponse($message)));
     }
@@ -70,8 +66,7 @@ if (!function_exists('errorResponse')) {
      * @param $message
      * @return array
      */
-    function errorResponse($message)
-    {
+    function errorResponse($message) {
         $response['error'] = true;
         $response['message'] = !is_array($message) ? [$message] : $message;
         return $response;
@@ -84,8 +79,7 @@ if (!function_exists('successResponse')) {
      * @param null $data
      * @return array
      */
-    function successResponse($message, $data = null)
-    {
+    function successResponse($message, $data = null) {
         $response['error'] = false;
         $response['message'] = !is_array($message) ? [$message] : $message;
         if (!is_null($data)) $response['data'] = $data;
@@ -94,8 +88,7 @@ if (!function_exists('successResponse')) {
 }
 
 if (!function_exists('back')) {
-    function back()
-    {
+    function back() {
         $url = null;
         if (isAjaxRequest() || isAppRequest()) apiError('You are not authorized to access', 401);
         if (isset($_SERVER['HTTP_REFERER'])) $url = $_SERVER['HTTP_REFERER'];
@@ -109,8 +102,7 @@ if (!function_exists('randomString')) {
      * @param int $length
      * @return string
      */
-    function randomString($length = 25)
-    {
+    function randomString($length = 25) {
         $characters = '23003164A33FF27BD4A1C7DE78E025F6DBC67E3960AD891C29B45CE4DCC4CDB7';
         $randomString = '';
         for ($i = 0; $i < $length; $i++) {
@@ -121,8 +113,7 @@ if (!function_exists('randomString')) {
 }
 
 if (!function_exists('toastrJS')) {
-    function toastrJS()
-    {
+    function toastrJS() {
         return '<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
                 <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">';
     }
@@ -133,8 +124,7 @@ if (!function_exists('htmlFlash')) {
      * @param string $type
      * @return string
      */
-    function htmlFlash($type = 'alert')
-    {
+    function htmlFlash($type = 'alert') {
         $CI = &get_instance();
         $flash = $CI->session->flashdata($type);
         if (!$flash) return false;
@@ -157,8 +147,7 @@ if (!function_exists('jqueryFlash')) {
      * @param string $time
      * @return string
      */
-    function jqueryFlash($type = 'alert', $time = '0')
-    {
+    function jqueryFlash($type = 'alert', $time = '0') {
         $CI = &get_instance();
         $flash = $CI->session->flashdata($type);
         if (!$flash) return false;
@@ -207,8 +196,7 @@ if (!function_exists('success')) {
      * @param bool $redirect
      * @param null $data
      */
-    function success($message, $redirect = true, $data = null)
-    {
+    function success($message, $redirect = true, $data = null) {
         $type = 'alert';
         $CI = &get_instance();
         $CI->session->set_flashdata($type, ['class' => 'success', 'message' => $message]);
@@ -225,8 +213,7 @@ if (!function_exists('warning')) {
      * @param bool $redirect
      * @param null $data
      */
-    function warning($message, $redirect = true, $data = null)
-    {
+    function warning($message, $redirect = true, $data = null) {
         $type = 'alert';
         $CI = &get_instance();
         $CI->session->set_flashdata($type, ['class' => 'warning', 'message' => $message]);
@@ -243,8 +230,7 @@ if (!function_exists('error')) {
      * @param bool $redirect
      * @param null $data
      */
-    function error($message, $redirect = true, $data = null)
-    {
+    function error($message, $redirect = true, $data = null) {
         $type = 'alert';
         $CI = &get_instance();
         $CI->session->set_flashdata($type, ['class' => 'error', 'message' => $message]);
@@ -261,8 +247,7 @@ if (!function_exists('getFlashValue')) {
      * @param string $type
      * @return null
      */
-    function getFlashValue($field, $type = 'data')
-    {
+    function getFlashValue($field, $type = 'data') {
         $data = get_instance()->session->flashdata($type);
         if (empty($data)) return null;
         return (isset($data[$field])) ? $data[$field] : null;
@@ -275,8 +260,7 @@ if (!function_exists('assetUrl')) {
      * @param $file_name
      * @return string
      */
-    function assetUrl($file_name)
-    {
+    function assetUrl($file_name) {
         return base_url() . ASSET_PATH . $file_name;
     }
 }
@@ -286,8 +270,7 @@ if (!function_exists('uploadUrl')) {
      * @param $file_name
      * @return string
      */
-    function uploadUrl($file_name)
-    {
+    function uploadUrl($file_name) {
         return base_url() . UPLOAD_PATH . $file_name;
     }
 }
@@ -297,8 +280,7 @@ if (!function_exists('downloadUrl')) {
      * @param $file_name
      * @return string
      */
-    function downloadUrl($file_name)
-    {
+    function downloadUrl($file_name) {
         return base_url() . DOWNLOAD_PATH . $file_name;
     }
 }
@@ -308,8 +290,7 @@ if (!function_exists('adminUrl')) {
      * @param $uri
      * @return string
      */
-    function adminUrl($uri)
-    {
+    function adminUrl($uri) {
         return base_url() . ADMIN . $uri;
     }
 }
@@ -321,8 +302,7 @@ if (!function_exists('jquery')) {
      * @param string $version
      * @return string
      */
-    function jquery($version = '2.2.4')
-    {
+    function jquery($version = '2.2.4') {
         // Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline
         $out = "<script src='//ajax.googleapis.com/ajax/libs/jquery/{$version}/jquery.min.js'></script>";
         return $out;
@@ -336,8 +316,7 @@ if (!function_exists('arrayToExcel')) {
      * @param string $fileName
      * @return string
      */
-    function arrayToExcel(array $header, array $data, $fileName = "export_excel")
-    {
+    function arrayToExcel(array $header, array $data, $fileName = "export_excel") {
         $CI = &get_instance();
         $CI->load->library('XLSXWriter');
         $writer = new XLSXWriter();
@@ -357,8 +336,7 @@ if (!function_exists('aOnclick')) {
      * @param string $attributes
      * @return string
      */
-    function aOnclick($title, $function, $param, $attributes = null)
-    {
+    function aOnclick($title, $function, $param, $attributes = null) {
         if (!empty($attributes)) {
             $attributes = _stringify_attributes($attributes);
         }
@@ -375,8 +353,7 @@ if (!function_exists('aVoid')) {
      * @param string $attributes
      * @return string
      */
-    function aVoid($title, $class = null, $id = null, $attributes = null)
-    {
+    function aVoid($title, $class = null, $id = null, $attributes = null) {
         $aVoid = null;
         if (!empty($id)) $aVoid .= ' id="' . $id . '"';
         if (!empty($class)) $aVoid .= ' class="' . $class . '"';
@@ -393,8 +370,7 @@ if (!function_exists('removePassedArrayKeys')) {
      * @param array $keysToRemove
      * @return array
      */
-    function removePassedArrayKeys(array $array, array $keysToRemove)
-    {
+    function removePassedArrayKeys(array $array, array $keysToRemove) {
         if (!$array) return $array;
         foreach ($array as $key => $value) {
             if (is_array($value)) {
@@ -414,8 +390,7 @@ if (!function_exists('allowPassedArrayKeys')) {
      * @param array $keysToAllow
      * @return array
      */
-    function allowPassedArrayKeys(array $array, array $keysToAllow)
-    {
+    function allowPassedArrayKeys(array $array, array $keysToAllow) {
         if (!$array) return $array;
         foreach ($array as $key => $value) {
             if (is_array($value)) {
@@ -434,8 +409,7 @@ if (!function_exists('isJson')) {
      * @param $string
      * @return array|mixed
      */
-    function isJson($string)
-    {
+    function isJson($string) {
         if (!is_string($string)) return false;
         $result = json_decode($string, true);
         if (json_last_error()) return false;
@@ -448,8 +422,7 @@ if (!function_exists('removeArrayKeys')) {
      * @param array $array
      * @return array
      */
-    function removeArrayKeys(array $array)
-    {
+    function removeArrayKeys(array $array) {
         $valueArray = [];
         foreach ($array as $Key => $value) {
             $valueArray[] = $value;
@@ -463,8 +436,7 @@ if (!function_exists('isSingleItemArray')) {
      * @param array $array
      * @return bool
      */
-    function isSingleItemArray(array $array)
-    {
+    function isSingleItemArray(array $array) {
         if (count($array) > 1) {
             return false;
         }
@@ -477,8 +449,7 @@ if (!function_exists('formatExceptionAsDataArray')) {
      * @param array $array
      * @return array|bool|mixed
      */
-    function formatExceptionAsDataArray($array)
-    {
+    function formatExceptionAsDataArray($array) {
         if (empty($array) || !is_array($array)) return $array;
         $array = removeArrayKeys($array);
         if (isSingleItemArray($array)) {
@@ -493,8 +464,7 @@ if (!function_exists('typeCast')) {
      * @param array $array
      * @return array|bool
      */
-    function typeCast($array)
-    {
+    function typeCast($array) {
         if (!is_array($array)) return $array;
         return array_map(function ($element) {
             if (is_numeric($element) && !strpos($element, '.')) {
@@ -511,8 +481,7 @@ if (!function_exists('intToString')) {
      * @param array $array
      * @return array|bool
      */
-    function intToString($array)
-    {
+    function intToString($array) {
         if (!is_array($array)) return $array;
         foreach ($array as $key => $value) {
             if (is_array($value)) {
@@ -533,8 +502,7 @@ if (!function_exists('typeCasting')) {
      * @param array $array
      * @return array|bool
      */
-    function typeCasting($array)
-    {
+    function typeCasting($array) {
         if (!is_array($array)) return $array;
         foreach ($array as $key => $value) {
             if (is_array($value)) {
@@ -557,8 +525,7 @@ if (!function_exists('omitNullKeys')) {
      * @param bool $trimming
      * @return array|mixed
      */
-    function omitNullKeys(array $data, $trimming = true)
-    {
+    function omitNullKeys(array $data, $trimming = true) {
         if ($trimming === true) $data = trimming($data);
 
         if (is_null($data) && empty($data)) return false;
@@ -580,8 +547,7 @@ if (!function_exists('trimming')) {
      * @param $array
      * @return mixed
      */
-    function trimming($array)
-    {
+    function trimming($array) {
         $blacklist = [
             'search', 'submit', 'save', 'generate', 'create', 'upload', 'login', 'forgot', 'is_active',
             'deleted', 'is_approved', 'is_verify'
@@ -601,8 +567,7 @@ if (!function_exists('age')) {
      * @param $date
      * @return bool|int
      */
-    function age($date)
-    {
+    function age($date) {
         if (!isValidDate($date)) return false;
         return (date('Y') - date('Y', strtotime($date)));
     }
@@ -613,8 +578,7 @@ if (!function_exists('isValidTimeStamp')) {
      * @param $timestamp
      * @return bool
      */
-    function isValidTimeStamp($timestamp)
-    {
+    function isValidTimeStamp($timestamp) {
         $format = 'Y-m-d H:i:s';
         $d = DateTime::createFromFormat($format, $timestamp);
         return $d && $d->format($format) == $timestamp;
@@ -626,8 +590,7 @@ if (!function_exists('isValidDate')) {
      * @param $date
      * @return bool
      */
-    function isValidDate($date)
-    {
+    function isValidDate($date) {
         $format = 'Y-m-d';
         $d = DateTime::createFromFormat($format, $date);
         return ($d && $d->format($format) == $date);
@@ -639,8 +602,7 @@ if (!function_exists('validVariableName')) {
      * @param $spacedString
      * @return string
      */
-    function validVariableName($spacedString)
-    {
+    function validVariableName($spacedString) {
         return strtolower(str_replace(' ', '_', strtolower($spacedString)));
     }
 }
@@ -650,8 +612,7 @@ if (!function_exists('variableToStr')) {
      * @param $variable
      * @return string
      */
-    function variableToStr($variable)
-    {
+    function variableToStr($variable) {
         return ucfirst(strtolower(str_replace('_', ' ', strtolower($variable))));
     }
 }
@@ -660,8 +621,7 @@ if (!function_exists('isAjaxRequest')) {
     /**
      * @return bool
      */
-    function isAjaxRequest()
-    {
+    function isAjaxRequest() {
         $header = get_instance()->input->request_headers();
         return !empty($header['X-Requested-With']) && strtolower($header['X-Requested-With']) === 'xmlhttprequest';
     }
@@ -671,10 +631,16 @@ if (!function_exists('isAppRequest')) {
     /**
      * @return bool
      */
-    function isAppRequest()
-    {
+    function isAppRequest() {
         $header = get_instance()->input->request_headers();
-        return (isset($header['Response-Type']) && $header['Response-Type']) || (isset($header['Content-Type']) && $header['Content-Type']) === 'application/json';
+        $isApp = false;
+        if (isset($header['Response-Type']) && $header['Response-Type'] === "application/json") {
+            $isApp = true;
+        }
+        if (isset($header['Content-Type']) && $header['Content-Type'] === "application/json") {
+            $isApp = true;
+        }
+        return $isApp;
     }
 }
 
@@ -683,8 +649,7 @@ if (!function_exists('intToBoolean')) {
      * @param integer|$int
      * @return bool
      */
-    function intToBoolean($int)
-    {
+    function intToBoolean($int) {
         switch (true) {
             case $int <= 0:
                 return (bool)$int = false;
@@ -700,8 +665,7 @@ if (!function_exists('booleanToInt')) {
      * @param bool|$boolean
      * @return bool|int
      */
-    function booleanToInt($boolean)
-    {
+    function booleanToInt($boolean) {
         switch ($boolean) {
             case false:
                 return (int)$boolean = 0;
@@ -719,8 +683,7 @@ if (!function_exists('validImage')) {
      * @return bool|string
      * @deprecated
      */
-    function validImage($name)
-    {
+    function validImage($name) {
         if (empty($_FILES[$name]['name'])) return false;
         return true;
     }
@@ -732,8 +695,7 @@ if (!function_exists('doUpload')) {
      * @param int $no
      * @return bool|string
      */
-    function doUpload($image, $no = 1)
-    {
+    function doUpload($image, $no = 1) {
         if (empty($_FILES[$image]['name'])) return false;
         $name = round(microtime(true) * $no) . '.' . pathinfo($_FILES[$image]['name'], PATHINFO_EXTENSION);
         if (!move_uploaded_file($_FILES[$image]['tmp_name'], UPLOAD_PATH . $name)) return false;
@@ -746,8 +708,7 @@ if (!function_exists('uriStringIS')) {
      * @param int $segment
      * @return mixed|string
      */
-    function uriStringIS($segment = null)
-    {
+    function uriStringIS($segment = null) {
         if (is_numeric($segment)) {
             return get_instance()->uri->segment($segment);
         }
@@ -759,8 +720,7 @@ if (!function_exists('lastUriString')) {
     /**
      * @return mixed|null
      */
-    function lastUriString()
-    {
+    function lastUriString() {
         $string = get_instance()->uri->uri_string();
         $string = explode('/', $string);
         $string = end($string);
@@ -773,8 +733,7 @@ if (!function_exists('lastUriStringIs')) {
      * @param $str
      * @return mixed|null
      */
-    function lastUriStringIs($str)
-    {
+    function lastUriStringIs($str) {
         $string = get_instance()->uri->uri_string();
         $string = explode('/', $string);
         $string = end($string);
@@ -787,8 +746,7 @@ if (!function_exists('input')) {
      * @param $key
      * @return string
      */
-    function input($key = null)
-    {
+    function input($key = null) {
         return get_instance()->input->get_post($key, true);
     }
 }
@@ -797,8 +755,7 @@ if (!function_exists('today')) {
     /**
      * @return false|string
      */
-    function today()
-    {
+    function today() {
         return date('Y-m-d');
     }
 }
@@ -807,8 +764,7 @@ if (!function_exists('timeStamp')) {
     /**
      * @return false|string
      */
-    function timeStamp()
-    {
+    function timeStamp() {
         return date('Y-m-d H:i:s');
     }
 }
@@ -818,8 +774,7 @@ if (!function_exists('jsonDie')) {
      * @param $data
      * @param int $http_status
      */
-    function jsonDie($data, $http_status = 200)
-    {
+    function jsonDie($data, $http_status = 200) {
         header('Content-Type: application/json', true, $http_status);
         $data = (!is_array($data)) ? ['data' => $data] : $data;
         die(json_encode($data));
@@ -831,8 +786,7 @@ if (!function_exists('isInt')) {
      * @param $str
      * @return bool|float|int
      */
-    function isInt($str)
-    {
+    function isInt($str) {
         $int = is_numeric($str) || floatval($str) - $str === 0;
         if (!$int) return false;
         $length = strlen((string)$str);
@@ -844,8 +798,7 @@ if (!function_exists('isPost')) {
     /**
      * @return bool
      */
-    function isPost()
-    {
+    function isPost() {
         return isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) === "post";
     }
 }
@@ -853,8 +806,7 @@ if (!function_exists('isGet')) {
     /**
      * @return bool
      */
-    function isGet()
-    {
+    function isGet() {
         return isset($_SERVER['REQUEST_METHOD']) && strtolower($_SERVER['REQUEST_METHOD']) === "get";
     }
 }
@@ -864,32 +816,28 @@ if (!function_exists('log_activity')) {
      * @param $data
      * @param string $tag
      */
-    function log_activity($data, $tag = 'data')
-    {
+    function log_activity($data, $tag = 'data') {
         $tag_name = strtolower(str_replace(' ', '_', strtolower($tag)));
         log_message('testing', print_r([$tag_name => $data], true));
     }
 }
 
 if (!function_exists('getStylesheet')) {
-    function getStylesheet()
-    {
+    function getStylesheet() {
         $style_sheet = get_instance()->style_sheet;
         if (empty($style_sheet)) return null;
         foreach ($style_sheet as $index => $item) echo $item . PHP_EOL;
     }
 }
 if (!function_exists('getJavascript')) {
-    function getJavascript()
-    {
+    function getJavascript() {
         $java_script = get_instance()->java_script;
         if (empty($java_script)) return null;
         foreach ($java_script as $index => $item) echo $item . PHP_EOL;
     }
 }
 if (!function_exists('getMetaData')) {
-    function getMetaData()
-    {
+    function getMetaData() {
         $meta_data = get_instance()->meta_data;
         if (empty($meta_data)) return null;
         foreach ($meta_data as $index => $item) echo $item . PHP_EOL;
@@ -901,8 +849,7 @@ if (!function_exists('blank')) {
      * @param $value
      * @return bool
      */
-    function blank($value)
-    {
+    function blank($value) {
         if (is_null($value)) return true;
         if (is_numeric($value)) return false;
         if (is_string($value)) return trim($value) === '';
@@ -913,29 +860,25 @@ if (!function_exists('blank')) {
 }
 
 if (!function_exists('request')) {
-    function request()
-    {
+    function request() {
         return new Request();
     }
 }
 
 if (!function_exists('response')) {
-    function response()
-    {
+    function response() {
         return new Response();
     }
 }
 
 if (!function_exists('crypter')) {
-    function crypter()
-    {
+    function crypter() {
         return new CrypterProvider();
     }
 }
 
 if (!function_exists('token')) {
-    function token()
-    {
+    function token() {
         return new Token();
     }
 }
@@ -947,8 +890,7 @@ if (!function_exists('compress')) {
      * @param $quality
      * @return mixed
      */
-    function compress($source, $destination, $quality)
-    {
+    function compress($source, $destination, $quality) {
         $image = null;
         $info = getimagesize($source);
 
@@ -974,16 +916,14 @@ if (!function_exists('compress')) {
 }
 
 if (!function_exists('valid_comma_separated')) {
-    function valid_comma_separated($param)
-    {
+    function valid_comma_separated($param) {
         if (preg_match('/^\d+(?:,\d+)*$/', $param)) return true;
         return false;
     }
 }
 
 if (!function_exists('input_clean')) {
-    function input_clean($data)
-    {
+    function input_clean($data) {
         // Fix &entity\n;
         $data = str_replace(array('&amp;', '&lt;', '&gt;'), array('&amp;amp;', '&amp;lt;', '&amp;gt;'), $data);
         $data = preg_replace('/(&#*\w+)[\x00-\x20]+;/u', '$1;', $data);
@@ -1018,8 +958,7 @@ if (!function_exists('input_clean')) {
 }
 
 if (!function_exists('is_digit')) {
-    function is_digit($digit)
-    {
+    function is_digit($digit) {
         if (is_int($digit)) return true;
         if (is_numeric($digit)) return true;
         if (is_string($digit)) return ctype_digit($digit);
@@ -1028,8 +967,7 @@ if (!function_exists('is_digit')) {
 }
 
 if (!function_exists('hasComma')) {
-    function hasComma($element)
-    {
+    function hasComma($element) {
         if (strpos($element, ',')) {
             return true;
         }
@@ -1038,8 +976,7 @@ if (!function_exists('hasComma')) {
 }
 
 if (!function_exists('addValueInComma')) {
-    function addValueInComma($value, $add)
-    {
+    function addValueInComma($value, $add) {
         if (strpos($value, ',')) {
             if (is_string($add)) $add = [$add];
             $arrayValue = explode(',', $value);
@@ -1057,8 +994,7 @@ if (!function_exists('addValueInComma')) {
 }
 
 if (!function_exists('removeValueInComma')) {
-    function removeValueInComma($value, $remove)
-    {
+    function removeValueInComma($value, $remove) {
         if (strpos($value, ',')) {
             $arrayValue = explode(',', $value);
             $arrayValue = array_filter($arrayValue, function ($value) {
@@ -1074,8 +1010,7 @@ if (!function_exists('removeValueInComma')) {
 }
 
 if (!function_exists('trim_associative_array')) {
-    function trim_associative_array(array &$input_array)
-    {
+    function trim_associative_array(array &$input_array) {
         if (is_array($input_array)) {
             foreach ($input_array as $key => &$val) {
                 if (is_array($val)) {
@@ -1089,8 +1024,7 @@ if (!function_exists('trim_associative_array')) {
 }
 
 if (!function_exists('in_comma')) {
-    function in_comma($needle, $value, $delimiter = ',')
-    {
+    function in_comma($needle, $value, $delimiter = ',') {
         if (!strpos($value, $delimiter)) return false;
 
         $arrayValue = explode($delimiter, $value);

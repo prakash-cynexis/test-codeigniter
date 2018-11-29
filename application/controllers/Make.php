@@ -1,22 +1,20 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class Make extends MY_Controller
-{
+class Make extends MY_Controller {
+
     protected $_file = null;
     protected $_resource_path = APPPATH . '/My_Classes/Resources/';
     protected $_openingTag = '{{';
     protected $_closingTag = '}}';
     protected $_class_name;
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         $this->_class_name = $this->_openingTag . 'class_Name' . $this->_closingTag;
     }
 
-    public function seed()
-    {
+    public function seed() {
         $this->table();
         echo "-------------------" . PHP_EOL;
         $this->upload_data();
@@ -24,8 +22,7 @@ class Make extends MY_Controller
         $this->views();
     }
 
-    public function table($table_name = null)
-    {
+    public function table($table_name = null) {
         if (!is_cli()) exit("No direct script access allowed");
 
         $this->load->dbforge();
@@ -62,8 +59,7 @@ class Make extends MY_Controller
         }
     }
 
-    public function views($view_name = null)
-    {
+    public function views($view_name = null) {
         $views = ['v_users'];
 
         if (!empty($view_name)) $views = [$view_name];
@@ -76,8 +72,7 @@ class Make extends MY_Controller
         }
     }
 
-    public function upload_data($file_name = null)
-    {
+    public function upload_data($file_name = null) {
         $uploads = ['roles', 'users'];
 
         if (!empty($file_name)) $uploads = [$file_name];
@@ -90,8 +85,7 @@ class Make extends MY_Controller
         }
     }
 
-    public function request($fileName)
-    {
+    public function request($fileName) {
         if (!is_cli()) exit("No direct script access allowed");
 
         $file = $this->_resource_path . 'formatOfRequestClass.txt';
@@ -104,8 +98,7 @@ class Make extends MY_Controller
         $this->createFile($text, $fileName);
     }
 
-    public function controller($fileName)
-    {
+    public function controller($fileName) {
         if (!is_cli()) exit("No direct script access allowed");
 
         $file = $this->_resource_path . 'formatOfController.txt';
@@ -118,8 +111,7 @@ class Make extends MY_Controller
         $this->createFile($text, $fileName);
     }
 
-    public function model($fileName)
-    {
+    public function model($fileName) {
         if (!is_cli()) exit("No direct script access allowed");
 
         $file = $this->_resource_path . 'formatOfModel.txt';
@@ -132,8 +124,7 @@ class Make extends MY_Controller
         $this->createFile($text, $fileName);
     }
 
-    public function web_view($fileName)
-    {
+    public function web_view($fileName) {
         if (!is_cli()) exit("No direct script access allowed");
 
         $file = $this->_resource_path . 'formatOfView.txt';
@@ -145,8 +136,7 @@ class Make extends MY_Controller
         $this->createFile($text, $fileName);
     }
 
-    public function admin_view($fileName)
-    {
+    public function admin_view($fileName) {
         if (!is_cli()) exit("No direct script access allowed");
 
         $file = $this->_resource_path . 'formatOfView.txt';
@@ -158,8 +148,7 @@ class Make extends MY_Controller
         $this->createFile($text, $fileName);
     }
 
-    private function createFile($content, $fileName)
-    {
+    private function createFile($content, $fileName) {
         $this->load->helper('file');
 
         if (!write_file($fileName, $content)) {

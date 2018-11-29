@@ -2,8 +2,8 @@
 
 namespace MyClasses\Providers;
 
-interface NotificationInterface
-{
+interface NotificationInterface {
+
     public function send();
 
     public function message($message);

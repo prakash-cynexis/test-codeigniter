@@ -6,19 +6,17 @@ use MyClasses\Http\Response;
 use RNCryptor\RNCryptor\Decryptor;
 use RNCryptor\RNCryptor\Encryptor;
 
-class CrypterProvider
-{
+class CrypterProvider {
+
     private $response;
     private $encryption_key;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->response = new Response();
         $this->encryption_key = ENCRYPTION_KEY;
     }
 
-    public function encrypt($value)
-    {
+    public function encrypt($value) {
         $cryptor = new Encryptor;
         $encrypted = null;
         if (empty($value)) $this->response->error('Can not allow null or empty field.');
@@ -32,8 +30,7 @@ class CrypterProvider
         return rawurlencode($encrypted);
     }
 
-    public function decrypt($value)
-    {
+    public function decrypt($value) {
         $deCryptor = new Decryptor;
         $decrypted = null;
         if (empty($value)) $this->response->error('encrypted data is empty.');

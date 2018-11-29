@@ -5,9 +5,10 @@ namespace MyClasses;
 use MyClasses\Providers\FCMProvider;
 use MyClasses\Providers\EmailProvider;
 use MyClasses\Providers\EmailTemplateProvider;
+use MyClasses\Providers\Notification;
 
-class Events
-{
+class Intimation {
+
     const WELCOME_EMAIL = 'WELCOME_EMAIL';
     private static $CI;
     private static $email;
@@ -18,16 +19,14 @@ class Events
     private static $template_name;
     private static $notificationData;
 
-    private static function initialize()
-    {
+    private static function initialize() {
         self::$CI = &get_instance();
         self::$CI->load->model("User_model");
         self::$usersToNotify = self::$notificationData = [];
         self::$eventType = self::$template_name = null;
     }
 
-    public static function emit($data, $eventType, array $send_by)
-    {
+    public static function emit($data, $eventType, array $send_by) {
         $result = [];
         if (!$data) response()->error('data not found.');
         if (!$eventType) response()->error('A valid event type must be passed e.g WELCOME_EMAIL..');
@@ -66,8 +65,7 @@ class Events
         return $result;
     }
 
-    private static function notify($user, $data)
-    {
+    private static function notify($user, $data) {
         $notifyContent = new Notification(new FCMProvider());
         $notifyContent->device_type($user['device_type']);
         $notifyContent->device_token($user['device_token']);
@@ -76,8 +74,7 @@ class Events
         return $done;
     }
 
-    private static function emailSend($data)
-    {
+    private static function emailSend($data) {
         if (empty(self::$template_name)) response()->error('Email Template name can not be null.');
         $emailTemplate = new EmailTemplateProvider(self::$template_name);
         $data['name'] = $data['user_name'];
@@ -93,8 +90,7 @@ class Events
         return $done;
     }
 
-    private static function setNotificationData($message, $data)
-    {
+    private static function setNotificationData($message, $data) {
         if (!is_array($data)) $data = ['id' => $data];
         self::$notificationData['type'] = self::$eventType;
         self::$notificationData['message'] = $message;

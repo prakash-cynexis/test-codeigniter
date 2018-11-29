@@ -3,29 +3,26 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 use MyClasses\AppController;
 
-class MY_Controller extends AppController
-{
+class MY_Controller extends AppController {
+
     /**
      * Meta-Data is set from the Controller Side,
      * then this variable is take it to on the view
      * @var array $meta_data
      */
     public $meta_data = []; // set in layout class
-
     /**
      * java_script is set from the Controller Side,
      * then this variable is take it to on the view
      * @var array $java_script
      */
     public $java_script = []; // set in layout class
-
     /**
      * style_sheet is set from the Controller Side,
      * then this variable is take it to on the view
      * @var array $style_sheet
      */
     public $style_sheet = []; // set in layout class
-
     /**
      * This variable can be accessed in all the classes
      * when we send the request to the controller, then
@@ -33,14 +30,12 @@ class MY_Controller extends AppController
      * @var array $authToken
      */
     public $authToken;
-
     /**
      * Through this variable, is set from the Controller Side,
      * then this variable is take it to on the view
      * @var array $data
      */
     public $data = [];
-
     /**
      * Through this variable, we pass the requested method bypass,
      * they can have access to Method Without Auth-Token.
@@ -49,26 +44,22 @@ class MY_Controller extends AppController
     public $_skip_auth_methods = [];
     private $offset;
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         $this->setOffset();
     }
 
-    public function setOffset($limit = 10)
-    {
+    public function setOffset($limit = 10) {
         $offset = 0;
         if (!empty($this->requestData['offset'])) $offset = $this->requestData['offset'];
         $this->offset = "LIMIT {$limit} OFFSET {$offset}";
     }
 
-    public function getOffset()
-    {
+    public function getOffset() {
         return $this->offset;
     }
 
-    final public function view($page, $title = null)
-    {
+    final public function view($page, $title = null) {
         $folder = "web";
         $this->data['current_user'] = getCurrentUser();
         $this->data['title'] = (!empty($title)) ? $title : variableToStr($page);
@@ -76,8 +67,7 @@ class MY_Controller extends AppController
         $this->loadView($pageLoad, $folder);
     }
 
-    final public function backend_view($page, $title = null)
-    {
+    final public function backend_view($page, $title = null) {
         $folder = "backend";
         $this->data['current_user'] = getCurrentUser();
         $this->data['title'] = (!empty($title)) ? $title : variableToStr($page);
@@ -85,8 +75,7 @@ class MY_Controller extends AppController
         $this->loadView($pageLoad, $folder);
     }
 
-    final public function setJavaScript(array $files, $folder)
-    {
+    final public function setJavaScript(array $files, $folder) {
         foreach ($files as $index => $file) {
             $file = assetUrl("{$folder}/js/{$file}");
             $this->java_script[] = "<script type=\"text/javascript\" src=\"$file\"></script>";
@@ -94,8 +83,7 @@ class MY_Controller extends AppController
         return $this;
     }
 
-    final public function setStyleSheet(array $files, $folder)
-    {
+    final public function setStyleSheet(array $files, $folder) {
         foreach ($files as $index => $file) {
             $file = assetUrl("{$folder}/css/{$file}");
             $this->style_sheet[] = "<link rel=\"stylesheet\" type=\"text/css\" href=\"$file\">";
@@ -103,22 +91,19 @@ class MY_Controller extends AppController
         return $this;
     }
 
-    final public function setMetaData(array $data)
-    {
+    final public function setMetaData(array $data) {
         foreach ($data as $index => $item) {
             $this->meta_data[] = "<meta name=\"$index\" content=\"$item\">";
         }
         return $this;
     }
 
-    private function loadView($content, $folder)
-    {
+    private function loadView($content, $folder) {
         $view_data = ['content' => $content];
         $this->load->view("layout/{$folder}/layout.php", $view_data);
     }
 
-    final public function extractInfo($data, $section, $role)
-    {
+    final public function extractInfo($data, $section, $role) {
         switch ($role) {
             case 'User':
                 $section = $this->userValidColumns($section);
@@ -128,8 +113,7 @@ class MY_Controller extends AppController
         return $section;
     }
 
-    private function userValidColumns($section)
-    {
+    private function userValidColumns($section) {
         if (ucfirst($section) == 'User') {
             return [
                 'user_name', 'email', 'password', 'role', 'subscribe_to_email'

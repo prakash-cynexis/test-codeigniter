@@ -2,16 +2,15 @@
 
 namespace MyClasses\Providers;
 
-class GCMProvider implements NotificationInterface
-{
+class GCMProvider implements NotificationInterface {
+
     private $GCM_PATH = 'https://android.googleapis.com/gcm/send';
     private $message;
     private $device_type;
     private $device_token;
     private $AUTHORIZATION_KEY = '';
 
-    public function send()
-    {
+    public function send() {
         switch ($this->device_type):
             case 'android':
                 return self::send_notification($this->device_token, $this->message);
@@ -20,20 +19,17 @@ class GCMProvider implements NotificationInterface
         endswitch;
     }
 
-    public function message($message)
-    {
+    public function message($message) {
         $this->message = $message;
         return $this;
     }
 
-    public function device_type($device_type)
-    {
+    public function device_type($device_type) {
         $this->device_type = $device_type;
         return $this;
     }
 
-    public function device_token($device_token)
-    {
+    public function device_token($device_token) {
         $this->device_token = $device_token;
         return $this;
     }
@@ -44,8 +40,7 @@ class GCMProvider implements NotificationInterface
      * @param $message
      * @return bool
      */
-    public function send_notification($registration_ids, $message)
-    {
+    public function send_notification($registration_ids, $message) {
         $sent = false;
         $fields['data'] = $message;
         $fields['registration_ids'] = [$registration_ids];

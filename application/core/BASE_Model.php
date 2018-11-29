@@ -7,8 +7,8 @@
  * @copyright Copyright (c) 2012, Jamie Rumbelow <http://jamierumbelow.net>
  */
 
-class BASE_Model extends CI_Model
-{
+class BASE_Model extends CI_Model {
+
     /* --------------------------------------------------------------
      * VARIABLES
      * ------------------------------------------------------------ */
@@ -87,8 +87,7 @@ class BASE_Model extends CI_Model
      * Initialise the model, tie into the CodeIgniter superobject and
      * try our best to guess the table name.
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
 
         $this->load->helper('inflector');
@@ -110,8 +109,7 @@ class BASE_Model extends CI_Model
     /**
      * Fetch a single record based on the primary key. Returns an object.
      */
-    final public function get($primary_value)
-    {
+    final public function get($primary_value) {
         return $this->get_by($this->primary_key, $primary_value);
     }
 
@@ -121,8 +119,7 @@ class BASE_Model extends CI_Model
      * @param $fields the fields needed
      * @return $this
      */
-    public function select($fields = NULL)
-    {
+    public function select($fields = NULL) {
         if (isset($fields)) {
             if ($fields == '*count*') {
                 $this->_select = '';
@@ -150,8 +147,7 @@ class BASE_Model extends CI_Model
      * Fetch a single record based on an arbitrary WHERE call. Can be
      * any valid value to $this->_database->where().
      */
-    final public function get_by()
-    {
+    final public function get_by() {
         $where = func_get_args();
 
         if ($this->soft_delete && $this->_temporary_with_deleted !== TRUE) {
@@ -179,8 +175,7 @@ class BASE_Model extends CI_Model
     /**
      * Fetch an array of records based on an array of primary values.
      */
-    final public function get_many($values)
-    {
+    final public function get_many($values) {
         $this->_database->where_in($this->primary_key, $values);
 
         return $this->get_all();
@@ -189,8 +184,7 @@ class BASE_Model extends CI_Model
     /**
      * Fetch an array of records based on an arbitrary WHERE call.
      */
-    final public function get_many_by()
-    {
+    final public function get_many_by() {
         $where = func_get_args();
 
         $this->_set_where($where);
@@ -202,8 +196,7 @@ class BASE_Model extends CI_Model
      * Fetch all the records in the table. Can be used as a generic call
      * to $this->_database->get() with scoped methods.
      */
-    final public function get_all()
-    {
+    final public function get_all() {
         $this->trigger('before_get');
 
         if ($this->soft_delete && $this->_temporary_with_deleted !== TRUE) {
@@ -228,8 +221,7 @@ class BASE_Model extends CI_Model
      * Insert a new row into the table. $data should be an associative array
      * of data to be inserted. Returns newly created ID.
      */
-    final public function insert($data, $skip_validation = FALSE)
-    {
+    final public function insert($data, $skip_validation = FALSE) {
         if ($skip_validation === FALSE) {
             $data = $this->validate($data);
         }
@@ -251,8 +243,7 @@ class BASE_Model extends CI_Model
     /**
      * Insert multiple rows into the table. Returns an array of multiple IDs.
      */
-    final public function insert_many($data, $skip_validation = FALSE)
-    {
+    final public function insert_many($data, $skip_validation = FALSE) {
         $ids = array();
 
         foreach ($data as $key => $row) {
@@ -265,8 +256,7 @@ class BASE_Model extends CI_Model
     /**
      * Updated a record based on the primary value.
      */
-    final public function update($primary_value, $data, $skip_validation = FALSE)
-    {
+    final public function update($primary_value, $data, $skip_validation = FALSE) {
         $data = $this->trigger('before_update', $data);
 
         if ($skip_validation === FALSE) {
@@ -289,8 +279,7 @@ class BASE_Model extends CI_Model
     /**
      * Update many records, based on an array of primary values.
      */
-    final public function update_many($primary_values, $data, $skip_validation = FALSE)
-    {
+    final public function update_many($primary_values, $data, $skip_validation = FALSE) {
         $data = $this->trigger('before_update', $data);
 
         if ($skip_validation === FALSE) {
@@ -313,8 +302,7 @@ class BASE_Model extends CI_Model
     /**
      * Updated a record based on an arbitrary WHERE clause.
      */
-    final public function update_by()
-    {
+    final public function update_by() {
         $args = func_get_args();
         $data = array_pop($args);
 
@@ -335,8 +323,7 @@ class BASE_Model extends CI_Model
     /**
      * Update all records
      */
-    final public function update_all($data)
-    {
+    final public function update_all($data) {
         $data = $this->trigger('before_update', $data);
         $result = $this->_database->set($data)
             ->update($this->_table);
@@ -348,8 +335,7 @@ class BASE_Model extends CI_Model
     /**
      * Delete a row from the table by the primary value
      */
-    final public function delete($id)
-    {
+    final public function delete($id) {
         $this->trigger('before_delete', $id);
 
         $this->_database->where($this->primary_key, $id);
@@ -368,8 +354,7 @@ class BASE_Model extends CI_Model
     /**
      * Delete a row from the database table by an arbitrary WHERE clause
      */
-    final public function delete_by()
-    {
+    final public function delete_by() {
         $where = func_get_args();
 
         $where = $this->trigger('before_delete', $where);
@@ -390,8 +375,7 @@ class BASE_Model extends CI_Model
     /**
      * Delete many rows from the database table by multiple primary values
      */
-    final public function delete_many($primary_values)
-    {
+    final public function delete_many($primary_values) {
         $primary_values = $this->trigger('before_delete', $primary_values);
 
         $this->_database->where_in($this->primary_key, $primary_values);
@@ -410,8 +394,7 @@ class BASE_Model extends CI_Model
     /**
      * Truncates the table
      */
-    final public function truncate()
-    {
+    final public function truncate() {
         $result = $this->_database->truncate($this->_table);
 
         return $result;
@@ -421,8 +404,7 @@ class BASE_Model extends CI_Model
      * RELATIONSHIPS
      * ------------------------------------------------------------ */
 
-    final public function with($relationship)
-    {
+    final public function with($relationship) {
         $this->_with[] = $relationship;
 
         if (!in_array('relate', $this->after_get)) {
@@ -432,8 +414,7 @@ class BASE_Model extends CI_Model
         return $this;
     }
 
-    final public function relate($row)
-    {
+    final public function relate($row) {
         if (empty($row)) {
             return $row;
         }
@@ -488,8 +469,7 @@ class BASE_Model extends CI_Model
     /**
      * Retrieve and generate a form_dropdown friendly array
      */
-    final public function dropdown()
-    {
+    final public function dropdown() {
         $args = func_get_args();
 
         if (count($args) == 2) {
@@ -523,8 +503,7 @@ class BASE_Model extends CI_Model
     /**
      * Fetch a count of rows based on an arbitrary WHERE call.
      */
-    final public function count_by()
-    {
+    final public function count_by() {
         if ($this->soft_delete && $this->_temporary_with_deleted !== TRUE) {
             $this->_database->where($this->soft_delete_key, (bool)$this->_temporary_only_deleted);
         }
@@ -538,8 +517,7 @@ class BASE_Model extends CI_Model
     /**
      * Fetch a total count of rows, disregarding any previous conditions
      */
-    final public function count_all()
-    {
+    final public function count_all() {
         if ($this->soft_delete && $this->_temporary_with_deleted !== TRUE) {
             $this->_database->where($this->soft_delete_key, (bool)$this->_temporary_only_deleted);
         }
@@ -550,8 +528,7 @@ class BASE_Model extends CI_Model
     /**
      * Tell the class to skip the insert validation
      */
-    final public function skip_validation()
-    {
+    final public function skip_validation() {
         $this->skip_validation = TRUE;
         return $this;
     }
@@ -559,16 +536,14 @@ class BASE_Model extends CI_Model
     /**
      * Get the skip validation status
      */
-    final public function get_skip_validation()
-    {
+    final public function get_skip_validation() {
         return $this->skip_validation;
     }
 
     /**
      * Return the next auto increment of the table. Only tested on MySQL.
      */
-    final public function get_next_id()
-    {
+    final public function get_next_id() {
         return (int)$this->_database->select('AUTO_INCREMENT')
             ->from('information_schema.TABLES')
             ->where('TABLE_NAME', $this->_table)
@@ -578,8 +553,7 @@ class BASE_Model extends CI_Model
     /**
      * Getter for the table name
      */
-    final public function table()
-    {
+    final public function table() {
         return $this->_table;
     }
 
@@ -590,8 +564,7 @@ class BASE_Model extends CI_Model
     /**
      * Return the next call as an array rather than an object
      */
-    final public function as_array()
-    {
+    final public function as_array() {
         $this->_temporary_return_type = 'array';
         return $this;
     }
@@ -599,8 +572,7 @@ class BASE_Model extends CI_Model
     /**
      * Return the next call as an object rather than an array
      */
-    final public function as_object()
-    {
+    final public function as_object() {
         $this->_temporary_return_type = 'object';
         return $this;
     }
@@ -608,8 +580,7 @@ class BASE_Model extends CI_Model
     /**
      * Don't care about soft deleted rows on the next call
      */
-    final public function with_deleted()
-    {
+    final public function with_deleted() {
         $this->_temporary_with_deleted = TRUE;
         return $this;
     }
@@ -617,8 +588,7 @@ class BASE_Model extends CI_Model
     /**
      * Only get deleted rows on the next call
      */
-    final public function only_deleted()
-    {
+    final public function only_deleted() {
         $this->_temporary_only_deleted = TRUE;
         return $this;
     }
@@ -630,8 +600,7 @@ class BASE_Model extends CI_Model
     /**
      * MySQL DATETIME created_at and updated_at
      */
-    final public function created_at($row)
-    {
+    final public function created_at($row) {
         if (is_object($row)) {
             $row->created_at = date('Y-m-d H:i:s');
         } else {
@@ -641,8 +610,7 @@ class BASE_Model extends CI_Model
         return $row;
     }
 
-    final public function updated_at($row)
-    {
+    final public function updated_at($row) {
         if (is_object($row)) {
             $row->updated_at = date('Y-m-d H:i:s');
         } else {
@@ -656,8 +624,7 @@ class BASE_Model extends CI_Model
      * Serialises data for you automatically, allowing you to pass
      * through objects and let it handle the serialisation in the background
      */
-    final public function serialize($row)
-    {
+    final public function serialize($row) {
         foreach ($this->callback_parameters as $column) {
             $row[$column] = serialize($row[$column]);
         }
@@ -665,8 +632,7 @@ class BASE_Model extends CI_Model
         return $row;
     }
 
-    final public function unserialize($row)
-    {
+    final public function unserialize($row) {
         foreach ($this->callback_parameters as $column) {
             if (is_array($row)) {
                 $row[$column] = unserialize($row[$column]);
@@ -681,8 +647,7 @@ class BASE_Model extends CI_Model
     /**
      * Protect attributes by removing them from $row array
      */
-    final public function protect_attributes($row)
-    {
+    final public function protect_attributes($row) {
         foreach ($this->protected_attributes as $attr) {
             if (is_object($row)) {
                 unset($row->$attr);
@@ -701,8 +666,7 @@ class BASE_Model extends CI_Model
     /**
      * A wrapper to $this->_database->order_by()
      */
-    final public function order_by($criteria, $order = 'ASC')
-    {
+    final public function order_by($criteria, $order = 'ASC') {
         if (is_array($criteria)) {
             foreach ($criteria as $key => $value) {
                 $this->_database->order_by($key, $value);
@@ -716,8 +680,7 @@ class BASE_Model extends CI_Model
     /**
      * A wrapper to $this->_database->limit()
      */
-    final public function limit($limit, $offset = 0)
-    {
+    final public function limit($limit, $offset = 0) {
         $this->_database->limit($limit, $offset);
         return $this;
     }
@@ -731,8 +694,7 @@ class BASE_Model extends CI_Model
      * (which looks for an instance variable $this->event_name), an array of
      * parameters to pass through and an optional 'last in interation' boolean
      */
-    final public function trigger($event, $data = FALSE, $last = TRUE)
-    {
+    final public function trigger($event, $data = FALSE, $last = TRUE) {
         if (isset($this->$event) && is_array($this->$event)) {
             foreach ($this->$event as $method) {
                 if (strpos($method, '(')) {
@@ -752,8 +714,7 @@ class BASE_Model extends CI_Model
     /**
      * Run validation on the passed data
      */
-    final public function validate($data)
-    {
+    final public function validate($data) {
         if ($this->skip_validation) {
             return $data;
         }
@@ -788,8 +749,7 @@ class BASE_Model extends CI_Model
     /**
      * Guess the table name by pluralising the model name
      */
-    private function _fetch_table()
-    {
+    private function _fetch_table() {
         if ($this->_table == NULL) {
             $this->_table = plural(preg_replace('/(_m|_model)?$/', '', strtolower(get_class($this))));
         }
@@ -798,8 +758,7 @@ class BASE_Model extends CI_Model
     /**
      * Guess the primary key for current table
      */
-    private function _fetch_primary_key()
-    {
+    private function _fetch_primary_key() {
         if ($this->primary_key == NULl) {
             $this->primary_key = $this->_database->query("SHOW KEYS FROM `" . $this->_table . "` WHERE Key_name = 'PRIMARY'")->row()->Column_name;
         }
@@ -808,8 +767,7 @@ class BASE_Model extends CI_Model
     /**
      * Set WHERE parameters, cleverly
      */
-    protected function _set_where($params)
-    {
+    protected function _set_where($params) {
         if (count($params) == 1 && is_array($params[0])) {
             foreach ($params[0] as $field => $filter) {
                 if (is_array($filter)) {
@@ -844,14 +802,12 @@ class BASE_Model extends CI_Model
     /**
      * Return the method name for the current return type
      */
-    protected function _return_type($multi = FALSE)
-    {
+    protected function _return_type($multi = FALSE) {
         $method = ($multi) ? 'result' : 'row';
         return $this->_temporary_return_type == 'array' ? $method . '_array' : $method;
     }
 
-    final public function typeCast($data)
-    {
+    final public function typeCast($data) {
         if (!$this->typeCast) return $data;
         if (!is_array($data)) return $data;
         return array_map(function ($element) {

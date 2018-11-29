@@ -4,20 +4,18 @@ namespace MyClasses\Providers;
 
 use MyClasses\Http\Response;
 
-abstract class ValidatorProvider implements ValidatorInterface
-{
+abstract class ValidatorProvider implements ValidatorInterface {
+
     protected static $CI;
     protected static $input;
     protected static $validation_rules = [];
 
-    protected static function initialize()
-    {
+    protected static function initialize() {
         static::$CI = &get_instance();
         static::$input = request()->input();
     }
 
-    protected static function form_validation($data = null)
-    {
+    protected static function form_validation($data = null) {
         static::initialize();
         $class = get_called_class();
         if (!is_null($data)) static::$input = $data;

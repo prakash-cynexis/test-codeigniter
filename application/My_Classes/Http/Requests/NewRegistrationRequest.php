@@ -4,16 +4,14 @@ namespace MyClasses\Http\Requests;
 
 use MyClasses\Providers\ValidatorProvider;
 
-class NewRegistrationRequest extends ValidatorProvider
-{
-    public static function validate($data = null)
-    {
+class NewRegistrationRequest extends ValidatorProvider {
+
+    public static function validate($data = null) {
         $data = static::form_validation($data);
         return $data;
     }
 
-    public static function rules()
-    {
+    public static function rules() {
         static::$validation_rules = [
             ['field' => 'field_one', 'rules' => 'required']
         ];
