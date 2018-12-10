@@ -503,6 +503,7 @@ if (!function_exists('typeCasting')) {
      * @return array|bool
      */
     function typeCasting($array) {
+        $stringArray = [];
         if (!is_array($array)) return $array;
         foreach ($array as $key => $value) {
             if (is_array($value)) {
@@ -510,9 +511,12 @@ if (!function_exists('typeCasting')) {
                 $array[$key] = $value;
                 continue;
             }
-            if (is_digit($value)) {
+            if (is_digit($value) && !strpos($value, '.')) {
                 $length = strlen((string)$value);
                 $array[$key] = ($length > 9) ? floatval($value) : (int)$value;
+                if (in_array($key, $stringArray)) {
+                    $array[$key] = (string)$value;
+                }
             }
         }
         return $array;
