@@ -1041,3 +1041,20 @@ if (!function_exists('in_comma')) {
         return false;
     }
 }
+
+if (!function_exists('unique_associative_array')) {
+    function unique_associative_array($array, $key) {
+        $i = 0;
+        $key_array = [];
+        $temp_array = [];
+
+        foreach ($array as $val) :
+            if (!in_array($val[$key], $key_array)) :
+                $key_array[$i] = $val[$key];
+                $temp_array[$i] = $val;
+            endif;
+            $i++;
+        endforeach;
+        return $temp_array;
+    }
+}
