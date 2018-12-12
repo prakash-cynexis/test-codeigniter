@@ -1043,11 +1043,12 @@ if (!function_exists('in_comma')) {
 }
 
 if (!function_exists('unique_associative_array')) {
-    function unique_associative_array($array, $key) {
+    function unique_associative_array(array $array, $key) {
+        if (empty($array)) return $array;
+
         $i = 0;
         $key_array = [];
         $temp_array = [];
-
         foreach ($array as $val) :
             if (!in_array($val[$key], $key_array)) :
                 $key_array[$i] = $val[$key];
@@ -1056,5 +1057,18 @@ if (!function_exists('unique_associative_array')) {
             $i++;
         endforeach;
         return $temp_array;
+    }
+}
+
+if (!function_exists('associative_in_array')) {
+    function associative_in_array(array $array, $array2) {
+        if (empty($array)) return $array;
+
+        foreach ($array as $val) :
+            if ($val[$array2[0]] == $array2[1]) :
+                return true;
+            endif;
+        endforeach;
+        return false;
     }
 }
