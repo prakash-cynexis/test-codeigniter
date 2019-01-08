@@ -55,7 +55,7 @@ if (!function_exists('apiError')) {
      * @param $message
      * @param int $http_status
      */
-    function apiError($message, $http_status = 400) {
+    function apiError($message, $http_status = 200) {
         header('Content-Type: application/json', true, $http_status);
         die(json_encode(errorResponse($message)));
     }
@@ -128,12 +128,18 @@ if (!function_exists('htmlFlash')) {
         $CI = &get_instance();
         $flash = $CI->session->flashdata($type);
         if (!$flash) return false;
-
+        $class = "alert alert-success";
+        if ($flash['class'] == 'error') {
+            $class = "alert alert-danger";
+        }
+        if ($flash['class'] == 'warning') {
+            $class = "alert alert-warning";
+        }
         if (!is_array($flash['message'])) {
-            return "<div class='{$flash['class']}-alert'><i class='fa fa-check-circle' aria-hidden='true'></i>{$flash['message']}</div>";
+            return "<div class='{$class}'><i class='fa fa-check-circle' aria-hidden='true'></i> {$flash['message']}</div>";
         }
 
-        $msg = "<div class='{$flash['class']}-alert'>";
+        $msg = "<div class='{$class}'>";
         foreach ($flash['message'] as $flash_message) {
             $msg .= "<i class='fa fa-check-circle' aria-hidden='true'></i>{$flash_message}<br/>";
         }
@@ -463,6 +469,7 @@ if (!function_exists('typeCast')) {
     /**
      * @param array $array
      * @return array|bool
+     * @deprecated
      */
     function typeCast($array) {
         if (!is_array($array)) return $array;
@@ -514,7 +521,7 @@ if (!function_exists('typeCasting')) {
             if (is_digit($value) && !strpos($value, '.')) {
                 $length = strlen((string)$value);
                 $array[$key] = ($length > 9) ? floatval($value) : (int)$value;
-                if (in_array($key, $stringArray)) {
+                if (array_key_exists($key, array_flip($stringArray))) {
                     $array[$key] = (string)$value;
                 }
             }
@@ -685,10 +692,12 @@ if (!function_exists('validImage')) {
     /**
      * @param string $name
      * @return bool|string
-     * @deprecated
      */
     function validImage($name) {
         if (empty($_FILES[$name]['name'])) return false;
+        if ($_FILES[$name]['type'] != 'image/png' && $_FILES[$name]['type'] != 'image/jpg' && $_FILES[$name]['type'] != 'image/jpeg' && $_FILES[$name]['type'] != 'image/gif') {
+            response()->error("image format not valid.");
+        }
         return true;
     }
 }
@@ -826,28 +835,6 @@ if (!function_exists('log_activity')) {
     }
 }
 
-if (!function_exists('getStylesheet')) {
-    function getStylesheet() {
-        $style_sheet = get_instance()->style_sheet;
-        if (empty($style_sheet)) return null;
-        foreach ($style_sheet as $index => $item) echo $item . PHP_EOL;
-    }
-}
-if (!function_exists('getJavascript')) {
-    function getJavascript() {
-        $java_script = get_instance()->java_script;
-        if (empty($java_script)) return null;
-        foreach ($java_script as $index => $item) echo $item . PHP_EOL;
-    }
-}
-if (!function_exists('getMetaData')) {
-    function getMetaData() {
-        $meta_data = get_instance()->meta_data;
-        if (empty($meta_data)) return null;
-        foreach ($meta_data as $index => $item) echo $item . PHP_EOL;
-    }
-}
-
 if (!function_exists('blank')) {
     /**
      * @param $value
@@ -884,6 +871,12 @@ if (!function_exists('crypter')) {
 if (!function_exists('token')) {
     function token() {
         return new Token();
+    }
+}
+
+if (!function_exists('crypter')) {
+    function crypter() {
+        return new CrypterProvider();
     }
 }
 
@@ -981,16 +974,18 @@ if (!function_exists('hasComma')) {
 
 if (!function_exists('addValueInComma')) {
     function addValueInComma($value, $add) {
-        if (strpos($value, ',')) {
-            if (is_string($add)) $add = [$add];
+        if (empty($value)) return $add;
+
+        if (hasComma($value)) {
+            $addArrayValue = [];
+            if (is_string($add)) $addArrayValue = [$add];
             $arrayValue = explode(',', $value);
             $arrayValue = array_filter($arrayValue, function ($value) {
-                return $value !== '';
+                return trim($value) !== '';
             });
-            $arrayValue = array_merge($arrayValue, $add);
+            $arrayValue = array_merge($arrayValue, $addArrayValue);
             $value = implode(',', array_unique($arrayValue));
-        }
-        if (is_string($value) && !hasComma($value)) {
+        } else {
             $value = $value . ',' . $add;
         }
         return $value;
@@ -1002,7 +997,7 @@ if (!function_exists('removeValueInComma')) {
         if (strpos($value, ',')) {
             $arrayValue = explode(',', $value);
             $arrayValue = array_filter($arrayValue, function ($value) {
-                return $value !== '';
+                return trim($value) !== '';
             });
             $arrayValue = array_flip($arrayValue);
             unset($arrayValue[$remove]);
@@ -1070,5 +1065,33 @@ if (!function_exists('associative_in_array')) {
             endif;
         endforeach;
         return false;
+    }
+}
+
+if (!function_exists('removeElementWithValue')) {
+    function removeElementWithValue(array &$array, $key, $value) {
+        foreach ($array as $subKey => $subArray) :
+            if ($subArray[$key] == $value) :
+                unset($array[$subKey]);
+            endif;
+        endforeach;
+    }
+}
+
+if (!function_exists('url_get_contents')) {
+    function url_get_contents($url) {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url); // The URL to fetch. This can also be set when initializing a session with curl_init().
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE); // TRUE to return the transfer as a string of the return value of curl_exec() instead of outputting it out directly.
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10); // The number of seconds to wait while trying to connect.
+        curl_setopt($ch, CURLOPT_USERAGENT, (new CI_User_agent())->agent_string()); // The contents of the "User-Agent: " header to be used in a HTTP request.
+        curl_setopt($ch, CURLOPT_FAILONERROR, TRUE); // To fail silently if the HTTP code returned is greater than or equal to 400.
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE); // To follow any "Location: " header that the server sends as part of the HTTP header.
+        curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE); // To automatically set the Referer: field in requests where it follows a Location: redirect.
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10); // The maximum number of seconds to allow cURL functions to execute.
+        curl_setopt($ch, CURLOPT_MAXREDIRS, 5); // The maximum number of redirects
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
     }
 }
