@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-use MyClasses\Events;
+use MyClasses\Intimation;
 use MyClasses\Providers\DataTableProvider;
 use Ozdemir\Datatables\Datatables;
 use Ozdemir\Datatables\DB\CodeigniterAdapter;
@@ -82,7 +82,7 @@ class Code extends MY_Controller {
             'user_name' => 'prakash',
         ];
 
-        $done = Events::emit($userInfo, Events::WELCOME_EMAIL, ['Email']);
+        $done = Intimation::emit($userInfo, Intimation::WELCOME_EMAIL, ['Email']);
         dd($done);
     }
 
