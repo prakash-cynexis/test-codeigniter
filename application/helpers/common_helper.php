@@ -538,17 +538,17 @@ if (!function_exists('omitNullKeys')) {
      */
     function omitNullKeys(array $data, $trimming = true) {
         if ($trimming === true) $data = trimming($data);
+        if (empty($data)) return is_array($data) ? [] : null;
 
-        if (is_null($data) && empty($data)) return false;
-        foreach ($data as $key => $value) {
-            if (is_array($data[$key])) {
+        foreach ($data as $key => $value) :
+            if (is_array($data[$key])) :
                 $data[$key] = omitNullKeys($data[$key]);
-            } else {
-                if (!is_bool($data[$key]) && !is_numeric($data[$key]) && (is_null($data[$key]) || $data[$key] == null || strtolower($data[$key]) == strtolower('NULL') || $data[$key] == '')) {
+            else :
+                if (!is_bool($data[$key]) && !is_numeric($data[$key]) && (is_null($data[$key]) || $data[$key] == null || strtolower($data[$key]) == strtolower('NULL') || $data[$key] == '')) :
                     unset($data[$key]);
-                }
-            }
-        }
+                endif;
+            endif;
+        endforeach;
         return $data;
     }
 }
