@@ -1,3 +1,141 @@
+POST http://localhost/test-codeigniter/code/getData?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+<> 2019-03-29T035349.200.html
+
+###
+
+POST http://localhost/test-codeigniter/code/getData?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+<> 2019-03-29T035334.200.html
+
+###
+
+POST http://localhost/test-codeigniter/code/getData?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+<> 2019-03-29T035316.200.html
+
+###
+
+POST http://localhost/test-codeigniter/code/getData?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+<> 2019-03-29T035254.200.html
+
+###
+
+POST http://localhost/test-codeigniter/code/getData?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+<> 2019-03-29T035206.500.json
+
+###
+
+POST http://localhost/test-codeigniter/code/testStudent?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+<> 2019-02-28T030452.200.html
+
+###
+
+POST http://localhost/test-codeigniter/code/testStudent?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+<> 2019-02-28T030435.200.html
+
+###
+
+POST http://localhost/test-codeigniter/code/testStudent?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+<> 2019-02-28T030427.200.html
+
+###
+
+POST http://localhost/test-codeigniter/code/testStudent?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+###
+
+POST http://localhost/test-codeigniter/code/testStudent?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+<> 2019-02-21T053419.200.html
+
+###
+
+POST http://localhost/test-codeigniter/code/testStudent?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+<> 2019-02-21T053202.200.html
+
+###
+
+POST http://localhost/test-codeigniter/code/testStudent?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+<> 2019-02-21T053039.200.html
+
+###
+
+POST http://localhost/test-codeigniter/code/testStudent?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+<> 2019-02-21T052943.200.html
+
+###
+
+POST http://localhost/test-codeigniter/code/testStudent?email=admin@admin.com&password=admin123
+Accept: */*
+Cache-Control: no-cache
+Response-Type: application/json
+Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
+
+<> 2019-02-21T052926.500.html
+
+###
+
 POST http://localhost/test-codeigniter/code/testStudent?email=admin@admin.com&password=admin123
 Accept: */*
 Cache-Control: no-cache
@@ -349,146 +487,6 @@ Response-Type: application/json
 Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
 
 <> 2018-10-05T060348.200.html
-
-###
-
-POST http://localhost/test-codeigniter/code/getData?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-10-05T060344.200.html
-
-###
-
-POST http://localhost/test-codeigniter/code/getData?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-10-05T060042.200.html
-
-###
-
-POST http://localhost/test-codeigniter/code/getData?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-10-05T060004.200.html
-
-###
-
-POST http://localhost/test-codeigniter/code/getData?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-10-05T055954.200.html
-
-###
-
-POST http://localhost/test-codeigniter/code/getData?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-10-05T055922.200.html
-
-###
-
-POST http://localhost/test-codeigniter/code/getData?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-10-05T055903.200.html
-
-###
-
-POST http://localhost/test-codeigniter/login?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-09-24T064800.200.json
-
-###
-
-POST http://localhost/test-codeigniter/login?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-09-24T064718.200.json
-
-###
-
-POST http://localhost/test-codeigniter/login?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-09-24T064657.200.json
-
-###
-
-GET http://localhost/test-codeigniter/code/checkIsPost?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-09-24T064458.200.html
-
-###
-
-GET http://localhost/test-codeigniter/code/checkIsPost?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-09-24T064354.200.html
-
-###
-
-GET http://localhost/test-codeigniter/code/checkIsPost?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-09-24T064336.200.html
-
-###
-
-GET http://localhost/test-codeigniter/code/checkIsPost?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-09-24T064245.200.html
-
-###
-
-GET http://localhost/test-codeigniter/code/checkIsPost?email=admin@admin.com&password=admin123
-Accept: */*
-Cache-Control: no-cache
-Response-Type: application/json
-Auth-Token: AwEjLcWM661b39C9%2BbWTaTIt70EaT1pmmd5bbVFwOhit0SwR%2FrxFTGm972cbZ6u%2BSNN1h5XQM5sKOxz3I%2F5LLpb2HnKaw5SnyWFdvyBLG0NwjcpInhtWV6B6uH08%2Fvf%2FWzF8CvPcJITMH%2BxWfC1qLAKIcYobhS6uCRsG4VkiBx3LSbpvMXEcdt7Q2IoSBqVXBiFstRlSQJIQeew0WeqVMy1w3alIDKE9jDF6gR7fLG9TIy1htkzPTcQGFDOJUeGIVak%3D
-
-<> 2018-09-24T063628.200.html
 
 ###
 

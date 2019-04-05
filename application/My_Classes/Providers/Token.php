@@ -23,11 +23,10 @@ class Token {
         return $token;
     }
 
-    public function set($data) {
-        $token = $this->crypter->encrypt($data);
-        if (!$token) $this->response->error('invalid data for token.');
-
-        return $token;
+    private function isExists() {
+        $headers = get_instance()->input->request_headers();
+        return (array_key_exists('Auth-Token', $headers)
+            && !empty($headers['Auth-Token'])) ? $headers['Auth-Token'] : false;
     }
 
     private function validate($token) {
@@ -38,9 +37,10 @@ class Token {
         return true;
     }
 
-    private function isExists() {
-        $headers = get_instance()->input->request_headers();
-        return (array_key_exists('Auth-Token', $headers)
-            && !empty($headers['Auth-Token'])) ? $headers['Auth-Token'] : false;
+    public function set($data) {
+        $token = $this->crypter->encrypt($data);
+        if (!$token) $this->response->error('invalid data for token.');
+
+        return $token;
     }
 }

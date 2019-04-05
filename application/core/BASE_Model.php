@@ -13,19 +13,18 @@ class BASE_Model extends CI_Model {
      * VARIABLES
      * ------------------------------------------------------------ */
 
-    protected $typeCast = true;
-    /**
-     * This model's default database table. Automatically
-     * guessed by pluralising the model name.
-     */
-    protected $_table;
-    private $_select;
     /**
      * The database connection object. Will be set to the default
      * connection. This allows individual models to use different DBs
      * without overwriting CI's global $this->db connection.
      */
     public $_database;
+    protected $typeCast = true;
+    /**
+     * This model's default database table. Automatically
+     * guessed by pluralising the model name.
+     */
+    protected $_table;
     /**
      * This model's default primary key or unique identifier.
      * Used by the get(), update() and delete() functions.
@@ -72,13 +71,14 @@ class BASE_Model extends CI_Model {
      * skip_validation() to skip data validation for any future calls.
      */
     protected $skip_validation = FALSE;
+
+    protected $return_type = 'array';
     /**
      * By default we return our results as objects. If we need to override
      * this, we can, or, we could use the `as_array()` and `as_object()` scopes.
      */
-    //protected $return_type = 'object';
-    protected $return_type = 'array';
-    protected $_temporary_return_type = NULL;
+    //protected $return_type = 'object';    protected $_temporary_return_type = NULL;
+    private $_select;
     /* --------------------------------------------------------------
      * GENERIC METHODS
      * ------------------------------------------------------------ */
@@ -107,10 +107,126 @@ class BASE_Model extends CI_Model {
      * ------------------------------------------------------------ */
 
     /**
+     * Guess the table name by pluralising the model name
+     */
+    private function _fetch_table() {
+        if ($this->_table == NULL) {
+            $this->_table = plural(preg_replace('/(_m|_model)?$/', '', strtolower(get_class($this))));
+        }
+    }
+
+    /**
      * Fetch a single record based on the primary key. Returns an object.
      */
     final public function get($primary_value) {
         return $this->get_by($this->primary_key, $primary_value);
+    }
+
+    /**
+     * Fetch a single record based on an arbitrary WHERE call. Can be
+     * any valid value to $this->_database->where().
+     */
+    final public function get_by() {
+        $where = func_get_args();
+
+        if ($this->soft_delete && $this->_temporary_with_deleted !== TRUE) {
+            $this->_database->where($this->soft_delete_key, (bool)$this->_temporary_only_deleted);
+        }
+
+        $this->_set_where($where);
+
+        $this->trigger('before_get');
+
+        if ($this->_select) {
+            $this->_database->select($this->_select);
+        }
+
+        $row = $this->_database->get($this->_table)
+            ->{$this->_return_type()}();
+        $this->_temporary_return_type = $this->return_type;
+
+        $row = $this->trigger('after_get', $row);
+
+        $this->_with = array();
+        return $this->typeCast($row);
+    }
+
+    /**
+     * Set WHERE parameters, cleverly
+     */
+    protected function _set_where($params) {
+        if (count($params) == 1 && is_array($params[0])) {
+            foreach ($params[0] as $field => $filter) {
+                if (is_array($filter)) {
+                    $this->_database->where_in($field, $filter);
+                } else {
+                    if (is_int($field)) {
+                        $this->_database->where($filter);
+                    } else {
+                        $this->_database->where($field, $filter);
+                    }
+                }
+            }
+        } else if (count($params) == 1) {
+            $this->_database->where($params[0]);
+        } else if (count($params) == 2) {
+            if (is_array($params[1])) {
+                $this->_database->where_in($params[0], $params[1]);
+            } else {
+                $this->_database->where($params[0], $params[1]);
+            }
+        } else if (count($params) == 3) {
+            $this->_database->where($params[0], $params[1], $params[2]);
+        } else {
+            if (is_array($params[1])) {
+                $this->_database->where_in($params[0], $params[1]);
+            } else {
+                $this->_database->where($params[0], $params[1]);
+            }
+        }
+    }
+
+    /**
+     * Trigger an event and call its observers. Pass through the event name
+     * (which looks for an instance variable $this->event_name), an array of
+     * parameters to pass through and an optional 'last in interation' boolean
+     */
+    final public function trigger($event, $data = FALSE, $last = TRUE) {
+        if (isset($this->$event) && is_array($this->$event)) {
+            foreach ($this->$event as $method) {
+                if (strpos($method, '(')) {
+                    preg_match('/([a-zA-Z0-9\_\-]+)(\(([a-zA-Z0-9\_\-\., ]+)\))?/', $method, $matches);
+
+                    $method = $matches[1];
+                    $this->callback_parameters = explode(',', $matches[3]);
+                }
+
+                $data = call_user_func_array(array($this, $method), array($data, $last));
+            }
+        }
+
+        return $data;
+    }
+
+    /**
+     * Return the method name for the current return type
+     */
+    protected function _return_type($multi = FALSE) {
+        $method = ($multi) ? 'result' : 'row';
+        return $this->_temporary_return_type == 'array' ? $method . '_array' : $method;
+    }
+
+    final public function typeCast($data) {
+        if (!$this->typeCast) return $data;
+        if (!is_array($data)) return $data;
+        return array_map(function ($element) {
+            if (is_array($element)) $element = $this->typeCast($element);
+            if (is_numeric($element) && !strpos($element, '.')) {
+                $length = strlen((string)$element);
+                return ($length > 9) ? floatval($element) : (int)$element;
+            }
+            return $element;
+        }, $data);
     }
 
     /**
@@ -144,50 +260,10 @@ class BASE_Model extends CI_Model {
     }
 
     /**
-     * Fetch a single record based on an arbitrary WHERE call. Can be
-     * any valid value to $this->_database->where().
-     */
-    final public function get_by() {
-        $where = func_get_args();
-
-        if ($this->soft_delete && $this->_temporary_with_deleted !== TRUE) {
-            $this->_database->where($this->soft_delete_key, (bool)$this->_temporary_only_deleted);
-        }
-
-        $this->_set_where($where);
-
-        $this->trigger('before_get');
-
-        if ($this->_select) {
-            $this->_database->select($this->_select);
-        }
-
-        $row = $this->_database->get($this->_table)
-            ->{$this->_return_type()}();
-        $this->_temporary_return_type = $this->return_type;
-
-        $row = $this->trigger('after_get', $row);
-
-        $this->_with = array();
-        return $this->typeCast($row);
-    }
-
-    /**
      * Fetch an array of records based on an array of primary values.
      */
     final public function get_many($values) {
         $this->_database->where_in($this->primary_key, $values);
-
-        return $this->get_all();
-    }
-
-    /**
-     * Fetch an array of records based on an arbitrary WHERE call.
-     */
-    final public function get_many_by() {
-        $where = func_get_args();
-
-        $this->_set_where($where);
 
         return $this->get_all();
     }
@@ -218,6 +294,30 @@ class BASE_Model extends CI_Model {
     }
 
     /**
+     * Fetch an array of records based on an arbitrary WHERE call.
+     */
+    final public function get_many_by() {
+        $where = func_get_args();
+
+        $this->_set_where($where);
+
+        return $this->get_all();
+    }
+
+    /**
+     * Insert multiple rows into the table. Returns an array of multiple IDs.
+     */
+    final public function insert_many($data, $skip_validation = FALSE) {
+        $ids = array();
+
+        foreach ($data as $key => $row) {
+            $ids[] = $this->insert($row, $skip_validation, ($key == count($data) - 1));
+        }
+
+        return $ids;
+    }
+
+    /**
      * Insert a new row into the table. $data should be an associative array
      * of data to be inserted. Returns newly created ID.
      */
@@ -241,16 +341,38 @@ class BASE_Model extends CI_Model {
     }
 
     /**
-     * Insert multiple rows into the table. Returns an array of multiple IDs.
+     * Run validation on the passed data
      */
-    final public function insert_many($data, $skip_validation = FALSE) {
-        $ids = array();
-
-        foreach ($data as $key => $row) {
-            $ids[] = $this->insert($row, $skip_validation, ($key == count($data) - 1));
+    final public function validate($data) {
+        if ($this->skip_validation) {
+            return $data;
         }
 
-        return $ids;
+        if (!empty($this->validate)) {
+            foreach ($data as $key => $val) {
+                $_POST[$key] = $val;
+            }
+
+            $this->load->library('form_validation');
+
+            if (is_array($this->validate)) {
+                $this->form_validation->set_rules($this->validate);
+
+                if ($this->form_validation->run() === TRUE) {
+                    return $data;
+                } else {
+                    return FALSE;
+                }
+            } else {
+                if ($this->form_validation->run($this->validate) === TRUE) {
+                    return $data;
+                } else {
+                    return FALSE;
+                }
+            }
+        } else {
+            return $data;
+        }
     }
 
     /**
@@ -299,6 +421,10 @@ class BASE_Model extends CI_Model {
         }
     }
 
+    /* --------------------------------------------------------------
+     * RELATIONSHIPS
+     * ------------------------------------------------------------ */
+
     /**
      * Updated a record based on an arbitrary WHERE clause.
      */
@@ -331,6 +457,10 @@ class BASE_Model extends CI_Model {
 
         return $result;
     }
+
+    /* --------------------------------------------------------------
+     * UTILITY METHODS
+     * ------------------------------------------------------------ */
 
     /**
      * Delete a row from the table by the primary value
@@ -400,10 +530,6 @@ class BASE_Model extends CI_Model {
         return $result;
     }
 
-    /* --------------------------------------------------------------
-     * RELATIONSHIPS
-     * ------------------------------------------------------------ */
-
     final public function with($relationship) {
         $this->_with[] = $relationship;
 
@@ -462,10 +588,6 @@ class BASE_Model extends CI_Model {
         return $row;
     }
 
-    /* --------------------------------------------------------------
-     * UTILITY METHODS
-     * ------------------------------------------------------------ */
-
     /**
      * Retrieve and generate a form_dropdown friendly array
      */
@@ -499,6 +621,10 @@ class BASE_Model extends CI_Model {
 
         return $options;
     }
+
+    /* --------------------------------------------------------------
+     * GLOBAL SCOPES
+     * ------------------------------------------------------------ */
 
     /**
      * Fetch a count of rows based on an arbitrary WHERE call.
@@ -540,6 +666,10 @@ class BASE_Model extends CI_Model {
         return $this->skip_validation;
     }
 
+    /* --------------------------------------------------------------
+     * OBSERVERS
+     * ------------------------------------------------------------ */
+
     /**
      * Return the next auto increment of the table. Only tested on MySQL.
      */
@@ -556,10 +686,6 @@ class BASE_Model extends CI_Model {
     final public function table() {
         return $this->_table;
     }
-
-    /* --------------------------------------------------------------
-     * GLOBAL SCOPES
-     * ------------------------------------------------------------ */
 
     /**
      * Return the next call as an array rather than an object
@@ -585,6 +711,10 @@ class BASE_Model extends CI_Model {
         return $this;
     }
 
+    /* --------------------------------------------------------------
+     * QUERY BUILDER DIRECT ACCESS METHODS
+     * ------------------------------------------------------------ */
+
     /**
      * Only get deleted rows on the next call
      */
@@ -592,10 +722,6 @@ class BASE_Model extends CI_Model {
         $this->_temporary_only_deleted = TRUE;
         return $this;
     }
-
-    /* --------------------------------------------------------------
-     * OBSERVERS
-     * ------------------------------------------------------------ */
 
     /**
      * MySQL DATETIME created_at and updated_at
@@ -609,6 +735,10 @@ class BASE_Model extends CI_Model {
 
         return $row;
     }
+
+    /* --------------------------------------------------------------
+     * INTERNAL METHODS
+     * ------------------------------------------------------------ */
 
     final public function updated_at($row) {
         if (is_object($row)) {
@@ -659,10 +789,6 @@ class BASE_Model extends CI_Model {
         return $row;
     }
 
-    /* --------------------------------------------------------------
-     * QUERY BUILDER DIRECT ACCESS METHODS
-     * ------------------------------------------------------------ */
-
     /**
      * A wrapper to $this->_database->order_by()
      */
@@ -685,76 +811,6 @@ class BASE_Model extends CI_Model {
         return $this;
     }
 
-    /* --------------------------------------------------------------
-     * INTERNAL METHODS
-     * ------------------------------------------------------------ */
-
-    /**
-     * Trigger an event and call its observers. Pass through the event name
-     * (which looks for an instance variable $this->event_name), an array of
-     * parameters to pass through and an optional 'last in interation' boolean
-     */
-    final public function trigger($event, $data = FALSE, $last = TRUE) {
-        if (isset($this->$event) && is_array($this->$event)) {
-            foreach ($this->$event as $method) {
-                if (strpos($method, '(')) {
-                    preg_match('/([a-zA-Z0-9\_\-]+)(\(([a-zA-Z0-9\_\-\., ]+)\))?/', $method, $matches);
-
-                    $method = $matches[1];
-                    $this->callback_parameters = explode(',', $matches[3]);
-                }
-
-                $data = call_user_func_array(array($this, $method), array($data, $last));
-            }
-        }
-
-        return $data;
-    }
-
-    /**
-     * Run validation on the passed data
-     */
-    final public function validate($data) {
-        if ($this->skip_validation) {
-            return $data;
-        }
-
-        if (!empty($this->validate)) {
-            foreach ($data as $key => $val) {
-                $_POST[$key] = $val;
-            }
-
-            $this->load->library('form_validation');
-
-            if (is_array($this->validate)) {
-                $this->form_validation->set_rules($this->validate);
-
-                if ($this->form_validation->run() === TRUE) {
-                    return $data;
-                } else {
-                    return FALSE;
-                }
-            } else {
-                if ($this->form_validation->run($this->validate) === TRUE) {
-                    return $data;
-                } else {
-                    return FALSE;
-                }
-            }
-        } else {
-            return $data;
-        }
-    }
-
-    /**
-     * Guess the table name by pluralising the model name
-     */
-    private function _fetch_table() {
-        if ($this->_table == NULL) {
-            $this->_table = plural(preg_replace('/(_m|_model)?$/', '', strtolower(get_class($this))));
-        }
-    }
-
     /**
      * Guess the primary key for current table
      */
@@ -762,61 +818,5 @@ class BASE_Model extends CI_Model {
         if ($this->primary_key == NULl) {
             $this->primary_key = $this->_database->query("SHOW KEYS FROM `" . $this->_table . "` WHERE Key_name = 'PRIMARY'")->row()->Column_name;
         }
-    }
-
-    /**
-     * Set WHERE parameters, cleverly
-     */
-    protected function _set_where($params) {
-        if (count($params) == 1 && is_array($params[0])) {
-            foreach ($params[0] as $field => $filter) {
-                if (is_array($filter)) {
-                    $this->_database->where_in($field, $filter);
-                } else {
-                    if (is_int($field)) {
-                        $this->_database->where($filter);
-                    } else {
-                        $this->_database->where($field, $filter);
-                    }
-                }
-            }
-        } else if (count($params) == 1) {
-            $this->_database->where($params[0]);
-        } else if (count($params) == 2) {
-            if (is_array($params[1])) {
-                $this->_database->where_in($params[0], $params[1]);
-            } else {
-                $this->_database->where($params[0], $params[1]);
-            }
-        } else if (count($params) == 3) {
-            $this->_database->where($params[0], $params[1], $params[2]);
-        } else {
-            if (is_array($params[1])) {
-                $this->_database->where_in($params[0], $params[1]);
-            } else {
-                $this->_database->where($params[0], $params[1]);
-            }
-        }
-    }
-
-    /**
-     * Return the method name for the current return type
-     */
-    protected function _return_type($multi = FALSE) {
-        $method = ($multi) ? 'result' : 'row';
-        return $this->_temporary_return_type == 'array' ? $method . '_array' : $method;
-    }
-
-    final public function typeCast($data) {
-        if (!$this->typeCast) return $data;
-        if (!is_array($data)) return $data;
-        return array_map(function ($element) {
-            if (is_array($element)) $element = $this->typeCast($element);
-            if (is_numeric($element) && !strpos($element, '.')) {
-                $length = strlen((string)$element);
-                return ($length > 9) ? floatval($element) : (int)$element;
-            }
-            return $element;
-        }, $data);
     }
 }

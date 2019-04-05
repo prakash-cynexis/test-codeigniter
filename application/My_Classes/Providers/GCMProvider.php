@@ -19,21 +19,6 @@ class GCMProvider implements NotificationInterface {
         endswitch;
     }
 
-    public function message($message) {
-        $this->message = $message;
-        return $this;
-    }
-
-    public function device_type($device_type) {
-        $this->device_type = $device_type;
-        return $this;
-    }
-
-    public function device_token($device_token) {
-        $this->device_token = $device_token;
-        return $this;
-    }
-
     /**
      * Sending Push Notification
      * @param $registration_ids
@@ -80,5 +65,20 @@ class GCMProvider implements NotificationInterface {
             if (!$sent) return false;
         }
         return true;
+    }
+
+    public function message($message) {
+        $this->message = $message;
+        return $this;
+    }
+
+    public function device_type($device_type) {
+        $this->device_type = $device_type;
+        return $this;
+    }
+
+    public function device_token($device_token) {
+        $this->device_token = $device_token;
+        return $this;
     }
 }

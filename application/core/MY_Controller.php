@@ -49,14 +49,14 @@ class MY_Controller extends AppController {
         $this->setOffset();
     }
 
+    public function getOffset() {
+        return $this->offset;
+    }
+
     public function setOffset($limit = 10) {
         $offset = 0;
         if (!empty($this->requestData['offset'])) $offset = $this->requestData['offset'];
         $this->offset = "LIMIT {$limit} OFFSET {$offset}";
-    }
-
-    public function getOffset() {
-        return $this->offset;
     }
 
     final public function view($page, $title = null) {
@@ -65,6 +65,11 @@ class MY_Controller extends AppController {
         $this->data['title'] = (!empty($title)) ? $title : variableToStr($page);
         $pageLoad = $this->load->view("layout/{$folder}/pages/{$page}", $this->data, true);
         $this->loadView($pageLoad, $folder);
+    }
+
+    private function loadView($content, $folder) {
+        $view_data = ['content' => $content];
+        $this->load->view("layout/{$folder}/layout.php", $view_data);
     }
 
     final public function backend_view($page, $title = null) {
@@ -96,11 +101,6 @@ class MY_Controller extends AppController {
             $this->meta_data[] = "<meta name=\"$index\" content=\"$item\">";
         }
         return $this;
-    }
-
-    private function loadView($content, $folder) {
-        $view_data = ['content' => $content];
-        $this->load->view("layout/{$folder}/layout.php", $view_data);
     }
 
     final public function extractInfo($data, $section, $role) {

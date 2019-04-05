@@ -2,9 +2,9 @@
 
 namespace MyClasses;
 
-use MyClasses\Providers\FCMProvider;
 use MyClasses\Providers\EmailProvider;
 use MyClasses\Providers\EmailTemplateProvider;
+use MyClasses\Providers\FCMProvider;
 use MyClasses\Providers\Notification;
 
 class Intimation {
@@ -18,13 +18,6 @@ class Intimation {
     private static $notification;
     private static $template_name;
     private static $notificationData;
-
-    private static function initialize() {
-        self::$CI = &get_instance();
-        self::$CI->load->model("User_model");
-        self::$usersToNotify = self::$notificationData = [];
-        self::$eventType = self::$template_name = null;
-    }
 
     public static function emit($data, $eventType, array $send_by) {
         $result = [];
@@ -65,13 +58,11 @@ class Intimation {
         return $result;
     }
 
-    private static function notify($user, $data) {
-        $notifyContent = new Notification(new FCMProvider());
-        $notifyContent->device_type($user['device_type']);
-        $notifyContent->device_token($user['device_token']);
-        $notifyContent->message($data);
-        $done = $notifyContent->send();
-        return $done;
+    private static function initialize() {
+        self::$CI = &get_instance();
+        self::$CI->load->model("User_model");
+        self::$usersToNotify = self::$notificationData = [];
+        self::$eventType = self::$template_name = null;
     }
 
     private static function emailSend($data) {
@@ -97,5 +88,14 @@ class Intimation {
         self::$notificationData = array_merge(self::$notificationData, $data);
         log_activity(self::$notificationData, 'notification data'); // test only, remove for production
         return typeCast(self::$notificationData);
+    }
+
+    private static function notify($user, $data) {
+        $notifyContent = new Notification(new FCMProvider());
+        $notifyContent->device_type($user['device_type']);
+        $notifyContent->device_token($user['device_token']);
+        $notifyContent->message($data);
+        $done = $notifyContent->send();
+        return $done;
     }
 }

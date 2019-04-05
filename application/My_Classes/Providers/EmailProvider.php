@@ -4,13 +4,13 @@ namespace MyClasses\Providers;
 
 class EmailProvider {
 
+    protected $_openingTag = '{{';
+    protected $_closingTag = '}}';
     private $CI;
     private $to;
     private $html;
     private $subject;
     private $messageLines;
-    protected $_openingTag = '{{';
-    protected $_closingTag = '}}';
 
     public function __construct() {
         $this->CI = &get_instance();
@@ -39,6 +39,15 @@ class EmailProvider {
         return true;
     }
 
+    private function toArray() {
+        $array = [
+            'to' => $this->to,
+            'subject' => $this->subject,
+            'body' => $this->messageLines ? $this->messageLines : $this->html,
+        ];
+        return $array;
+    }
+
     public function to($to) {
         $this->to = $to;
         return $this;
@@ -56,15 +65,6 @@ class EmailProvider {
     public function line($line) {
         $this->messageLines[] = $line;
         return $this;
-    }
-
-    private function toArray() {
-        $array = [
-            'to' => $this->to,
-            'subject' => $this->subject,
-            'body' => $this->messageLines ? $this->messageLines : $this->html,
-        ];
-        return $array;
     }
 
     private function emailConfig() {

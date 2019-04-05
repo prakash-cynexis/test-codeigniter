@@ -59,19 +59,6 @@ class Make extends MY_Controller {
         }
     }
 
-    public function views($view_name = null) {
-        $views = ['v_users'];
-
-        if (!empty($view_name)) $views = [$view_name];
-        foreach ($views as $index => $view) {
-            $file = $this->_resource_path . 'v_views/' . $view . '.sql';
-            $this->_file = file_get_contents($file);
-            $done = $this->db->query($this->_file);
-            if ($done) echo $view . ' view created.' . PHP_EOL;
-            if (!$done) exit('Some problem occurred.');
-        }
-    }
-
     public function upload_data($file_name = null) {
         $uploads = ['roles', 'users'];
 
@@ -81,6 +68,19 @@ class Make extends MY_Controller {
             $this->_file = file_get_contents($file);
             $done = $this->db->query($this->_file);
             if ($done) echo $upload . ' upload data.' . PHP_EOL;
+            if (!$done) exit('Some problem occurred.');
+        }
+    }
+
+    public function views($view_name = null) {
+        $views = ['v_users'];
+
+        if (!empty($view_name)) $views = [$view_name];
+        foreach ($views as $index => $view) {
+            $file = $this->_resource_path . 'v_views/' . $view . '.sql';
+            $this->_file = file_get_contents($file);
+            $done = $this->db->query($this->_file);
+            if ($done) echo $view . ' view created.' . PHP_EOL;
             if (!$done) exit('Some problem occurred.');
         }
     }
@@ -96,6 +96,15 @@ class Make extends MY_Controller {
 
         $fileName = APPPATH . "/My_Classes/http/requests/{$fileName}.php";
         $this->createFile($text, $fileName);
+    }
+
+    private function createFile($content, $fileName) {
+        $this->load->helper('file');
+
+        if (!write_file($fileName, $content)) {
+            exit('Unable to write the file');
+        }
+        exit('File written!');
     }
 
     public function controller($fileName) {
@@ -146,14 +155,5 @@ class Make extends MY_Controller {
 
         $fileName = APPPATH . "/views/layout/backend/pages/{$fileName}.php";
         $this->createFile($text, $fileName);
-    }
-
-    private function createFile($content, $fileName) {
-        $this->load->helper('file');
-
-        if (!write_file($fileName, $content)) {
-            exit('Unable to write the file');
-        }
-        exit('File written!');
     }
 }

@@ -8,11 +8,6 @@ class DataTableProvider {
     private static $data;
     private static $query;
 
-    private static function initialize() {
-        self::$CI = &get_instance();
-        self::$data = $_POST;
-    }
-
     public static function userLists() {
         self::initialize();
         self::$CI->db->select('id, user_name, email, role_id, id as action');
@@ -21,5 +16,10 @@ class DataTableProvider {
         self::$query = self::$CI->db->last_query();
 
         return self::$query;
+    }
+
+    private static function initialize() {
+        self::$CI = &get_instance();
+        self::$data = $_POST;
     }
 }

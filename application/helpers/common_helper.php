@@ -12,10 +12,10 @@ if (!function_exists('arrayRemoveZero')) {
      */
     function arrayRemoveZero(array $array) {
         if (empty($array)) return $array;
-        foreach ($array as $key => $value) {
+        foreach ($array as $key => $value) :
             if ($value === 0 || $value === '0') unset($array[$key]);
             if (is_array($value)) $array[$key] = arrayRemoveZero($value);
-        }
+        endforeach;
         return $array;
     }
 }
@@ -26,14 +26,14 @@ if (!function_exists('dd')) {
      * @param bool $exit
      */
     function dd($x, $exit = true) {
-        if (is_array($x) || is_object($x)) {
+        if (is_array($x) || is_object($x)) :
             echo "<pre>";
             print_r($x);
             echo "</pre><hr/>";
-        } else {
+        else :
             var_dump($x);
             echo "<hr/>";
-        }
+        endif;
         if (boolVal($exit)) exit();
     }
 }
@@ -105,9 +105,9 @@ if (!function_exists('randomString')) {
     function randomString($length = 25) {
         $characters = '23003164A33FF27BD4A1C7DE78E025F6DBC67E3960AD891C29B45CE4DCC4CDB7';
         $randomString = '';
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; $i++) :
             $randomString .= $characters[rand(0, strlen($characters) - 1)];
-        }
+        endfor;
         return $randomString;
     }
 }
@@ -128,21 +128,23 @@ if (!function_exists('htmlFlash')) {
         $CI = &get_instance();
         $flash = $CI->session->flashdata($type);
         if (!$flash) return false;
+
         $class = "alert alert-success";
-        if ($flash['class'] == 'error') {
+        if ($flash['class'] == 'error') :
             $class = "alert alert-danger";
-        }
-        if ($flash['class'] == 'warning') {
+        endif;
+        if ($flash['class'] == 'warning') :
             $class = "alert alert-warning";
-        }
-        if (!is_array($flash['message'])) {
+        endif;
+
+        if (!is_array($flash['message'])) :
             return "<div class='{$class}'><i class='fa fa-check-circle' aria-hidden='true'></i> {$flash['message']}</div>";
-        }
+        endif;
 
         $msg = "<div class='{$class}'>";
-        foreach ($flash['message'] as $flash_message) {
+        foreach ($flash['message'] as $flash_message) :
             $msg .= "<i class='fa fa-check-circle' aria-hidden='true'></i>{$flash_message}<br/>";
-        }
+        endforeach;
         return $msg . "</div>";
     }
 }
@@ -158,9 +160,9 @@ if (!function_exists('jqueryFlash')) {
         $flash = $CI->session->flashdata($type);
         if (!$flash) return false;
 
-        if (is_array($flash['message'])) {
+        if (is_array($flash['message'])) :
             $msg = '<script type="text/javascript">';
-            foreach ($flash['message'] as $message) {
+            foreach ($flash['message'] as $message) :
                 $msg .= "setTimeout(function() {
                             toastr.options = {
                                 closeButton: true,
@@ -174,9 +176,9 @@ if (!function_exists('jqueryFlash')) {
                             toastr.{$flash['class']}('{$message}');
     
                         }, 1300);";
-            }
+            endforeach;
             return $msg . '</script>';
-        } else {
+        else :
             $msg = '<script type="text/javascript">';
             $msg .= "setTimeout(function() {
                         toastr.options = {
@@ -192,7 +194,7 @@ if (!function_exists('jqueryFlash')) {
 
                     }, 1300);";
             return $msg . '</script>';
-        }
+        endif;
     }
 }
 
@@ -378,14 +380,14 @@ if (!function_exists('removePassedArrayKeys')) {
      */
     function removePassedArrayKeys(array $array, array $keysToRemove) {
         if (!$array) return $array;
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
+        foreach ($array as $key => $value) :
+            if (is_array($value)) :
                 $value = removePassedArrayKeys($value, $keysToRemove);
                 $array[$key] = $value;
                 continue;
-            }
+            endif;
             if (in_array($key, $keysToRemove)) unset($array[$key]);
-        }
+        endforeach;
         return $array;
     }
 }
@@ -398,14 +400,14 @@ if (!function_exists('allowPassedArrayKeys')) {
      */
     function allowPassedArrayKeys(array $array, array $keysToAllow) {
         if (!$array) return $array;
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
+        foreach ($array as $key => $value) :
+            if (is_array($value)) :
                 $value = allowPassedArrayKeys($value, $keysToAllow);
                 $array[$key] = $value;
                 continue;
-            }
+            endif;
             if (!in_array($key, $keysToAllow)) unset($array[$key]);
-        }
+        endforeach;
         return $array;
     }
 }
@@ -430,9 +432,9 @@ if (!function_exists('removeArrayKeys')) {
      */
     function removeArrayKeys(array $array) {
         $valueArray = [];
-        foreach ($array as $Key => $value) {
+        foreach ($array as $Key => $value) :
             $valueArray[] = $value;
-        }
+        endforeach;
         return $valueArray;
     }
 }
@@ -443,9 +445,9 @@ if (!function_exists('isSingleItemArray')) {
      * @return bool
      */
     function isSingleItemArray(array $array) {
-        if (count($array) > 1) {
+        if (count($array) > 1) :
             return false;
-        }
+        endif;
         return true;
     }
 }
@@ -458,9 +460,9 @@ if (!function_exists('formatExceptionAsDataArray')) {
     function formatExceptionAsDataArray($array) {
         if (empty($array) || !is_array($array)) return $array;
         $array = removeArrayKeys($array);
-        if (isSingleItemArray($array)) {
+        if (isSingleItemArray($array)) :
             return $array[0];
-        }
+        endif;
         return $array;
     }
 }
@@ -490,16 +492,16 @@ if (!function_exists('intToString')) {
      */
     function intToString($array) {
         if (!is_array($array)) return $array;
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
+        foreach ($array as $key => $value) :
+            if (is_array($value)) :
                 $value = intToString($value);
                 $array[$key] = $value;
                 continue;
-            }
-            if (is_digit($value)) {
+            endif;
+            if (is_digit($value)) :
                 $array[$key] = strval($value);
-            }
-        }
+            endif;
+        endforeach;
         return $array;
     }
 }
@@ -512,20 +514,20 @@ if (!function_exists('typeCasting')) {
     function typeCasting($array) {
         $stringArray = [];
         if (!is_array($array)) return $array;
-        foreach ($array as $key => $value) {
-            if (is_array($value)) {
+        foreach ($array as $key => $value) :
+            if (is_array($value)) :
                 $value = typeCasting($value);
                 $array[$key] = $value;
                 continue;
-            }
-            if (is_digit($value) && !strpos($value, '.')) {
+            endif;
+            if (is_digit($value) && !strpos($value, '.')) :
                 $length = strlen((string)$value);
                 $array[$key] = ($length > 9) ? floatval($value) : (int)$value;
-                if (array_key_exists($key, array_flip($stringArray))) {
+                if (array_key_exists($key, array_flip($stringArray))) :
                     $array[$key] = (string)$value;
-                }
-            }
-        }
+                endif;
+            endif;
+        endforeach;
         return $array;
     }
 }
@@ -564,9 +566,10 @@ if (!function_exists('trimming')) {
             'deleted', 'is_approved', 'is_verify'
         ];
 
-        foreach ($blacklist as $key) {
+        foreach ($blacklist as $key) :
             if (isset($array[$key])) unset($array[$key]);
-        }
+        endforeach;
+
         if (isset($array['role']) && strtolower($array['role']) == 'admin') unset($array['role']);
         trim_associative_array($array);
         return $array;
@@ -643,14 +646,16 @@ if (!function_exists('isAppRequest')) {
      * @return bool
      */
     function isAppRequest() {
-        $header = get_instance()->input->request_headers();
+        $headers = get_instance()->input->request_headers();
+        $headers = array_change_key_case($headers, CASE_LOWER);
+
         $isApp = false;
-        if (isset($header['Response-Type']) && $header['Response-Type'] === "application/json") {
+        if (isset($headers['response-type']) && $headers['response-type'] === "application/json") :
             $isApp = true;
-        }
-        if (isset($header['Content-Type']) && $header['Content-Type'] === "application/json") {
+        endif;
+        if (isset($headers['content-type']) && $headers['content-type'] === "application/json") :
             $isApp = true;
-        }
+        endif;
         return $isApp;
     }
 }
@@ -661,14 +666,14 @@ if (!function_exists('intToBoolean')) {
      * @return bool
      */
     function intToBoolean($int) {
-        switch (true) {
+        switch (true) :
             case $int <= 0:
                 return (bool)$int = false;
             case $int > 0:
                 return (bool)$int = true;
             default:
                 return false;
-        }
+        endswitch;
     }
 }
 if (!function_exists('booleanToInt')) {
@@ -677,14 +682,14 @@ if (!function_exists('booleanToInt')) {
      * @return bool|int
      */
     function booleanToInt($boolean) {
-        switch ($boolean) {
+        switch ($boolean) :
             case false:
                 return (int)$boolean = 0;
             case true:
                 return (int)$boolean = 1;
             default:
                 return false;
-        }
+        endswitch;
     }
 }
 
@@ -695,9 +700,9 @@ if (!function_exists('validImage')) {
      */
     function validImage($name) {
         if (empty($_FILES[$name]['name'])) return false;
-        if ($_FILES[$name]['type'] != 'image/png' && $_FILES[$name]['type'] != 'image/jpg' && $_FILES[$name]['type'] != 'image/jpeg' && $_FILES[$name]['type'] != 'image/gif') {
+        if ($_FILES[$name]['type'] != 'image/png' && $_FILES[$name]['type'] != 'image/jpg' && $_FILES[$name]['type'] != 'image/jpeg' && $_FILES[$name]['type'] != 'image/gif') :
             response()->error("image format not valid.");
-        }
+        endif;
         return true;
     }
 }
@@ -722,9 +727,9 @@ if (!function_exists('uriStringIS')) {
      * @return mixed|string
      */
     function uriStringIS($segment = null) {
-        if (is_numeric($segment)) {
+        if (is_numeric($segment)) :
             return get_instance()->uri->segment($segment);
-        }
+        endif;
         return get_instance()->uri->uri_string();
     }
 }
@@ -965,9 +970,9 @@ if (!function_exists('is_digit')) {
 
 if (!function_exists('hasComma')) {
     function hasComma($element) {
-        if (strpos($element, ',')) {
+        if (strpos($element, ',')) :
             return true;
-        }
+        endif;
         return false;
     }
 }
@@ -976,8 +981,8 @@ if (!function_exists('addValueInComma')) {
     function addValueInComma($value, $add) {
         if (empty($value)) return $add;
 
-        if (hasComma($value)) {
-            $addArrayValue = [];
+        if (hasComma($value)) :
+            $addArrayValue = $add;
             if (is_string($add)) $addArrayValue = [$add];
             $arrayValue = explode(',', $value);
             $arrayValue = array_filter($arrayValue, function ($value) {
@@ -985,16 +990,16 @@ if (!function_exists('addValueInComma')) {
             });
             $arrayValue = array_merge($arrayValue, $addArrayValue);
             $value = implode(',', array_unique($arrayValue));
-        } else {
-            $value = $value . ',' . $add;
-        }
+        else :
+            $value = $value == $add ? $add : $value . ',' . $add;
+        endif;
         return $value;
     }
 }
 
 if (!function_exists('removeValueInComma')) {
     function removeValueInComma($value, $remove) {
-        if (strpos($value, ',')) {
+        if (strpos($value, ',')) :
             $arrayValue = explode(',', $value);
             $arrayValue = array_filter($arrayValue, function ($value) {
                 return trim($value) !== '';
@@ -1003,68 +1008,28 @@ if (!function_exists('removeValueInComma')) {
             unset($arrayValue[$remove]);
             $arrayValue = array_flip($arrayValue);
             return implode(',', array_unique($arrayValue));
-        }
-        return $value;
+        endif;
+        return $value == $remove ? null : $value;
     }
 }
 
 if (!function_exists('trim_associative_array')) {
     function trim_associative_array(array &$input_array) {
-        if (is_array($input_array)) {
-            foreach ($input_array as $key => &$val) {
-                if (is_array($val)) {
+        if (is_array($input_array)) :
+            foreach ($input_array as $key => &$val) :
+                if (is_array($val)) :
                     trim_associative_array($val);
-                } else {
+                else :
                     $input_array[$key] = trim($val);
-                }
-            }
-        }
+                endif;
+            endforeach;
+        endif;
     }
 }
 
-if (!function_exists('in_comma')) {
-    function in_comma($needle, $value, $delimiter = ',') {
-        if (!strpos($value, $delimiter)) return false;
-
-        $arrayValue = explode($delimiter, $value);
-        $arrayValue = array_filter($arrayValue, function ($value) {
-            return trim($value) !== '';
-        });
-        $arrayValue = array_flip($arrayValue);
-
-        if (isset($arrayValue[$needle])) return true;
-        return false;
-    }
-}
-
-if (!function_exists('unique_associative_array')) {
-    function unique_associative_array(array $array, $key) {
-        if (empty($array)) return $array;
-
-        $i = 0;
-        $key_array = [];
-        $temp_array = [];
-        foreach ($array as $val) :
-            if (!in_array($val[$key], $key_array)) :
-                $key_array[$i] = $val[$key];
-                $temp_array[$i] = $val;
-            endif;
-            $i++;
-        endforeach;
-        return $temp_array;
-    }
-}
-
-if (!function_exists('associative_in_array')) {
-    function associative_in_array(array $array, $array2) {
-        if (empty($array)) return $array;
-
-        foreach ($array as $val) :
-            if ($val[$array2[0]] == $array2[1]) :
-                return true;
-            endif;
-        endforeach;
-        return false;
+if (!function_exists('not_empty')) {
+    function not_empty($var) {
+        return !empty($var) || $var === 0 || $var === '0';
     }
 }
 
@@ -1075,6 +1040,27 @@ if (!function_exists('removeElementWithValue')) {
                 unset($array[$subKey]);
             endif;
         endforeach;
+    }
+}
+
+if (!function_exists('isCurlSuccess')) {
+    function isCurlSuccess($httpCode) {
+        switch ($httpCode) :
+            case 200:  # HTTP OK
+                return true;
+                break;
+            case 201:  # CREATED
+                return true;
+                break;
+            case 207:  # HTTP_MULTI_STATUS
+                return true;
+                break;
+            case 204:  # HTTP_NO_CONTENT
+                return true;
+                break;
+            default;
+                return false;
+        endswitch;
     }
 }
 

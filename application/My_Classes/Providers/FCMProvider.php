@@ -4,12 +4,12 @@ namespace MyClasses\Providers;
 
 class FCMProvider implements NotificationInterface {
 
-    private $message;
-    private $device_type;
-    private $device_token;
     private static $iOS_SERVER_KEY = '';
     private static $ANDROID_SERVER_KEY = '';
     private static $FCM_PATH = 'https://fcm.googleapis.com/fcm/send';
+    private $message;
+    private $device_type;
+    private $device_token;
 
     public function send() {
         switch ($this->device_type):
@@ -20,21 +20,6 @@ class FCMProvider implements NotificationInterface {
             default:
                 return false;
         endswitch;
-    }
-
-    public function message($message) {
-        $this->message = $message;
-        return $this;
-    }
-
-    public function device_type($device_type) {
-        $this->device_type = $device_type;
-        return $this;
-    }
-
-    public function device_token($device_token) {
-        $this->device_token = $device_token;
-        return $this;
     }
 
     private static function iOS($token, $message) {
@@ -75,6 +60,11 @@ class FCMProvider implements NotificationInterface {
             if (!$sent) return false;
         }
         return true;
+    }
+
+    private static function iPhoneFormat($message) {
+        $iPhoneFormatMessage = array_merge($message, ["body" => 'Test Notification']);
+        return $iPhoneFormatMessage;
     }
 
     private static function android($token, $message) {
@@ -119,8 +109,18 @@ class FCMProvider implements NotificationInterface {
         return true;
     }
 
-    private static function iPhoneFormat($message) {
-        $iPhoneFormatMessage = array_merge($message, ["body" => 'Test Notification']);
-        return $iPhoneFormatMessage;
+    public function message($message) {
+        $this->message = $message;
+        return $this;
+    }
+
+    public function device_type($device_type) {
+        $this->device_type = $device_type;
+        return $this;
+    }
+
+    public function device_token($device_token) {
+        $this->device_token = $device_token;
+        return $this;
     }
 }
