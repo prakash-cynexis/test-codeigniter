@@ -243,7 +243,7 @@ class XLSXWriter {
         return $core_xml;
     }
 
-        public static function xmlspecialchars($val) {
+    public static function xmlspecialchars($val) {
         return str_replace("'", "&#39;", htmlspecialchars($val));
     }//
 
@@ -507,7 +507,7 @@ class XLSXWriter {
 
     //------------------------------------------------------------------
 
-protected function writeCell(XLSXWriter_BuffererWriter &$file, $row_number, $column_number, $value, $cell_format_index) {
+    protected function writeCell(XLSXWriter_BuffererWriter &$file, $row_number, $column_number, $value, $cell_format_index) {
         $cell_type = $this->cell_types[$cell_format_index];
         $cell_name = self::xlsCell($row_number, $column_number);
 

@@ -1,4 +1,3 @@
-<?php getJavascript() ?>
 <script>
     $(document).on('click', '.btn-spinner', function (e) {
         $(this).html('<i class="fa fa-spinner fa-spin" style="font-size:18px"></i> Processing...');

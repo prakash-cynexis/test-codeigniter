@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <?php getMetaData(); ?>
     <title>Admin | <?= $title ?></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
@@ -17,7 +16,6 @@
     <link href="<?= assetUrl('backend/css/darkblue.min.css') ?>" rel="stylesheet" type="text/css"/>
     <link href="<?= assetUrl('backend/css/custom.css') ?>" rel="stylesheet" type="text/css"/>
     <link rel="shortcut icon" href="favicon.ico"/>
-    <?php getStylesheet(); ?>
     <!-- Jquery -->
     <?= jquery() ?>
     <!-- toastr notification  -->

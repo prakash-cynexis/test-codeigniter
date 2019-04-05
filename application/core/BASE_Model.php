@@ -71,7 +71,6 @@ class BASE_Model extends CI_Model {
      * skip_validation() to skip data validation for any future calls.
      */
     protected $skip_validation = FALSE;
-
     protected $return_type = 'array';
     /**
      * By default we return our results as objects. If we need to override

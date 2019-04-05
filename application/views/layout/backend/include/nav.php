@@ -5,26 +5,26 @@
         </div>
     </li>
     <li class="nav-item active">
-        <a href="javascript:;" class="nav-link nav-toggle">
+        <a href="javascript:" class="nav-link nav-toggle">
             <i class="icon-home"></i>
             <span class="title">Dashboard</span>
         </a>
     </li>
     <li class="nav-item">
-        <a href="javascript:;" class="nav-link nav-toggle">
+        <a href="javascript:" class="nav-link nav-toggle">
             <i class="icon-folder"></i>
             <span class="title">Multi Level Menu</span>
             <span class="arrow "></span>
         </a>
         <ul class="sub-menu">
             <li class="nav-item">
-                <a href="javascript:;" class="nav-link nav-toggle">
+                <a href="javascript:" class="nav-link nav-toggle">
                     <i class="icon-settings"></i> Item 1
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
                     <li class="nav-item">
-                        <a href="javascript:;" target="_blank" class="nav-link">
+                        <a href="javascript:" target="_blank" class="nav-link">
                             <i class="icon-user"></i> Arrow Toggle
                             <span class="arrow nav-toggle"></span>
                         </a>
@@ -58,7 +58,7 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a href="javascript:;" target="_blank" class="nav-link">
+                <a href="javascript:" target="_blank" class="nav-link">
                     <i class="icon-globe"></i> Arrow Toggle
                     <span class="arrow nav-toggle"></span>
                 </a>

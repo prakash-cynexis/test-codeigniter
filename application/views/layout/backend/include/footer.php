@@ -21,7 +21,6 @@
 <script src="<?= assetUrl('plugins/bootstrap/js/bootstrap.min.js') ?>"></script>
 <script src="<?= assetUrl('plugins/jquery-slimscroll/jquery.slimscroll.min.js') ?>"></script>
 <script src="<?= assetUrl('plugins/bootstrap-switch/js/bootstrap-switch.min.js') ?>"></script>
-<?php getJavascript() ?>
 <script>
     $(document).on('click', '.btn-spinner', function (e) {
         $(this).html('<i class="fa fa-spinner fa-spin" style="font-size:18px"></i> Processing...');
