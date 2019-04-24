@@ -99,6 +99,7 @@ class BASE_Model extends CI_Model {
         array_unshift($this->before_update, 'protect_attributes');
 
         $this->_temporary_return_type = $this->return_type;
+        $this->_select = null;
     }
 
     /* --------------------------------------------------------------
