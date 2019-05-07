@@ -93,7 +93,7 @@ class Code extends MY_Controller {
     }
 
     public function lists() {
-        $userLists = new Datatables(new CodeigniterAdapter());
+        $userLists = new DataTableProvider(new CodeigniterAdapter());
         $sql = DataTableProvider::userLists();
 
         $userLists->query($sql);
