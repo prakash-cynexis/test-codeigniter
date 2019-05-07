@@ -14,6 +14,7 @@ class Code extends MY_Controller {
     }
 
     public function getData() {
+        dd(date("Y-m-d H:i:s","1514559900"));
         $data = $this->db->query("CALL getUsers()")->result_array();
         dd($data);
     }
